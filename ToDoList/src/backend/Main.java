@@ -1,5 +1,5 @@
 package backend;
 
-public class awdada {
+public class Main {
 
 }
