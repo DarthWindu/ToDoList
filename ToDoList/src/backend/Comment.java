@@ -21,12 +21,9 @@ public class Comment extends HistoryItem {
 		this.setDate(Calendar.getInstance().getTime());//Is this the correct way to set the date?
 	}
 	
-	/**
-	 * @author Pujit
-	 * @return comment: Returns comment the object represents
-	 * 
-	 * Updated p 0.1
-	 */
+	/** @author Pujit
+	 * @return comment: Returns comment the object represent
+	 *  */
 	public String getComment() 
 	{
 		return comment;
@@ -35,8 +32,6 @@ public class Comment extends HistoryItem {
 	/**
 	 * @author Pujit
 	 * @param newComment: The new comment that replaces the old one
-	 * 
-	 * Updated p 0.1
 	 */
 	public void setComment(String newComment)
 	{
