@@ -44,7 +44,7 @@ public abstract class HistoryItem {
 	}
 	/**
 	 * @author Ryan Sutton
-	 * @return String text: the text of the HsitoryItem 
+	 * @return String text: the text of the HistoryItem 
 	 * 
 	 * Updated p 0.1
 	 */
