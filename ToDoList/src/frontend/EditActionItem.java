@@ -1,5 +1,6 @@
 package frontend;
+import javax.swing.JPanel;
 
-public class EditActionItem {
+public class EditActionItem extends JPanel{
 
 }
