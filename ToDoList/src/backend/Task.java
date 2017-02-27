@@ -79,19 +79,13 @@ public class Task implements Serializable{
 		historyEvents = new ArrayList<HistoryItem>();
 	}
 	
-	/**
-	 * 
-	 * @return status: integer representation of Priority level
-	 */
+	/**@return status: integer representation of Priority level*/
 	public int getStatus()
 	{
 		return status.intValue();
 	}
 	
-	/**
-	 * 
-	 * @param newStatus - PriorityLevel
-	 * 
+	/** @param newStatus - PriorityLevel
 	 * Adds PrirityChange and HistoryItem events, and changes status/priority level
 	 */
 	public void setStatus(int newStatus) 
@@ -102,10 +96,7 @@ public class Task implements Serializable{
 		status = new Integer(newStatus);
 	}
 	
-	/**
-	 * 
-	 * @param newName for task
-	 * 
+	/** @param newName for task
 	 * Adds a NameChange Event and a HistoryItem event
 	 * Also changes the task Name
 	 */
@@ -117,55 +108,37 @@ public class Task implements Serializable{
 		taskName = newName;
 	}
 	
-	/**
-	 * 
-	 * @return List of comments
-	 */
+	/** @return List of comments */
 	public ArrayList<Comment> getComments()
 	{
 		return comments;//NEED TO ADD addComment method
 	}
 	
-	/**
-	 * 
-	 * @return priorityChange Events
-	 */
+	/** @return priorityChange Events */
 	public ArrayList<PriorityChange> getPriorityChanges()
 	{
 		return priorityChanges;
 	}
 	
-	/**
-	 * 
-	 * @return nameChange Events
-	 */
+	/**  @return nameChange Events*/
 	public ArrayList<NameChange> getNameChanges()
 	{
 		return nameChanges;
 	}
 	
-	/**
-	 * 
-	 * @param plannedChange
-	 */
+	/**@param plannedChange */
 	public void addPlannedPriorityChange(PlannedPriorityChange plannedChange) 
 	{
 		priorityChangeDates.add(plannedChange);
 	}
 	
-	/**
-	 * 
-	 * @return List of Planned Priority Changes
-	 */
+	/** @return List of Planned Priority Changes */
 	public ArrayList<PlannedPriorityChange> getPlannedPriorityChangeList() 
 	{
 		return priorityChangeDates;
 	}
 	
-	/**
-	 * @param comment
-	 *  
-	 */
+	/** @param comment*/
 	public void addComment(String comment)
 	{
 		Comment newComment = (new Comment(comment));
