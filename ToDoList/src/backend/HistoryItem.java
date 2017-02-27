@@ -42,10 +42,10 @@ public abstract class HistoryItem {
 	/**
 	 * @author Ryan Sutton
 	 * @return String text: the text of the History Item 
-	 * 
 	 * Updated p 0.1
 	 */
 	public String getText() {
+		// hello just testing
 		return text;
 	}
 
