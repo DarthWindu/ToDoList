@@ -45,7 +45,6 @@ public abstract class HistoryItem {
 	 * Updated p 0.1
 	 */
 	public String getText() {
-		// hello just testing
 		return text;
 	}
 
