@@ -12,7 +12,7 @@ import java.util.Date;
  * 
  * Object representing a To-Do- List task
  * 
- * test push
+ * test
  * 
  * Status:
  * 0 means inactive
