@@ -9,7 +9,6 @@ import java.util.Calendar;
  * 
  * Represents a name change event
  * No changes, except for possible addition of serialization implementation is expected.
- *
  */
 public class NameChange extends HistoryItem {
 	private String oldName, newName;
