@@ -11,7 +11,8 @@ import java.util.Date;
  *
  */
 public abstract class HistoryItem {
-	protected Date whenDone;
+	private Date whenDone;
+	private String text;
 	
 	/**
 	 * @author Pujit
@@ -32,4 +33,23 @@ public abstract class HistoryItem {
 	public void setDate (Date date) {
 		whenDone = date;
 	}
+	/**
+	 * @author Ryan Sutton
+	 * @param string: sets the text for the HistoryItem such as “comment created” 
+	 * 
+	 * Updated p 0.1
+	 */
+	public void setText(String eventDescription){
+		text = eventDescription;
+	}
+	/**
+	 * @author Ryan Sutton
+	 * @return String text: the text of the HsitoryItem 
+	 * 
+	 * Updated p 0.1
+	 */
+	public String getText() {
+		return text;
+	}
+
 }
