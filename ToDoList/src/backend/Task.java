@@ -12,6 +12,8 @@ import java.util.Date;
  * 
  * Object representing a To-Do- List task
  * 
+ * test
+ * 
  * Status:
  * 0 means inactive
  * 1 means eventual
@@ -77,16 +79,13 @@ public class Task implements Serializable{
 		historyEvents = new ArrayList<HistoryItem>();
 	}
 	
-	/**
-	 * @return status: integer representation of Priority level
-	 */
+	/**@return status: integer representation of Priority level*/
 	public int getStatus()
 	{
 		return status.intValue();
 	}
 	
-	/**
-	 * @param newStatus - PriorityLevel
+	/** @param newStatus - PriorityLevel
 	 * Adds PrirityChange and HistoryItem events, and changes status/priority level
 	 */
 	public void setStatus(int newStatus) 
@@ -97,8 +96,7 @@ public class Task implements Serializable{
 		status = new Integer(newStatus);
 	}
 	
-	/**
-	 * @param newName for task
+	/** @param newName for task
 	 * Adds a NameChange Event and a HistoryItem event
 	 * Also changes the task Name
 	 */
