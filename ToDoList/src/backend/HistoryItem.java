@@ -27,7 +27,7 @@ public abstract class HistoryItem {
 	 * @param date: Date HistoryItem takes/took/will take place
 	 * May be unecessary
 	 * 
-	 * Updated p 0.1this is a test
+	 * Updated p 0.1
 	 */
 	public void setDate (Date date) {
 		whenDone = date;
