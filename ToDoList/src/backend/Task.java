@@ -32,7 +32,6 @@ public class Task implements Serializable{
 	private static final long serialVersionUID = 2850384200535302052L;
 	private String taskName;
 	private Integer status; //Integer is serializable - we could change to int if primitive types are serializable, but I'm not sure
-	private ArrayList<PlannedPriorityChange> priorityChangeDates;//Dates the Priority changes
 	private ArrayList<Comment> comments;//Changed from design - Changed from HistoryItem List to Comment List
 	private ArrayList<PriorityChange> priorityChanges;
 	private ArrayList<NameChange> nameChanges;
@@ -72,7 +71,6 @@ public class Task implements Serializable{
 	private void initVariables() 
 	{
 		//Might need to change because Serialization may require this method NOT to be called
-		priorityChangeDates = new ArrayList<PlannedPriorityChange>();
 		comments = new ArrayList<Comment>();
 		priorityChanges = new ArrayList<PriorityChange>();
 		nameChanges = new ArrayList<NameChange>();
@@ -126,18 +124,6 @@ public class Task implements Serializable{
 		return nameChanges;
 	}
 	
-	/**@param plannedChange */
-	public void addPlannedPriorityChange(PlannedPriorityChange plannedChange) 
-	{
-		priorityChangeDates.add(plannedChange);
-	}
-	
-	/** @return List of Planned Priority Changes */
-	public ArrayList<PlannedPriorityChange> getPlannedPriorityChangeList() 
-	{
-		return priorityChangeDates;
-	}
-	
 	/** @param comment*/
 	public void addComment(String comment)
 	{
@@ -159,8 +145,8 @@ public class Task implements Serializable{
 		//Returns true if both tasks' names and status values match
 	}
 
-//METHODS THAT NEED TO BE DESIGNED/WORKED ON---------------------------------------------------
-	
+	//METHODS THAT NEED TO BE DESIGNED/WORKED ON---------------------------------------------------
+	//Joe: we should not need this
 	/*public void checkElevation() //This method needs to be redesigned and discussed extensively, especially with the serialization. This will be a major source for bugs.
 	{//Doesn't really work - just a rough outline - uncertain of what to do in every situation except if the date meets it.
 		//Also, what if 
