@@ -16,7 +16,6 @@ public abstract class HistoryItem {
 	/**
 	 * @author Pujit
 	 * @return Date whenDone: When the HistoryItem event took place
-	 * Updated p 0.1
 	 */
 	public Date getDate() {
 		return whenDone;
@@ -26,8 +25,6 @@ public abstract class HistoryItem {
 	 * @author Pujit
 	 * @param date: Date HistoryItem takes/took/will take place
 	 * May be unecessary
-	 * 
-	 * Updated p 0.1
 	 */
 	public void setDate (Date date) {
 		whenDone = date;
