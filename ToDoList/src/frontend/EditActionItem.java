@@ -15,7 +15,7 @@ public class EditActionItem extends JPanel implements ActionListener{
 		
 	}
 
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		
 	}
 }
