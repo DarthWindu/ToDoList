@@ -17,7 +17,7 @@ public class NameChange extends HistoryItem {
 	{
 		oldName = old_Name;
 		newName = new_Name;
-		this.setDate(Calendar.getInstance().getTime());
+		setDate(Calendar.getInstance().getTime());
 	}
 	
 	public String getOldName()

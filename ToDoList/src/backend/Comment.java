@@ -17,12 +17,12 @@ public class Comment extends HistoryItem {
 	Comment(String userComment)
 	{
 		comment = userComment;
-		this.setDate(Calendar.getInstance().getTime());//Is this the correct way to set the date?
+		setDate(Calendar.getInstance().getTime());//Is this the correct way to set the date?
 	}
 	
 	/** @author Pujit
 	 * @return comment: Returns comment the object represent
-	 *  */
+	 */
 	public String getComment() 
 	{
 		return comment;

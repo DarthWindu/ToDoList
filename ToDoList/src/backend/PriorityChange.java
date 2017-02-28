@@ -26,7 +26,7 @@ public class PriorityChange extends HistoryItem {
 	{
 		oldStatus = new Integer(userOldStatus);
 		newStatus = new Integer(userNewStatus);
-		this.setDate(dateOfEvent);
+		setDate(dateOfEvent);
 	}
 	
 	/**
