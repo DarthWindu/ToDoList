@@ -93,7 +93,6 @@ public class Task implements Serializable{
 		historyEvents.add(change);
 		status = new Integer(newStatus);
 	}
-	
 	/** @param newName for task
 	 * Adds a NameChange Event and a HistoryItem event
 	 * Also changes the task Name
