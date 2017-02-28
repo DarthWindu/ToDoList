@@ -32,17 +32,14 @@ public abstract class HistoryItem {
 	}
 	/**
 	 * @author Ryan Sutton
-	 * @param string: sets the text for the HistoryItem such as “comment created” 
-	 * 
-	 * Updated p 0.1
+	 * @param string: sets the text for the HistoryItem such as “comment created”
 	 */
 	public void setText(String eventDescription){
 		text = eventDescription;
 	}
 	/**
 	 * @author Ryan Sutton
-	 * @return String text: the text of the History Item 
-	 * Updated p 0.1
+	 * @return String text: the text of the History Item
 	 */
 	public String getText() {
 		return text;
