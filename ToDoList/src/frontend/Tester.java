@@ -8,6 +8,5 @@ public class Tester {
 }
  /*.addActionListener(new ActionListener(){
 public void actionPerformed(ActionEvent arg0) {
-lp.remove(top);
-}
-});*/
+	}
+		});*/
