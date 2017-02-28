@@ -36,6 +36,7 @@ public class Task implements Serializable{
 	private ArrayList<PriorityChange> priorityChanges;
 	private ArrayList<NameChange> nameChanges;
 	private ArrayList<HistoryItem> historyEvents;
+	private Date[] priorityChange;
 	private Date dateCreated;
 	
 	public static final int DEFAULT_STATUS = 2;//Default status (2) means Current
@@ -132,7 +133,10 @@ public class Task implements Serializable{
 		historyEvents.add(newComment);
 	}
 	
-	
+	public Date[] getDates()
+	{
+		return priorityChange;
+	}
 	
 	public String getName()
 	{
