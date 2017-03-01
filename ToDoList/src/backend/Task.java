@@ -112,6 +112,12 @@ public class Task implements Serializable{
 		return comments;//NEED TO ADD addComment method
 	}
 	
+	/** @return List of history items */
+	public ArrayList<HistoryItem> getHistoryItems()
+	{
+		return historyEvents;
+	}
+	
 	/** @return priorityChange Events */
 	public ArrayList<PriorityChange> getPriorityChanges()
 	{
