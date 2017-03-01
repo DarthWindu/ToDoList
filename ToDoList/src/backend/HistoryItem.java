@@ -1,5 +1,6 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * 
@@ -10,7 +11,7 @@ import java.util.Date;
  * Represents an event that should be displayed in a task's history
  *
  */
-public abstract class HistoryItem {
+public abstract class HistoryItem implements Serializable{
 	private Date whenDone;
 	private String text;
 	

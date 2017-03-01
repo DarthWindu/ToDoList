@@ -1,5 +1,6 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 
 //DOESNT THIS NEED A DATE FIELD??? - I added one
-public class PriorityChange extends HistoryItem {
+public class PriorityChange extends HistoryItem implements Serializable {
 	Integer oldStatus, newStatus;
 	
 	PriorityChange(int userOldStatus, int userNewStatus)

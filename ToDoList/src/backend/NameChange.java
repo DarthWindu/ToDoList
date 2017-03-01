@@ -1,5 +1,6 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Calendar;
 /**
  * 
@@ -10,7 +11,7 @@ import java.util.Calendar;
  * Represents a name change event
  * No changes, except for possible addition of serialization implementation is expected.
  */
-public class NameChange extends HistoryItem {
+public class NameChange extends HistoryItem implements Serializable{
 	private String oldName, newName;
 	
 	NameChange(String old_Name, String new_Name)

@@ -1,8 +1,9 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ToDoList {
+public class ToDoList implements Serializable{
 	
 	private ArrayList<Task> activeTasks;
 	private ArrayList<Task> completedTasks;

@@ -1,5 +1,6 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Calendar;
  * Represents Comment on a task
  *
  */
-public class Comment extends HistoryItem {
+public class Comment extends HistoryItem implements Serializable {
 	private String comment;
 	
 	Comment(String userComment)
