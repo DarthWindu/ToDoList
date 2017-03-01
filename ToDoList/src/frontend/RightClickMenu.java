@@ -1,9 +1,13 @@
 package frontend;
+import backend.*;
+import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.JPanel;
 
 public class RightClickMenu extends JPanel implements ActionListener{
-
+	JMenu menu;
+	JMenuItem[] menuItems;
+	
+	
 	RightClickMenu() {
 		
 	}
