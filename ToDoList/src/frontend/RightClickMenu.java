@@ -1,4 +1,5 @@
 package frontend;
+import backend.*;
 import java.awt.event.*;
 
 import javax.swing.JPanel;

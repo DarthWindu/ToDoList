@@ -147,6 +147,8 @@ public class Task implements Serializable{
 		return (taskName.equals(task.getName()) && (status.intValue() == task.getStatus()));
 		//Returns true if both tasks' names and status values match
 	}
+	
+	
 
 	//METHODS THAT NEED TO BE DESIGNED/WORKED ON---------------------------------------------------
 	//Joe: we should not need this

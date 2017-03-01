@@ -9,7 +9,7 @@ public class ToDoList implements Serializable{
 	private ArrayList<Task> completedTasks;
 	
 	
-	public ArrayList<Task> getactiveTasks(){
+	public ArrayList<Task> getActiveTasks(){
 		return activeTasks;
 	}
 	
