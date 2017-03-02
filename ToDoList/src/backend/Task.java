@@ -32,10 +32,10 @@ public class Task implements Serializable{
 	private static final long serialVersionUID = 2850384200535302052L;
 	private String taskName;
 	private Integer status; //Integer is serializable - we could change to int if primitive types are serializable, but I'm not sure
-	private ArrayList<Comment> comments;//Changed from design - Changed from HistoryItem List to Comment List
+	private ArrayList<Comment> comments = new ArrayList<Comment>();//Changed from design - Changed from HistoryItem List to Comment List
 	private ArrayList<PriorityChange> priorityChanges;
 	private ArrayList<NameChange> nameChanges;
-	private ArrayList<HistoryItem> historyEvents;
+	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
 	private Date[] priorityChange;
 	private Date dateCreated;
 	
