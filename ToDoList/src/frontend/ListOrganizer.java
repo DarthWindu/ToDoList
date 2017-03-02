@@ -1,3 +1,5 @@
+package frontend;
+
 import javafx.application.Application;
 import javafx.collections.*;
 import javafx.geometry.*;
