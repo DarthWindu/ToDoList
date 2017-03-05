@@ -12,7 +12,7 @@ public class EditActionItem extends JPanel implements ActionListener{
 	JButton historyButton;
 	JButton print;
 
-	EditActionItem() {
+	EditActionItem(Task task) {
 		radioButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 
