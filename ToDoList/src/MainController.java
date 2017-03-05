@@ -4,14 +4,31 @@
 
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+
+import backend.Task;
+import backend.ToDoList;
+
+import frontend.TaskCell;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 public class MainController {
 
@@ -55,7 +72,7 @@ public class MainController {
     private MenuItem menuAbout; // Value injected by FXMLLoader
 
     @FXML // fx:id="myCustomListView"
-    private JFXListView<?> myCustomListView; // Value injected by FXMLLoader
+    private JFXListView<String> myCustomListView; // Value injected by FXMLLoader
 
     @FXML // fx:id="myTextField"
     private JFXTextField myTextField; // Value injected by FXMLLoader
@@ -77,6 +94,28 @@ public class MainController {
         assert myTextField != null : "fx:id=\"myTextField\" was not injected: check your FXML file 'test1.fxml'.";
         
         //ALL ACTION HANDLERS GO HERE
-
+        /*ObservableList<String> data = FXCollections.observableArrayList();
+        ToDoList todo = new ToDoList();//Load TodoList (from last session)
+        for (Task task : todo.getActiveTasks()) {
+        	data.add(task.getName());
+        }
+        myCustomListView.setItems(data);*/
+        
+        ObservableList<String> data = FXCollections.observableArrayList(
+                "-black",
+                "-blue",
+                "-red",
+                "-red-2",
+                "-yellow",
+                "s-green",
+                "s-green-2"
+        );
+        myCustomListView.setItems(data);
+        myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        	@Override
+        	public ListCell<String> call(ListView<String> list) {
+        		return new TaskCell();
+        	}
+        });
     }
 }

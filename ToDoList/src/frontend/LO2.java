@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class ListOrganizer extends Application {
+public class LO2 extends Application {
     private static final String PREFIX =
             "http://icons.iconarchive.com/icons/jozef89/origami-birds/72/bird";
 
@@ -47,7 +47,7 @@ public class ListOrganizer extends Application {
     }
 
     public static void main(String[] args) {
-        launch(ListOrganizer.class);
+        launch(LO2.class);
     }
 
     private class BirdCell extends ListCell<String> {
@@ -145,12 +145,13 @@ public class ListOrganizer extends Application {
             if (empty || item == null) {
                 setGraphic(null);
             } else {
-                imageView.setImage(
+                /*imageView.setImage(
                     birdImages.get(
                         getListView().getItems().indexOf(item)
                     )
                 );
-                setGraphic(imageView);
+                setGraphic(imageView);*/
+            	this.setText("" + getListView().getItems().indexOf(item));
             }
         }
     }
