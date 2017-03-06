@@ -8,15 +8,18 @@ import java.awt.event.*;
 
 public class RightClickMenu extends JPanel{
 	JPopupMenu menu;
-	
+	Task tasker;
+	ToDoList lister;
 	RightClickMenu(Task task, ToDoList list) {
+		tasker = task;
+		lister = list;
 		menu = new JPopupMenu();
 		
 		JMenuItem completeItem = new JMenuItem("Set priority to completed");
 		
 		completeItem.addActionListener(new ActionListener(){//might need to use popupmenulisteners?
 			public void actionPerformed(ActionEvent arg0) {
-				task.setStatus(Task.COMPLETED);
+				tasker.setStatus(Task.COMPLETED);
 				
 				menu.setVisible(false);
 			}
@@ -26,7 +29,7 @@ public class RightClickMenu extends JPanel{
 		
 		deleteItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				list.delete(task);
+				lister.delete(tasker);
 				
 				menu.setVisible(false);
 			}
@@ -36,7 +39,7 @@ public class RightClickMenu extends JPanel{
 		
 		editItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				new EditActionItem(task);
+				new EditActionItem(tasker);
 				
 				menu.setVisible(false);
 			}
