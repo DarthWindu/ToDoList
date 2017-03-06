@@ -28,7 +28,7 @@ public class RightClickMenu extends JPanel{
 		
 		deleteItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				list.delete(task);
+				MainMenu.toDoList.delete(task);
 				System.out.println("delete");
 				menu.setVisible(false);
 			}
