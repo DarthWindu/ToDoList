@@ -1,8 +1,12 @@
 package frontend;
 import backend.*;
+
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
 import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 
 import javax.swing.*;
 
@@ -18,6 +22,9 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 	{
 		
 		ButtonGroup group = new ButtonGroup();
+		
+		this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
@@ -78,5 +85,11 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 		frame.setContentPane(x);
 		frame.setVisible(true);
 		frame.pack();
+	}
+
+	@Override
+	public int print(Graphics arg0, PageFormat arg1, int arg2) throws PrinterException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
