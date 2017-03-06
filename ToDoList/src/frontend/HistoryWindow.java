@@ -13,7 +13,7 @@ import backend.*;
 public class HistoryWindow{
 	Stage frame = new Stage();
 	HistoryWindow(Task task) {
-		ArrayList<HistoryItem> history = task.getHistoryItems();                                                                                                            
+		ArrayList<HistoryItem> history = task.getHistoryItems();
 		for(HistoryItem his : history){
 			Date day = his.getDate();
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy | hh:mm aa");
@@ -25,42 +25,39 @@ public class HistoryWindow{
 				addText = "Changed name from " + name.getOldName() + " to " + name.getNewName();
 			}catch(Exception e){
 			}
+			
 			try{
 				Comment com = (Comment)his;
 				addText = com.getComment();
 			}catch(Exception e){
 			}
+			
 			try{
 				PriorityChange pri = (PriorityChange)his;
 				String priOld = "";
 				String priNew = "";
-				if(pri.getOldStatus() == 0){
-					priOld = "inactive";
-				}else if(pri.getOldStatus() == 1){
-					priOld = "eventual";
-				}else if(pri.getOldStatus() == 2){
-					priOld = "current";
-				}else if(pri.getOldStatus() == 3){
-					priOld = "urgent";
-				}else if(pri.getOldStatus() == 4){
-					priOld = "completed";
+				
+				switch(pri.getOldStatus()) {
+				case 0: priOld = "inactive";break;
+				case 1: priOld = "eventual";break;
+				case 2: priOld = "current";break;
+				case 3: priOld = "urgent";break;
+				case 4: priOld = "completed";break; 
 				}
 				
-				if(pri.getNewStatus() == 0){
-					priNew = "inactive";
-				}else if(pri.getNewStatus() == 1){
-					priNew = "eventual";
-				}else if(pri.getNewStatus() == 2){
-					priNew = "current";
-				}else if(pri.getNewStatus() == 3){
-					priNew = "urgent";
-				}else if(pri.getNewStatus() == 4){
-					priNew = "completed";
+				switch(pri.getNewStatus()) {
+				case 0: priNew = "inactive";break;
+				case 1: priNew = "eventual";break;
+				case 2: priNew = "current";break;
+				case 3: priNew = "urgent";break;
+				case 4: priNew = "completed";break;
 				}
 				
 				addText = "Changed priority from" + priOld + " to " + priNew;
+				
 			}catch(Exception e){
 			}
+			
 			text = text + "\n" + addText;
 		}
 	}

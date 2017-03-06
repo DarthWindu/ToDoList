@@ -14,6 +14,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
 public class TaskCell extends ListCell<String>{
+	private int indexToDelete = -1;
 	public TaskCell() {
         setOnDragDetected(event -> {
             if (getItem() == null) {
@@ -22,6 +23,7 @@ public class TaskCell extends ListCell<String>{
             }
 
             ObservableList<String> items = this.getListView().getItems();
+            indexToDelete = items.indexOf(this);
 
             Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
