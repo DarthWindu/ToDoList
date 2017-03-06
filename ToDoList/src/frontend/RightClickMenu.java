@@ -2,7 +2,6 @@ package frontend;
 import backend.*;
 
 import javax.swing.*;
-
 import java.awt.MouseInfo;
 import java.awt.event.*;
 
@@ -19,8 +18,8 @@ public class RightClickMenu extends JPanel{
 		
 		completeItem.addActionListener(new ActionListener(){//might need to use popupmenulisteners?
 			public void actionPerformed(ActionEvent arg0) {
+				task.setStatus(Task.COMPLETED);
 				tasker.setStatus(Task.COMPLETED);
-				
 				menu.setVisible(false);
 			}
 		});
