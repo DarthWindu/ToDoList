@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import frontend.MainMenu;
 
 /**
  * @author Pujit M.
@@ -93,7 +94,12 @@ public class Task implements Serializable{
 		priorityChanges.add(change);
 		historyEvents.add(change);
 		status = new Integer(newStatus);
+		
+		if(newStatus == COMPLETED)
+			MainMenu.getList().switchTaskToCompleted(this);
+		
 	}
+	
 	/** @param newName for task
 	 * Adds a NameChange Event and a HistoryItem event
 	 * Also changes the task Name
