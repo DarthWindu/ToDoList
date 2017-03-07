@@ -1,31 +1,40 @@
 package frontend;
+
 import backend.*;
 
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
 import javax.swing.*;
 
-public class EditActionItem extends JPanel implements ActionListener, Printable{
+public class EditActionItem extends JPanel implements ActionListener, Printable {
 	JRadioButton radioButton, radioButton2, radioButton3, radioButton4;
-	JCheckBox checkCurrent,checkUrgent,checkEventual;
+	JCheckBox checkCurrent, checkUrgent, checkEventual;
 	JButton commentButton;
 	JButton historyButton;
 	JButton print;
-	Task paramTask;
+	JTextField name;
 
 	EditActionItem(Task task)
 	{
 
 		ButtonGroup group = new ButtonGroup();
 
-		this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+	//	this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
+	//	this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+
+		this.setLayout(new GridLayout(0,2));
+		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		
+		name = new JTextField(task.getName());
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
 		radioButton3 = new JRadioButton("Eventual");
@@ -37,11 +46,22 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 		historyButton = new JButton("History");
 		print = new JButton("Print");
 
+		name.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e){
+				name.setText("");
+			}
+			
+			public void focusLost(FocusEvent e)
+			{
+				task.changeName(name.getText());
+			}
+		});
+		
 		historyButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-					
+				HistoryWindow hist = new HistoryWindow(task);
 			}
 		});
 
@@ -49,7 +69,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 		{
 			public void actionPerformed(ActionEvent arg1)
 			{
-
+				CommentWindow cw = new CommentWindow();
 			}
 		});
 
@@ -72,6 +92,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 		group.add(radioButton3);
 		group.add(radioButton4);
 
+		this.add(name);
 		this.add(radioButton);
 		this.add(radioButton2);
 		this.add(radioButton3);
@@ -86,17 +107,17 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 
 	}
 
-	//Note that over here, would you be changing the task and then sending it back?
-	//Where would the task be going from here if you were to change something?
-	public void actionPerformed(ActionEvent e)
-	{
+	// Note that over here, would you be changing the task and then sending it
+	// back?
+	// Where would the task be going from here if you were to change something?
+	public void actionPerformed(ActionEvent e) {
 
 	}
 
-	public static void main(String [] args)
-	{
+	public static void main(String[] args) {
 		JFrame frame = new JFrame("This");
 		Task e = new Task("NameOfTask");
+		
 		EditActionItem x = new EditActionItem(e);
 		frame.setContentPane(x);
 		frame.setVisible(true);

@@ -53,16 +53,19 @@ public class Task implements Serializable{
 	{
 		//Date date = Calendar.getInstance().getTime();
 		this(name, Calendar.getInstance().getTime());
+		this.initVariables();
 		//NOTE that Calendar.getInstance().getTime() might not yield desired result (mm.dd.yy hh:mm am/pm)
 	}
 	
 	Task(String name, Date date) 
 	{
 		this(name, date, DEFAULT_STATUS); // !! - might be an issue calling a static variable in constructor
+		this.initVariables();
 	}
 	
 	Task(String name, Date date, int initPriority) 
 	{
+		this.initVariables();
 		taskName = name;
 		dateCreated = date;
 		status = new Integer(initPriority);
