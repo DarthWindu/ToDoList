@@ -78,7 +78,7 @@ public class MainController {
     private JFXTextField myTextField; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    public void initialize() {
         assert myScrollPane != null : "fx:id=\"myScrollPane\" was not injected: check your FXML file 'test1.fxml'.";
         assert myAnchorPane != null : "fx:id=\"myAnchorPane\" was not injected: check your FXML file 'test1.fxml'.";
         assert mainMenuBar != null : "fx:id=\"mainMenuBar\" was not injected: check your FXML file 'test1.fxml'.";
@@ -101,14 +101,12 @@ public class MainController {
         }
         myCustomListView.setItems(data);*/
         
+        
         ObservableList<String> data = FXCollections.observableArrayList(
-                "-black",
-                "-blue",
-                "-red",
-                "-red-2",
-                "-yellow",
-                "s-green",
-                "s-green-2"
+                "hi",
+                "bye",
+                "damn",
+                "task"
         );
         myCustomListView.setItems(data);
         myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -117,5 +115,6 @@ public class MainController {
         		return new TaskCell();
         	}
         });
+        
     }
 }
