@@ -35,8 +35,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		
 		
-		
-		
 		addTask = new JTextField();
 		addTask.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
