@@ -42,6 +42,8 @@ public class RightClickMenu extends JPanel{
 			}
 		});
 		
+		
+		
 		menu.add(completeItem);
 		
 		menu.add(deleteItem);
