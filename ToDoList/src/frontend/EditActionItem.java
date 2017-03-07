@@ -117,6 +117,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("This");
 		Task e = new Task("NameOfTask");
+		
 		EditActionItem x = new EditActionItem(e);
 		frame.setContentPane(x);
 		frame.setVisible(true);
