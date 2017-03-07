@@ -82,8 +82,15 @@ public class TaskCell extends ListCell<String>{
 				if (draggedIndex > -1) {
 					String cellToMove = items.remove(draggedIndex);
 					int indexOfThis = items.indexOf(this.getText());
+					
+					if (indexOfThis == items.size() - 1)
+					{
+						items.add(cellToMove);
+					} else {
+						items.add(indexOfThis, cellToMove);
+					}
 
-					items.add(indexOfThis, cellToMove);
+					
 					//this.setText(db.getString());
 
 					success = true;
