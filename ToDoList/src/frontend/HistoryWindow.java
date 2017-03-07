@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import javafx.util.*;
 import backend.*;
 
+//Kudos to whoever did this one, my only advice would be to shorten it down because all of 
+//the code is in the constructor
 public class HistoryWindow{
 	Stage frame = new Stage();
 	HistoryWindow(Task task) {
@@ -25,18 +27,18 @@ public class HistoryWindow{
 				addText = "Changed name from " + name.getOldName() + " to " + name.getNewName();
 			}catch(Exception e){
 			}
-			
+
 			try{
 				Comment com = (Comment)his;
 				addText = com.getComment();
 			}catch(Exception e){
 			}
-			
+
 			try{
 				PriorityChange pri = (PriorityChange)his;
 				String priOld = "";
 				String priNew = "";
-				
+
 				switch(pri.getOldStatus()) {
 				case 0: priOld = "inactive";break;
 				case 1: priOld = "eventual";break;
@@ -44,7 +46,7 @@ public class HistoryWindow{
 				case 3: priOld = "urgent";break;
 				case 4: priOld = "completed";break; 
 				}
-				
+
 				switch(pri.getNewStatus()) {
 				case 0: priNew = "inactive";break;
 				case 1: priNew = "eventual";break;
@@ -52,12 +54,12 @@ public class HistoryWindow{
 				case 3: priNew = "urgent";break;
 				case 4: priNew = "completed";break;
 				}
-				
+
 				addText = "Changed priority from" + priOld + " to " + priNew;
-				
+
 			}catch(Exception e){
 			}
-			
+
 			text = text + "\n" + addText;
 		}
 	}
