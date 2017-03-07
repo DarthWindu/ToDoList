@@ -34,7 +34,7 @@ public class Main extends Application{
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+		//Serialization
 		ToDoList tdl;
 		try {
 			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
