@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class RightClickMenu extends JPanel{
-	 
-	
 	RightClickMenu(Task task) {
 		System.out.println("yyyyyyy");
 		
@@ -19,7 +17,7 @@ public class RightClickMenu extends JPanel{
 		completeItem.addActionListener(new ActionListener(){//might need to use popupmenulisteners?
 			public void actionPerformed(ActionEvent arg0) {
 				task.setStatus(Task.COMPLETED);
-				System.out.println("complete");
+				
 				menu.setVisible(false);
 			}
 		});
@@ -29,7 +27,7 @@ public class RightClickMenu extends JPanel{
 		deleteItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				MainMenu.getList().delete(task);
-				System.out.println("delete");
+				
 				menu.setVisible(false);
 			}
 		});
@@ -39,7 +37,7 @@ public class RightClickMenu extends JPanel{
 		editItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				new EditActionItem(task);
-				System.out.println("edit");
+				
 				menu.setVisible(false);
 			}
 		});
