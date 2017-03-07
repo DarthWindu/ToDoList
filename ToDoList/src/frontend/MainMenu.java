@@ -52,6 +52,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		bar.add(new JMenu("file"));// make it fit and to the left
 		
+		bar.setPreferredSize(new Dimension(50,50));
+		
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
 				  //make sure that all save operations are done
