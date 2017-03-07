@@ -26,7 +26,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	final static int WIDTH = 1000;
 	final static int HEIGHT = 800;
 	
-	MainMenu(ToDoList list) {
+	public MainMenu(ToDoList list) {
 		
 		if(list == null)
 			toDoList = new ToDoList();
