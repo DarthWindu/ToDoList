@@ -20,13 +20,11 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	JButton commentButton;
 	JButton historyButton;
 	JButton print;
-	Task paramTask;
 	JTextField name;
 
 	EditActionItem(Task task)
 	{
 
-		paramTask = task;
 		ButtonGroup group = new ButtonGroup();
 
 	//	this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
@@ -36,7 +34,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		this.setLayout(new GridLayout(0,2));
 		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 		
-		name = new JTextField(paramTask.getName());
+		name = new JTextField(task.getName());
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
 		radioButton3 = new JRadioButton("Eventual");
@@ -55,7 +53,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			
 			public void focusLost(FocusEvent e)
 			{
-				//nothing
+				task.changeName(name.getText());
 			}
 		});
 		
@@ -63,7 +61,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-					
+				HistoryWindow hist = new HistoryWindow(task);
 			}
 		});
 
@@ -71,7 +69,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		{
 			public void actionPerformed(ActionEvent arg1)
 			{
-
+				CommentWindow cw = new CommentWindow();
 			}
 		});
 
