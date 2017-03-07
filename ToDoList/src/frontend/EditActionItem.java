@@ -20,12 +20,12 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 
 	EditActionItem(Task task)
 	{
-		
+
 		ButtonGroup group = new ButtonGroup();
-		
+
 		this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		
+
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
 		radioButton3 = new JRadioButton("Eventual");
@@ -36,21 +36,37 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 		commentButton = new JButton("Comment");
 		historyButton = new JButton("History");
 		print = new JButton("Print");
-		
-		print.addActionListener(new ActionListener ()
+
+		historyButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+					
+			}
+		});
+
+		commentButton.addActionListener(new ActionListener ()
+		{
+			public void actionPerformed(ActionEvent arg1)
+			{
+
+			}
+		});
+
+		print.addActionListener(new ActionListener ()
+		{
+			public void actionPerformed(ActionEvent arg2)
+			{
 				Printer pr = new Printer();
 			}
-			
+
 		});
-		
-		
+
+
 		checkCurrent.addActionListener(this);
 		checkUrgent.addActionListener(this);
 		checkEventual.addActionListener(this);
-		
+
 		group.add(radioButton);
 		group.add(radioButton2);
 		group.add(radioButton3);
@@ -66,15 +82,15 @@ public class EditActionItem extends JPanel implements ActionListener, Printable{
 		this.add(commentButton);
 		this.add(historyButton);
 		this.add(print);
-		
-		
+
+
 	}
 
 	//Note that over here, would you be changing the task and then sending it back?
 	//Where would the task be going from here if you were to change something?
 	public void actionPerformed(ActionEvent e)
 	{
-		
+
 	}
 
 	public static void main(String [] args)
