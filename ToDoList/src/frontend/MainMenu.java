@@ -1,6 +1,9 @@
 package frontend;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -56,7 +59,18 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
-				  //make sure that all save operations are done
+				  try
+			        {
+						FileOutputStream fileOut = new FileOutputStream("src/" + "todolist" + ".java");
+						ObjectOutputStream out = new ObjectOutputStream(fileOut);
+						out.writeObject(toDoList);
+						out.close();
+						fileOut.close();
+			        }catch(IOException i)
+			        {
+			            i.printStackTrace();
+			        }
+
 			  }
 		});
 		
