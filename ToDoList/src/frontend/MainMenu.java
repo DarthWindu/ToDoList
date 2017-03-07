@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -19,11 +20,12 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	JFrame frame;
 	JPanel panel;
 	JScrollPane scrollPane;
-	JMenuBar bar;
+	JMenuBar bar, fileBar;
 	ArrayList<Task> activeTasks;
 	private static ToDoList toDoList;
 	final static int WIDTH = 1000;
 	final static int HEIGHT = 800;
+	
 	MainMenu(ToDoList list) {
 		
 		if(list == null)
@@ -42,14 +44,15 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			}
 		});
 		
-		frame = new JFrame("babushka");
+		frame = new JFrame("To Do List");
 		
 		
 		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 		
 		
+		bar = new JMenuBar();
 		
-		
+		bar.add(new JMenu("file"));// make it fit and to the left
 		
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
@@ -73,7 +76,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		scrollPane.setPreferredSize(new Dimension(WIDTH,HEIGHT*2));
 		
-		frame.add(scrollPane);
+		frame.add(bar);
+		frame.add(scrollPane);// I dont think we need a horizontal scroll bar
 		frame.add(addTask);
 		
 		frame.pack();
