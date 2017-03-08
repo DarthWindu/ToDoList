@@ -65,10 +65,6 @@ public class HistoryWindow{
 			}catch(Exception e){}
 			
 			
-				
-			
-				
-			
 			text = text + "\n" + addText;
 		}
 		
