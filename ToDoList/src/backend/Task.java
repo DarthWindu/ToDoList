@@ -94,6 +94,7 @@ public class Task implements Serializable{
 	public void setStatus(int newStatus) 
 	{
 		PriorityChange change = new PriorityChange(status, newStatus);
+		change.setText("Priority Change");
 		priorityChanges.add(change);
 		historyEvents.add(change);
 		status = new Integer(newStatus);
@@ -110,6 +111,7 @@ public class Task implements Serializable{
 	public void changeName(String newName)
 	{
 		NameChange change = new NameChange(taskName, newName);
+		change.setText("Name Change");
 		nameChanges.add(change);
 		historyEvents.add(change);
 		taskName = newName;
@@ -143,15 +145,9 @@ public class Task implements Serializable{
 	public void addComment(String comment)
 	{
 		Comment newComment = (new Comment(comment));
+		newComment.setText("Comment");
 		comments.add(newComment);
 		historyEvents.add(newComment);
-	}
-	
-	public boolean deleteComment(Comment comment) {
-		//BUGS LIKELY HERE
-		comments.remove(comment);
-		historyEvents.remove(comment);
-		return true;
 	}
 	
 	public Date[] getDates()
