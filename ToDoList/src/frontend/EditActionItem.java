@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
@@ -52,6 +53,16 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			}
 			
 			public void focusLost(FocusEvent e)
+			{
+				task.changeName(name.getText());
+			}
+		});
+		
+		name.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "enter");
+
+
+		name.getActionMap().put("enter", new AbstractAction(){
+			public void actionPerformed(ActionEvent arg3)
 			{
 				task.changeName(name.getText());
 			}
