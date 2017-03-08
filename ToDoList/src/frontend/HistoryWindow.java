@@ -19,12 +19,12 @@ public class HistoryWindow{
 	HistoryWindow(Task task) {
 		ArrayList<HistoryItem> history = task.getHistoryItems();
 		
-		System.out.println("a");
+		String text = "";
 		
 		for(HistoryItem his : history){
 			Date day = his.getDate();
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy | hh:mm aa");
-			String text = sdf.format(day);
+			text = sdf.format(day);
 			
 			text = text + " | " + his.getText();
 			
@@ -61,25 +61,28 @@ public class HistoryWindow{
 					case 4: priNew = "completed";break;
 				}
 
-			addText = "Changed priority from" + priOld + " to " + priNew;
+				addText = "Changed priority from" + priOld + " to " + priNew;
 			}catch(Exception e){}
 			
 			
 				
 			
 				
-			frame = new JFrame();
-			
-			frame.setSize(500,500);
-			
-			scrollPane = new JScrollPane();
-				
-				
-			frame.pack();
-			frame.setVisible(true);
 			
 			text = text + "\n" + addText;
 		}
+		
+		frame = new JFrame();
+			
+		frame.setSize(500,500);
+			
+		scrollPane = new JScrollPane();
+				
+		scrollPane.add(new JLabel(text));
+				
+		frame.pack();
+		frame.setVisible(true);
+			
 	}
 
 }
