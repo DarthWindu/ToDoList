@@ -147,6 +147,13 @@ public class Task implements Serializable{
 		historyEvents.add(newComment);
 	}
 	
+	public boolean deleteComment(Comment comment) {
+		//BUGS LIKELY HERE
+		comments.remove(comment);
+		historyEvents.remove(comment);
+		return true;
+	}
+	
 	public Date[] getDates()
 	{
 		return priorityChange;

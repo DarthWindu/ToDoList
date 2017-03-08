@@ -35,7 +35,7 @@ public class Main extends Application{
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 		//Serialization
-		ToDoList tdl;
+		/*ToDoList tdl;
 		try {
 			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -51,6 +51,6 @@ public class Main extends Application{
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
-
+*/
 	}
 }
