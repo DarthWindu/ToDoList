@@ -26,10 +26,11 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	JButton print;
 	JTextField name;
 	Task tasker;
+	ButtonGroup group;
 	EditActionItem(Task task)
 	{
 		tasker = task;
-		ButtonGroup group = new ButtonGroup();
+		 group = new ButtonGroup();
 
 		//	this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
 		//	this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -169,7 +170,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		frame.pack();
 	}
 
-	public int print( Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
+	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
 		return pageIndex;
 
 	}
