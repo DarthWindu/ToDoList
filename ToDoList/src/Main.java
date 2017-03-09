@@ -50,7 +50,7 @@ public class Main extends Application{
 			e1.printStackTrace();
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
-		}
-*/
+		}*/
+
 	}
 }

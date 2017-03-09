@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -15,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 import backend.Task;
 import backend.ToDoList;
@@ -25,9 +23,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	JFrame frame;
 	JPanel panel;
 	JScrollPane scrollPane;
-	JMenuBar bar;
-	JMenu fileMenu;
-	JMenuItem open;
+	JMenuBar bar, fileBar;
 	ArrayList<Task> activeTasks;
 	private static ToDoList toDoList;
 	final static int WIDTH = 1000;
@@ -45,31 +41,21 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		addTask = new JTextField();
 		addTask.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				toDoList.add(new Task(addTask.getText()));
+
 			}
 		});
 		
 		frame = new JFrame("To Do List");
+		
 		
 		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 		
 		
 		bar = new JMenuBar();
 		
-		fileMenu = new JMenu("file");
-		
-		open = new JMenuItem("open");
-		
-		
-		fileMenu.setSize(new Dimension(50,50));
-		
-		
-		fileMenu.add(open);
-		
-		bar.add(fileMenu);// make it fit and to the left
+		bar.add(new JMenu("file"));// make it fit and to the left
 		
 		bar.setPreferredSize(new Dimension(50,50));
-		
 		
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
@@ -132,7 +118,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		String msg;
 		int notches = e.getWheelRotation();
-		
 		
 	}
 }
