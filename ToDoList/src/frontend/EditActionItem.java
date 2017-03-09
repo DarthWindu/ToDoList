@@ -25,10 +25,10 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	JButton historyButton;
 	JButton print;
 	JTextField name;
-
+	Task tasker;
 	EditActionItem(Task task)
 	{
-
+		tasker = task;
 		ButtonGroup group = new ButtonGroup();
 
 		//	this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
@@ -38,7 +38,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		this.setLayout(new GridLayout(0,2));
 		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
-		name = new JTextField(task.getName());
+		name = new JTextField(tasker.getName());
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
 		radioButton3 = new JRadioButton("Eventual");
@@ -49,8 +49,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		commentButton = new JButton("Comment");
 		historyButton = new JButton("History");
 		print = new JButton("Print");
-		BufferedImage im = createImage(this);
-		
+		final BufferedImage im = createImage(this);
 
 		name.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent e){
@@ -59,7 +58,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 			public void focusLost(FocusEvent e)
 			{
-				task.changeName(name.getText());
+				tasker.changeName(name.getText());
 			}
 		});
 
@@ -67,7 +66,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		name.getActionMap().put("enter", new AbstractAction(){
 			public void actionPerformed(ActionEvent arg3)
 			{
-				task.changeName(name.getText());
+				tasker.changeName(name.getText());
 			}
 		});
 
@@ -75,7 +74,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				HistoryWindow hist = new HistoryWindow(task);
+				HistoryWindow hist = new HistoryWindow(tasker);
 			}
 		});
 
@@ -83,7 +82,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		{
 			public void actionPerformed(ActionEvent arg1)
 			{
-				CommentWindow cw = new CommentWindow(task);
+				CommentWindow cw = new CommentWindow(tasker);
 			}
 		});
 
@@ -93,7 +92,6 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				PrinterJob job = PrinterJob.getPrinterJob();
 				job.setPrintable( new Printable()
 				{
-					@Override
 					public int print(Graphics pg, PageFormat pf, int pageNum)
 					{
 						if(pageNum != 0)
