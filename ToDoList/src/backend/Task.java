@@ -170,7 +170,12 @@ public class Task implements Serializable{
 		//Returns true if both tasks' names and status values match
 	}
 	
-	
+	public void deleteComment(Comment comment) {
+		for(Comment com: comments) {
+			if(com.isEqual(comment))
+				comments.remove(com);
+		}
+	}
 
 	//METHODS THAT NEED TO BE DESIGNED/WORKED ON---------------------------------------------------
 	//Joe: we should not need this
