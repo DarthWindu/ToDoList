@@ -83,7 +83,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		{
 			public void actionPerformed(ActionEvent arg1)
 			{
-				CommentWindow cw = new CommentWindow();
+				CommentWindow cw = new CommentWindow(task);
 			}
 		});
 
