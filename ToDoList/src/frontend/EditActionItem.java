@@ -126,7 +126,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 
 		checkCurrent.addActionListener(this);
-		checkUrgent.addActionListener(this);
+		checkUrgent.addActionListener(this);//these need 3 textfields each
 		checkEventual.addActionListener(this);
 
 		group.add(radioButton);
@@ -136,12 +136,12 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		this.add(name);
 		this.add(radioButton);
-		this.add(radioButton2);
-		this.add(radioButton3);
-		this.add(radioButton4);
 		this.add(checkCurrent);
+		this.add(radioButton2);
 		this.add(checkUrgent);
+		this.add(radioButton3);
 		this.add(checkEventual);
+		this.add(radioButton4);
 		this.add(commentButton);
 		this.add(historyButton);
 		this.add(print);
