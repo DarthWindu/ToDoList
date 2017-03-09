@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class Comment extends HistoryItem implements Serializable {
 	private String comment;
 	
-	Comment(String userComment)
+	public Comment(String userComment)
 	{
 		comment = userComment;
 		setDate(Calendar.getInstance().getTime());//Is this the correct way to set the date?
@@ -36,5 +36,11 @@ public class Comment extends HistoryItem implements Serializable {
 	public void setComment(String newComment)
 	{
 		comment = newComment;
+	}
+	
+	public boolean isEqual(Comment comment) {
+		if(comment.getComment().equals(this.getComment()))
+			return true;
+		return false;
 	}
 }
