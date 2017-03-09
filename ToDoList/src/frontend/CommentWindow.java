@@ -34,7 +34,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(500,200);
 		mainFrame.setLayout(new GridLayout(0,3));      
-
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
@@ -69,14 +69,14 @@ public class CommentWindow {
 		controlPanel.add(userText);
 		controlPanel.add(commit);
 		controlPanel.add(delete);
-		mainFrame.setVisible(true);  
+		mainFrame.setVisible(true);
 	}
 	
 	private void prepareGUI_ONLYtask(){
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(500,200);
 		mainFrame.setLayout(new GridLayout(0,3));      
-
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
