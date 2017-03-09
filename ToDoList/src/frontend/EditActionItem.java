@@ -67,6 +67,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void actionPerformed(ActionEvent arg3)
 			{
 				tasker.changeName(name.getText());
+				
 			}
 		});
 
@@ -100,10 +101,6 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 						Graphics2D g2 = (Graphics2D)pg;
 						g2.translate(pf.getImageableX(), pf.getImageableY());
 						pg.drawImage(im, 0, 0, im.getWidth(), im.getHeight(), null);
-						/* I've tried the following commented codes but they don't work */
-						//MainAppPanel.this.printAll(g2);
-						//MainAppPanel.this.print(g2);
-						//MainAppPanel.this.print(g2);
 						return Printable.PAGE_EXISTS;
 					}
 				});
