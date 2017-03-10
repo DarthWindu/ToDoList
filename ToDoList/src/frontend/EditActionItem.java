@@ -87,7 +87,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CommentWindow cw = new CommentWindow(tasker);
 			}
 		});
-
+ //This is a new version, even though github says its not
 		print.addActionListener(new ActionListener ()
 		{
 			public void actionPerformed( ActionEvent ae ) {
