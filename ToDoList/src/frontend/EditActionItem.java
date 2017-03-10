@@ -108,6 +108,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 				boolean didYouPrint = job.printDialog();
 				if(didYouPrint) {
+					
 					try {
 						job.print();
 					} catch( PrinterException exc) {
@@ -145,6 +146,8 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 	}
 
+	//What happened to the new version?
+	
 	// Note that over here, would you be changing the task and then sending it
 	// back?
 	// Where would the task be going from here if you were to change something?
