@@ -88,6 +88,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			}
 		});
  //This is a new version, even though github says its not
+		//Even another one
 		print.addActionListener(new ActionListener ()
 		{
 			public void actionPerformed( ActionEvent ae ) {
