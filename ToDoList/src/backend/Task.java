@@ -94,7 +94,6 @@ public class Task implements Serializable{
 	public void setStatus(int newStatus) 
 	{
 		PriorityChange change = new PriorityChange(status, newStatus);
-		change.setText("Priority Changed");
 		priorityChanges.add(change);
 		historyEvents.add(change);
 		status = new Integer(newStatus);
@@ -111,7 +110,6 @@ public class Task implements Serializable{
 	public void changeName(String newName)
 	{
 		NameChange change = new NameChange(taskName, newName);
-		change.setText("Name Changed");
 		nameChanges.add(change);
 		historyEvents.add(change);
 		taskName = newName;
@@ -145,7 +143,6 @@ public class Task implements Serializable{
 	public void addComment(String comment)
 	{
 		Comment newComment = (new Comment(comment));
-		newComment.setText("New Comment Added");
 		comments.add(newComment);
 		historyEvents.add(newComment);
 	}
@@ -166,7 +163,12 @@ public class Task implements Serializable{
 		//Returns true if both tasks' names and status values match
 	}
 	
-	
+	public void deleteComment(Comment comment) {
+		for(Comment com: comments) {
+			if(com.isEqual(comment))
+				comments.remove(com);
+		}
+	}
 
 	//METHODS THAT NEED TO BE DESIGNED/WORKED ON---------------------------------------------------
 	//Joe: we should not need this
@@ -183,7 +185,7 @@ public class Task implements Serializable{
 				mostRecent = mostRecentPPC.getDateOfChange();
 			}
 		}
-	
+		
 		Date currentDate = Calendar.getInstance().getTime();
 		if (currentDate.after(mostRecent)) 
 		{

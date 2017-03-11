@@ -6,8 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class RightClickMenu{
+public class RightClickMenu extends JPanel{
 	RightClickMenu(Task task) {
+		System.out.println("yyyyyyy");
+		
 		JPopupMenu menu = new JPopupMenu();
 		
 		JMenuItem completeItem = new JMenuItem("Set priority to completed");
@@ -40,13 +42,14 @@ public class RightClickMenu{
 			}
 		});
 		
-		
-		
 		menu.add(completeItem);
 		
 		menu.add(deleteItem);
 		
 		menu.add(editItem);
+		
+		System.out.println((float) MouseInfo.getPointerInfo().getLocation().getX());
+		System.out.println((float) MouseInfo.getPointerInfo().getLocation().getY());
 		
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
 		

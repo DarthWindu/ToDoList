@@ -4,7 +4,6 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.*;
 
 import backend.*;
@@ -13,15 +12,15 @@ import backend.*;
 //the code is in the constructor
 public class HistoryWindow{
 	JFrame frame;
-	JPanel panel;
+	JPanel panel,holder;
 	JScrollPane scrollPane;
-	JLabel label;
+	JLabel changeType,changeText;
 
 	HistoryWindow(Task task) {
 		ArrayList<HistoryItem> history = task.getHistoryItems();
 		String text = "";
 
-		frame = new JFrame();
+		frame = new JFrame("History Window");
 
 		frame.setPreferredSize(new Dimension(500,500));
 		
@@ -31,6 +30,8 @@ public class HistoryWindow{
 		
 		panel.setPreferredSize(new Dimension(500,500));
 
+		panel.setLayout(new GridLayout(0,1,0,20));
+		
 		scrollPane = new JScrollPane(panel);
 		
 		frame.add(scrollPane);
@@ -41,6 +42,9 @@ public class HistoryWindow{
 		
 		frame.pack();
 		frame.setVisible(true);
+		
+		panel.revalidate();
+		
 		for(HistoryItem his : history){
 			Date day = his.getDate();
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy | hh:mm aa");
@@ -85,29 +89,16 @@ public class HistoryWindow{
 			}catch(Exception e){}
 
 
-			text = text + "\n" + addText;
-			label = new JLabel(text);
-			label.setBackground(Color.RED);
-			panel.add(label);
+			//text = text + " \n" + addText;
+			holder = new JPanel();
+			holder.setLayout(new GridLayout(0,1));
+			holder.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			changeType = new JLabel(text);
+			changeText = new JLabel(addText);
+			holder.add(changeType);
+			holder.add(changeText);
+			panel.add(holder);
 		}
-
-//		frame = new JFrame();
-//
-//		frame.setPreferredSize(new Dimension(500,500));
-//		
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		
-//		panel = new JPanel();
-//		
-//		panel.setPreferredSize(new Dimension(500,500));
-//
-//		scrollPane = new JScrollPane(panel);
-//
-//		scrollPane.add(new JLabel(text));
-//
-//		frame.pack();
-//		frame.setVisible(true);
-
 	}
 
 }
