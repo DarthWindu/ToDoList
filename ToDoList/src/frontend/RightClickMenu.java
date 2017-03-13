@@ -7,12 +7,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class RightClickMenu extends JPanel{
-	RightClickMenu(Task task) {
-		System.out.println("yyyyyyy");
-		
-		JPopupMenu menu = new JPopupMenu();
+	private Task task;
+	JPopupMenu menu;
+	
+	RightClickMenu(Task passedTask) {
+		menu = new JPopupMenu();
 		
 		JMenuItem completeItem = new JMenuItem("Set priority to completed");
+		
+		task = passedTask;
 		
 		completeItem.addActionListener(new ActionListener(){//might need to use popupmenulisteners?
 			public void actionPerformed(ActionEvent arg0) {
