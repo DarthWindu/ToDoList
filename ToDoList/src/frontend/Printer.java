@@ -40,9 +40,7 @@ class Printer extends JPanel implements Printable  {
 					} catch( PrinterException exc) {
 						System.out.println( exc );
 					}
-				} else {
-					System.out.println("You cancelled the print");
-				} 
+				}
 			}
 		});
 	}
