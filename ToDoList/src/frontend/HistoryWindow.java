@@ -21,25 +21,18 @@ public class HistoryWindow{
 		String text = "";
 
 		frame = new JFrame("History Window");
-
 		frame.setPreferredSize(new Dimension(500,500));
-		
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 		
 		panel = new JPanel();
-		
 		panel.setPreferredSize(new Dimension(500,500));
-
 		panel.setLayout(new GridLayout(0,1,0,20));
 		
 		scrollPane = new JScrollPane(panel);
-		
-		frame.add(scrollPane);
-		
-		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
-		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
+		frame.add(scrollPane);
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -51,7 +44,6 @@ public class HistoryWindow{
 			text = sdf.format(day);
 
 			text = text + " | " + his.getText();
-
 			String addText = "";
 
 			try{
@@ -88,13 +80,13 @@ public class HistoryWindow{
 				addText = "Changed priority from " + priOld + " to " + priNew;
 			}catch(Exception e){}
 
-
-			//text = text + " \n" + addText;
 			holder = new JPanel();
 			holder.setLayout(new GridLayout(0,1));
 			holder.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			
 			changeType = new JLabel(text);
 			changeText = new JLabel(addText);
+			
 			holder.add(changeType);
 			holder.add(changeText);
 			panel.add(holder);
