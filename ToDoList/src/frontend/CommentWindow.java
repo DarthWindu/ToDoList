@@ -34,7 +34,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(500,200);
 		mainFrame.setLayout(new GridLayout(0,3));      
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
@@ -76,7 +76,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(500,200);
 		mainFrame.setLayout(new GridLayout(0,3));      
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
