@@ -24,7 +24,7 @@ public class HistoryWindow{
 
 		frame.setPreferredSize(new Dimension(500,500));
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		panel = new JPanel();
 		
