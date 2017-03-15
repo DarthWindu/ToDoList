@@ -30,7 +30,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	EditActionItem(Task task)
 	{
 		tasker = task;
-		 group = new ButtonGroup();
+		group = new ButtonGroup();
 
 		//	this.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
 		//	this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -68,7 +68,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void actionPerformed(ActionEvent arg3)
 			{
 				tasker.changeName(name.getText());
-				
+
 			}
 		});
 
@@ -87,7 +87,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CommentWindow cw = new CommentWindow(tasker);
 			}
 		});
- //This is a new version, even though github says its not
+		//This is a new version, even though github says its not
 		//Even another one
 		print.addActionListener(new ActionListener ()
 		{
@@ -109,7 +109,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 				boolean didYouPrint = job.printDialog();
 				if(didYouPrint) {
-					
+
 					try {
 						job.print();
 					} catch( PrinterException exc) {
@@ -117,7 +117,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 					}
 				} else 
 					System.out.println("You cancelled the print");
-				
+
 			}
 
 		});
@@ -148,7 +148,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	}
 
 	//What happened to the new version?
-	
+
 	// Note that over here, would you be changing the task and then sending it
 	// back?
 	// Where would the task be going from here if you were to change something?
@@ -158,12 +158,12 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 	public BufferedImage createImage(EditActionItem panel) {
 		panel.setSize(1280,720);
-	    BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
-	    Graphics2D g = bi.createGraphics();
-	    panel.paint(g);
-	    return bi;
+		BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = bi.createGraphics();
+		panel.paint(g);
+		return bi;
 	}
-	
+
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("This");
 		Task e = new Task("NameOfTask");

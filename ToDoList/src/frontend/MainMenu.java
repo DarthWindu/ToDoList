@@ -75,7 +75,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		});
 		
 		
-		
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(WIDTH,HEIGHT*2));
 		
