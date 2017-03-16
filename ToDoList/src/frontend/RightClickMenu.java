@@ -6,11 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class RightClickMenu extends JPanel{
+public class RightClickMenu{
 	private Task task;
 	JPopupMenu menu;
+	EditActionItem edit;
 	
-	RightClickMenu(Task passedTask) {
+	RightClickMenu(Task passedTask){
 		menu = new JPopupMenu();
 		
 		JMenuItem completeItem = new JMenuItem("Set priority to completed");
@@ -21,7 +22,6 @@ public class RightClickMenu extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				task.setStatus(Task.COMPLETED);
 				
-				menu.setVisible(false);
 			}
 		});
 		
@@ -31,7 +31,6 @@ public class RightClickMenu extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				MainMenu.getList().delete(task);
 				
-				menu.setVisible(false);
 			}
 		});
 		
@@ -39,10 +38,25 @@ public class RightClickMenu extends JPanel{
 		
 		editItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				new EditActionItem(task);
+				System.out.println("a");
 				
+				edit = new EditActionItem(task);
+				
+			}
+		});
+		
+		menu.addMouseListener(new MouseListener(){
+			public void mouseClicked(MouseEvent arg0) {
 				menu.setVisible(false);
 			}
+
+			public void mouseEntered(MouseEvent arg0) {}
+
+			public void mouseExited(MouseEvent arg0) {}
+
+			public void mousePressed(MouseEvent arg0) {}
+
+			public void mouseReleased(MouseEvent arg0) {}
 		});
 		
 		menu.add(completeItem);
@@ -51,8 +65,7 @@ public class RightClickMenu extends JPanel{
 		
 		menu.add(editItem);
 		
-		System.out.println((float) MouseInfo.getPointerInfo().getLocation().getX());
-		System.out.println((float) MouseInfo.getPointerInfo().getLocation().getY());
+		
 		
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
 		
