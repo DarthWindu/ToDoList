@@ -8,6 +8,11 @@ public class ToDoList implements Serializable{
 	private ArrayList<Task> activeTasks;
 	private ArrayList<Task> completedTasks;
 	
+	public ToDoList(){
+		activeTasks = new ArrayList<Task>();
+		completedTasks = new ArrayList<Task>();
+	}
+	
 	
 	public ArrayList<Task> getActiveTasks(){
 		return activeTasks;
