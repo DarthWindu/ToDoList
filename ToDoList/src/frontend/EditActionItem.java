@@ -18,32 +18,37 @@ import java.awt.print.PrinterJob;
 
 import javax.swing.*;
 
-public class EditActionItem extends JFrame implements ActionListener, Printable {
+public class EditActionItem extends JPanel implements ActionListener, Printable {
 	JRadioButton radioButton, radioButton2, radioButton3, radioButton4;
 	JCheckBox checkCurrent, checkUrgent, checkEventual;
 	JButton commentButton;
 	JButton historyButton;
 	JButton print;
 	JTextField name;
+	JTextField CurrentMonth, CurrentDay, CurrentYear, 
+	UrgentMonth, UrgentDay, UrgentYear, EventualMonth, EventualDay, EventualYear;
 	Task tasker;
 	ButtonGroup group;
-	JPanel panel;
-	
 	EditActionItem(Task task)
 	{
 		tasker = task;
 		group = new ButtonGroup();
 
-		
-		panel = new JPanel();
 
-		panel.setBorder(BorderFactory.createEmptyBorder(15,15,15,15));
-		panel.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-		panel.setLayout(new GridLayout(0,2));
-		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		this.setLayout(new GridLayout(0,2));
+		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
 		name = new JTextField(tasker.getName());
+		CurrentMonth = new JTextField();
+		CurrentDay = new JTextField();
+		CurrentYear = new JTextField();
+		UrgentMonth = new JTextField();
+		UrgentDay = new JTextField();
+		UrgentYear = new JTextField();
+		EventualMonth = new JTextField();
+		EventualDay = new JTextField();
+		EventualYear = new JTextField();
+		
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
 		radioButton3 = new JRadioButton("Eventual");
@@ -54,6 +59,7 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 		commentButton = new JButton("Comment");
 		historyButton = new JButton("History");
 		print = new JButton("Print");
+		
 		final BufferedImage im = createImage(this);
 
 		name.addFocusListener(new FocusListener(){
@@ -72,10 +78,9 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 			public void actionPerformed(ActionEvent arg3)
 			{
 				tasker.changeName(name.getText());
-				
+
 			}
 		});
-
 		historyButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -83,7 +88,6 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 				HistoryWindow hist = new HistoryWindow(tasker);
 			}
 		});
-
 		commentButton.addActionListener(new ActionListener ()
 		{
 			public void actionPerformed(ActionEvent arg1)
@@ -91,8 +95,8 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 				CommentWindow cw = new CommentWindow(tasker);
 			}
 		});
- //panel is a new version, even though github says its not
-		//Even another one
+		
+		
 		print.addActionListener(new ActionListener ()
 		{
 			public void actionPerformed( ActionEvent ae ) {
@@ -113,7 +117,7 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 
 				boolean didYouPrint = job.printDialog();
 				if(didYouPrint) {
-					
+
 					try {
 						job.print();
 					} catch( PrinterException exc) {
@@ -121,7 +125,7 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 					}
 				} else 
 					System.out.println("You cancelled the print");
-				
+
 			}
 
 		});
@@ -136,25 +140,23 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 		group.add(radioButton3);
 		group.add(radioButton4);
 
-		panel.add(name);
-		panel.add(radioButton);
-		panel.add(checkCurrent);
-		panel.add(radioButton2);
-		panel.add(checkUrgent);
-		panel.add(radioButton3);
-		panel.add(checkEventual);
-		panel.add(radioButton4);
-		panel.add(commentButton);
-		panel.add(historyButton);
-		panel.add(print);
-		
-		this.setContentPane(panel);
-		this.pack();
-		this.setVisible(true);
+		this.add(name);
+		this.add(radioButton);
+		this.add(checkCurrent);
+		this.add(radioButton2);
+		this.add(checkUrgent);
+		this.add(radioButton3);
+		this.add(checkEventual);
+		this.add(radioButton4);
+		this.add(commentButton);
+		this.add(historyButton);
+		this.add(print);
+
+
 	}
 
 	//What happened to the new version?
-	
+
 	// Note that over here, would you be changing the task and then sending it
 	// back?
 	// Where would the task be going from here if you were to change something?
@@ -164,12 +166,22 @@ public class EditActionItem extends JFrame implements ActionListener, Printable 
 
 	public BufferedImage createImage(EditActionItem panel) {
 		panel.setSize(1280,720);
-	    BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
-	    Graphics2D g = bi.createGraphics();
-	    panel.paint(g);
-	    return bi;
+		BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = bi.createGraphics();
+		panel.paint(g);
+		return bi;
 	}
-	
+
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("This");
+		Task e = new Task("NameOfTask");
+
+		EditActionItem x = new EditActionItem(e);
+		frame.setContentPane(x);
+		frame.setVisible(true);
+		frame.pack();
+	}
+
 	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
 		return pageIndex;
 
