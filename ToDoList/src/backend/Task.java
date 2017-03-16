@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+
 import frontend.MainMenu;
 
 /**
@@ -164,9 +166,12 @@ public class Task implements Serializable{
 	}
 	
 	public void deleteComment(Comment comment) {
-		for(Comment com: comments) {
-			if(com.isEqual(comment))
-				comments.remove(com);
+		Iterator<Comment> iterator = comments.iterator();
+		
+		while(iterator.hasNext()) {
+			Comment com = iterator.next();
+			if(com.equals(iterator.next()))
+				iterator.remove();
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.swing.*;
 
 import backend.*;
@@ -28,7 +29,7 @@ public class HistoryWindow{
 		
 		panel = new JPanel();
 		
-		panel.setPreferredSize(new Dimension(500,500));
+		panel.setPreferredSize(new Dimension(1600,800));
 
 		panel.setLayout(new GridLayout(0,1,0,20));
 		
@@ -36,14 +37,10 @@ public class HistoryWindow{
 		
 		frame.add(scrollPane);
 		
-		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
-		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		frame.pack();
 		frame.setVisible(true);
-		
-		panel.revalidate();
 		
 		for(HistoryItem his : history){
 			Date day = his.getDate();
@@ -88,17 +85,20 @@ public class HistoryWindow{
 				addText = "Changed priority from " + priOld + " to " + priNew;
 			}catch(Exception e){}
 
-
-			//text = text + " \n" + addText;
 			holder = new JPanel();
-			holder.setLayout(new GridLayout(0,1));
+			holder.setLayout(new GridLayout(0,1,0,10));
 			holder.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			changeType = new JLabel(text);
 			changeText = new JLabel(addText);
 			holder.add(changeType);
 			holder.add(changeText);
+			holder.setMinimumSize(new Dimension(5,5));
+			holder.setMaximumSize(new Dimension(5,5));
 			panel.add(holder);
 		}
+		frame.revalidate();
+		panel.revalidate();
+		scrollPane.revalidate();
 	}
 
 }
