@@ -5,7 +5,7 @@ import java.util.Date;
 
 public abstract class HistoryItem implements Serializable{
 	private Date whenDone;
-	private String text;
+	private String text = "";
 	
 	public Date getDate() {
 		return whenDone;
