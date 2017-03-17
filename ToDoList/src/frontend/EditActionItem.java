@@ -18,7 +18,7 @@ import java.awt.print.PrinterJob;
 
 import javax.swing.*;
 
-public class EditActionItem extends JPanel implements ActionListener, Printable {
+public class EditActionItem extends JFrame implements ActionListener, Printable {
 	JRadioButton radioButton, radioButton2, radioButton3, radioButton4;
 	JCheckBox checkCurrent, checkUrgent, checkEventual;
 	JButton commentButton;
@@ -29,14 +29,17 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	UrgentMonth, UrgentDay, UrgentYear, EventualMonth, EventualDay, EventualYear;
 	Task tasker;
 	ButtonGroup group;
+	JPanel panel;
+	
 	EditActionItem(Task task)
 	{
 		tasker = task;
 		group = new ButtonGroup();
 
-
-		this.setLayout(new GridLayout(0,2));
-		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		panel = new JPanel();
+		
+		panel.setLayout(new GridLayout(0,2));
+		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
 		name = new JTextField(tasker.getName());
 		CurrentMonth = new JTextField();
@@ -140,19 +143,22 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		group.add(radioButton3);
 		group.add(radioButton4);
 
-		this.add(name);
-		this.add(radioButton);
-		this.add(checkCurrent);
-		this.add(radioButton2);
-		this.add(checkUrgent);
-		this.add(radioButton3);
-		this.add(checkEventual);
-		this.add(radioButton4);
-		this.add(commentButton);
-		this.add(historyButton);
-		this.add(print);
+		panel.add(name);
+		panel.add(radioButton);
+		panel.add(checkCurrent);
+		panel.add(radioButton2);
+		panel.add(checkUrgent);
+		panel.add(radioButton3);
+		panel.add(checkEventual);
+		panel.add(radioButton4);
+		panel.add(commentButton);
+		panel.add(historyButton);
+		panel.add(print);
 
-
+		
+		this.setContentPane(panel);
+		this.setVisible(true);
+		this.pack();
 	}
 
 	//What happened to the new version?
@@ -173,13 +179,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("This");
-		Task e = new Task("NameOfTask");
-
-		EditActionItem x = new EditActionItem(e);
-		frame.setContentPane(x);
-		frame.setVisible(true);
-		frame.pack();
+		
 	}
 
 	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
