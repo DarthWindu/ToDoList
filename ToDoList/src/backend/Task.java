@@ -114,7 +114,7 @@ public class Task implements Serializable{
 	public void changeName(String newName)
 	{
 		NameChange change = new NameChange(taskName, newName);
-		change.setText("Priority Changed");
+		change.setText("Name Changed");
 		nameChanges.add(change);
 		historyEvents.add(change);
 		taskName = newName;
