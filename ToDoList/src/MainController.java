@@ -22,6 +22,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -33,6 +34,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -109,16 +111,23 @@ public class MainController {
 		assert myTextField != null : "fx:id=\"myTextField\" was not injected: check your FXML file 'test1.fxml'.";
 
 		//ALL ACTION HANDLERS GO HERE
-		/*ObservableList<String> data = FXCollections.observableArrayList();
-        ToDoList todo = new ToDoList();//Load TodoList (from last session)
-        for (Task task : todo.getActiveTasks()) {
-        	data.add(task.getName());
-        }
-        myCustomListView.setItems(data);*/
+		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+		    @Override
+		    public void handle(MouseEvent click) {
+
+		        if (click.getClickCount() == 2) {
+		           //Use ListView's getSelected Item
+		           String item = myCustomListView.getSelectionModel().getSelectedItem();
+		           System.out.println("Double Click on: " + item);//Works
+		           //use this to do whatever you want to. Open Link etc.
+		        }
+		    }
+		});
 		
-		tdl = Main.todoList;
 
 		//Load Task Names into List
+		tdl = Main.todoList;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
 			if (tasks != null) {
