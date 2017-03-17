@@ -60,7 +60,13 @@ public class RightClickMenu{
 		
 		menu.add(editItem);
 		
+		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
 		
+		menu.setVisible(true);
+	}
+	
+	public void popup(Task t){
+		task = t;
 		
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
 		
