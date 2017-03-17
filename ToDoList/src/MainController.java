@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,6 +86,11 @@ public class MainController {
 
 	@FXML // fx:id="myTextField"
 	private JFXTextField myTextField; // Value injected by FXMLLoader
+	
+	@FXML
+	public void exitApplication(ActionEvent event) {
+	   Platform.exit();
+	}
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	public void initialize() {
@@ -110,28 +116,7 @@ public class MainController {
         }
         myCustomListView.setItems(data);*/
 		
-		//Load serialized To Do List:
-		try {
-			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			tdl = (ToDoList) in.readObject();
-			in.close();
-			fileIn.close();
-			//MainMenu menu = new MainMenu(tdl);
-		} catch (FileNotFoundException e1) {
-			//MainMenu a = new MainMenu(null);
-			//e1.printStackTrace();
-			System.out.println("FileNotFound - MainController");
-			tdl = null;
-		} catch (IOException e1) {
-			//e1.printStackTrace();
-			System.out.println("IO Exception - MainController");
-			tdl = null;
-		} catch (ClassNotFoundException e1) {
-			//e1.printStackTrace();
-			System.out.println("ClassNotFound - MainController"); 
-			tdl = null;
-		}
+		tdl = Main.todoList;
 
 		//Load Task Names into List
 		if (tdl != null) {
