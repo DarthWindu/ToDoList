@@ -21,6 +21,8 @@ public class RightClickMenu{
 		completeItem.addActionListener(new ActionListener(){//might need to use popupmenulisteners?
 			public void actionPerformed(ActionEvent arg0){
 				task.setStatus(Task.COMPLETED);
+				
+				menu.setVisible(false);
 			}
 		});
 		
@@ -29,6 +31,8 @@ public class RightClickMenu{
 		deleteItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				MainMenu.getList().delete(task);
+				
+				menu.setVisible(false);
 			}
 		});
 		
@@ -37,6 +41,8 @@ public class RightClickMenu{
 		editItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				edit = new EditActionItem(task);
+				
+				menu.setVisible(false);
 			}
 		});
 		
@@ -67,9 +73,7 @@ public class RightClickMenu{
 	
 	public void popup(Task t){
 		task = t;
-		
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
-		
 		menu.setVisible(true);
 	}
 }
