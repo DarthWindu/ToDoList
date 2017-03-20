@@ -18,9 +18,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -32,6 +34,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -85,6 +88,11 @@ public class MainController {
 
 	@FXML // fx:id="myTextField"
 	private JFXTextField myTextField; // Value injected by FXMLLoader
+	
+	@FXML
+	public void exitApplication(ActionEvent event) {
+	   Platform.exit();
+	}
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	public void initialize() {
@@ -103,37 +111,23 @@ public class MainController {
 		assert myTextField != null : "fx:id=\"myTextField\" was not injected: check your FXML file 'test1.fxml'.";
 
 		//ALL ACTION HANDLERS GO HERE
-		/*ObservableList<String> data = FXCollections.observableArrayList();
-        ToDoList todo = new ToDoList();//Load TodoList (from last session)
-        for (Task task : todo.getActiveTasks()) {
-        	data.add(task.getName());
-        }
-        myCustomListView.setItems(data);*/
+		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+		    @Override
+		    public void handle(MouseEvent click) {
+
+		        if (click.getClickCount() == 2) {
+		           //Use ListView's getSelected Item
+		           String item = myCustomListView.getSelectionModel().getSelectedItem();
+		           System.out.println("Double Click on: " + item);//Works
+		           //use this to do whatever you want to. Open Link etc.
+		        }
+		    }
+		});
 		
-		//Load serialized To Do List:
-		try {
-			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			tdl = (ToDoList) in.readObject();
-			in.close();
-			fileIn.close();
-			//MainMenu menu = new MainMenu(tdl);
-		} catch (FileNotFoundException e1) {
-			//MainMenu a = new MainMenu(null);
-			//e1.printStackTrace();
-			System.out.println("FileNotFound - MainController");
-			tdl = null;
-		} catch (IOException e1) {
-			//e1.printStackTrace();
-			System.out.println("IO Exception - MainController");
-			tdl = null;
-		} catch (ClassNotFoundException e1) {
-			//e1.printStackTrace();
-			System.out.println("ClassNotFound - MainController"); 
-			tdl = null;
-		}
 
 		//Load Task Names into List
+		tdl = Main.todoList;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
 			if (tasks != null) {
