@@ -134,7 +134,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		});
 
 		
-		//Good God //Jeez
+		//Good God //Jeez this is messy
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(true);
