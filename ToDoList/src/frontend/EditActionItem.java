@@ -2,6 +2,9 @@ package frontend;
 
 import backend.*;
 
+import static javax.swing.GroupLayout.Alignment.BASELINE;
+import static javax.swing.GroupLayout.Alignment.LEADING;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -28,15 +31,15 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	JTextField CurrentMonth, CurrentDay, CurrentYear, 
 	UrgentMonth, UrgentDay, UrgentYear, EventualMonth, EventualDay, EventualYear;
 	Task tasker;
-	ButtonGroup group;
+	ButtonGroup groupButton;
 	EditActionItem(Task task)
 	{
 		tasker = task;
-		group = new ButtonGroup();
+		groupButton = new ButtonGroup();
 
 
-		this.setLayout(new GridLayout(0,2));
-		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		//this.setLayout(new GridLayout(0,2));
+		//	this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
 		name = new JTextField(tasker.getName());
 		CurrentMonth = new JTextField();
@@ -48,7 +51,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		EventualMonth = new JTextField();
 		EventualDay = new JTextField();
 		EventualYear = new JTextField();
-		
+
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
 		radioButton3 = new JRadioButton("Eventual");
@@ -59,7 +62,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		commentButton = new JButton("Comment");
 		historyButton = new JButton("History");
 		print = new JButton("Print");
-		
+
 		final BufferedImage im = createImage(this);
 
 		name.addFocusListener(new FocusListener(){
@@ -95,8 +98,8 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CommentWindow cw = new CommentWindow(tasker);
 			}
 		});
-		
-		
+
+
 		print.addActionListener(new ActionListener ()
 		{
 			public void actionPerformed( ActionEvent ae ) {
@@ -130,15 +133,96 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		});
 
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateContainerGaps(true);
+
+		layout.setHorizontalGroup(layout.createSequentialGroup() 	
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(name)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(LEADING)
+										.addComponent(radioButton)
+										.addComponent(radioButton2)
+										.addComponent(radioButton3)
+										.addComponent(radioButton4))
+								.addGroup(layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup()
+												.addComponent(checkUrgent)
+												.addComponent(checkCurrent)
+												.addComponent(checkEventual))
+										.addGroup(layout.createParallelGroup()
+												.addComponent(UrgentMonth)
+												.addComponent(CurrentMonth)
+												.addComponent(EventualMonth))
+										.addGroup(layout.createParallelGroup()
+												.addComponent(UrgentDay)
+												.addComponent(CurrentDay)
+												.addComponent(EventualDay))
+										.addGroup(layout.createParallelGroup())
+										.addComponent(UrgentYear)
+										.addComponent(CurrentYear)
+										.addComponent(EventualYear)
+
+										.addGroup(layout.createParallelGroup(LEADING)
+												.addComponent(print)
+												.addComponent(commentButton)
+												.addComponent(historyButton))))));
+
+
+
+		;
+
+		//   layout.linkSize(SwingConstants.HORIZONTAL, findButton, cancelButton);
+
+		layout.setVerticalGroup(layout.createSequentialGroup()
+				.addComponent(name)
+
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(radioButton))
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(radioButton2))
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(radioButton3))
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(radioButton4))
+
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addGroup(layout.createSequentialGroup()
+
+
+								.addGroup(layout.createParallelGroup(LEADING)
+										.addComponent(checkUrgent)
+										.addComponent(UrgentMonth)
+										.addComponent(UrgentDay)
+										.addComponent(UrgentYear)
+										.addComponent(print))
+
+								.addGroup(layout.createParallelGroup(LEADING)
+										.addComponent(checkCurrent)
+										.addComponent(CurrentMonth)
+										.addComponent(CurrentDay)
+										.addComponent(CurrentYear)
+										.addComponent(historyButton))
+
+								.addGroup(layout.createParallelGroup(LEADING)
+										.addComponent(checkEventual)
+										.addComponent(EventualMonth)
+										.addComponent(EventualDay)
+										.addComponent(EventualYear)
+										.addComponent(commentButton)
+										))));
+
+
 
 		checkCurrent.addActionListener(this);
-		checkUrgent.addActionListener(this);//these need 3 textfields each
+		checkUrgent.addActionListener(this);
 		checkEventual.addActionListener(this);
 
-		group.add(radioButton);
-		group.add(radioButton2);
-		group.add(radioButton3);
-		group.add(radioButton4);
+		groupButton.add(radioButton);
+		groupButton.add(radioButton2);
+		groupButton.add(radioButton3);
+		groupButton.add(radioButton4);
 
 		this.add(name);
 		this.add(radioButton);
@@ -153,13 +237,13 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		this.add(print);
 
 
+		//layout.setHorizontalGroup(group);
+		//layout.setVerticalGroup(group2);
+
+
 	}
 
-	//What happened to the new version?
 
-	// Note that over here, would you be changing the task and then sending it
-	// back?
-	// Where would the task be going from here if you were to change something?
 	public void actionPerformed(ActionEvent e) {
 
 	}
