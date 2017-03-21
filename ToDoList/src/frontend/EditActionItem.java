@@ -138,20 +138,20 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(true);
 
-		layout.setHorizontalGroup(layout.createSequentialGroup() 	
-				.addGroup(layout.createParallelGroup(LEADING)
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup()
 						.addComponent(name)
+						.addGroup(layout.createParallelGroup()
+								.addComponent(radioButton)
+								.addComponent(radioButton2)
+								.addComponent(radioButton3)
+								.addComponent(radioButton4))
+
 						.addGroup(layout.createSequentialGroup()
 								.addGroup(layout.createParallelGroup()
-										.addComponent(radioButton)
-										.addComponent(radioButton2)
-										.addComponent(radioButton3)
-										.addComponent(radioButton4)))
-						.addGroup(layout.createParallelGroup()
-								.addComponent(checkUrgent)
-								.addComponent(checkCurrent)
-								.addComponent(checkEventual)
-						.addGroup(layout.createSequentialGroup()
+										.addComponent(checkUrgent)
+										.addComponent(checkCurrent)
+										.addComponent(checkEventual))
 								.addGroup(layout.createParallelGroup()
 										.addComponent(UrgentMonth)
 										.addComponent(CurrentMonth)
@@ -167,8 +167,35 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 								.addGroup(layout.createParallelGroup()
 										.addComponent(print)
 										.addComponent(commentButton)
-										.addComponent(historyButton))))));
-		
+										.addComponent(historyButton)))));
+		/*	.addComponent(name
+				.addGroup(layout.createParallelGroup()
+						.addComponent(radioButton)
+						.addComponent(radioButton2)
+						.addComponent(radioButton3)
+						.addComponent(radioButton4)))
+		.addGroup(layout.createParallelGroup()
+				.addComponent(checkUrgent)
+				.addComponent(checkCurrent)
+				.addComponent(checkEventual)
+				.addGroup(layout.createSequentialGroup()
+						.addGroup(layout.createParallelGroup()
+								.addComponent(UrgentMonth)
+								.addComponent(CurrentMonth)
+								.addComponent(EventualMonth))
+						.addGroup(layout.createParallelGroup()
+								.addComponent(UrgentDay)
+								.addComponent(CurrentDay)
+								.addComponent(EventualDay))
+						.addGroup(layout.createParallelGroup()
+								.addComponent(UrgentYear)
+								.addComponent(CurrentYear)
+								.addComponent(EventualYear))
+						.addGroup(layout.createParallelGroup()
+								.addComponent(print)
+								.addComponent(commentButton)
+								.addComponent(historyButton))));*/
+
 		//   layout.linkSize(SwingConstants.HORIZONTAL, findButton, cancelButton);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
