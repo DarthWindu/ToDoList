@@ -56,7 +56,7 @@ public class RightClickMenu{
 		
 		menu.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
-				//menu.setVisible(false);
+				menu.setVisible(false);
 			}
 		});
 		

@@ -44,8 +44,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			toDoList = list;
 		
 		
-		
-		
 		addTask = new JTextField();
 		addTask.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -63,17 +61,51 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		fileMenu = new JMenu("File");
 		
+		backup = new JMenuItem("Backup");
+		
+		backup.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//back up to a chosen file
+			}
+		});
+		
+		restore = new JMenuItem("Restore");
+		
+		restore.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//closed action items opens
+			}
+		});
+		
+		print = new JMenuItem("Print");
+		
+		print.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//print
+			}
+		});
+		
 		fileMenu.add(backup);
 		
-		fileMenu.add(restore);//initialize all of these
+		fileMenu.add(restore);
 		
 		fileMenu.add(print);
 		
-		bar.add(fileMenu);// make it fit and to the left
+		bar.add(fileMenu);
+		
+		closedItems = new JMenuItem("Completed Action Items");
+		
+		closedItems.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//open completed action items
+			}
+		});
+		
+		closedItems.setPreferredSize(new Dimension(50, 50));//y is it so big
 		
 		bar.add(closedItems);
 		
-		bar.add(Box.createHorizontalGlue());
+		//bar.add(Box.createGlue());
 		
 		bar.setPreferredSize(new Dimension(50,50));
 		
@@ -81,7 +113,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			  public void windowClosing(WindowEvent e) {
 				  try
 			        {
-						FileOutputStream fileOut = new FileOutputStream("src/" + "todolist" + ".java");
+						FileOutputStream fileOut = new FileOutputStream("src/" + "todolist" + ".java");//should save to default file
 						ObjectOutputStream out = new ObjectOutputStream(fileOut);
 						out.writeObject(toDoList);
 						out.close();
