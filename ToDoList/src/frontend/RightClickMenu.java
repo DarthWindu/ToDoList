@@ -8,6 +8,7 @@ import java.awt.event.*;
 
 public class RightClickMenu{
 	private Task task;
+	private boolean canComplete;
 	JPopupMenu menu;
 	EditActionItem edit;
 	
@@ -40,24 +41,23 @@ public class RightClickMenu{
 		
 		editItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				edit = new EditActionItem(task);
+				//edit = new EditActionItem(task);
+				
+				JFrame frame = new JFrame(task.getName());
+				
+				EditActionItem x = new EditActionItem(task);
+				frame.setContentPane(x);
+				frame.setVisible(true);
+				frame.pack();
 				
 				menu.setVisible(false);
 			}
 		});
 		
-		menu.addMouseListener(new MouseListener(){
-			public void mouseClicked(MouseEvent arg0) {
+		menu.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
 				menu.setVisible(false);
 			}
-
-			public void mouseEntered(MouseEvent arg0) {}
-
-			public void mouseExited(MouseEvent arg0) {}
-
-			public void mousePressed(MouseEvent arg0) {}
-
-			public void mouseReleased(MouseEvent arg0) {}
 		});
 		
 		menu.add(completeItem);
@@ -71,9 +71,13 @@ public class RightClickMenu{
 		menu.setVisible(true);
 	}
 	
-	public void popup(Task t){
+	public void popup(Task t, boolean setCanComplete){//has to work with
 		task = t;
+		
+		if(canComplete)
+		
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
+		
 		menu.setVisible(true);
 	}
 }

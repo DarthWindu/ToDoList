@@ -7,13 +7,17 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JMenuBar;
+import javax.swing.ScrollPaneConstants;
 
 import backend.Task;
 import backend.ToDoList;
@@ -24,18 +28,20 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	JPanel panel;
 	JScrollPane scrollPane;
 	JMenuBar bar, fileBar;
+	JList<Task> display;
 	ArrayList<Task> activeTasks;
+	
+	JMenu fileMenu;
+	JMenuItem backup, restore, print, closedItems;
 	private static ToDoList toDoList;
 	final static int WIDTH = 1000;
 	final static int HEIGHT = 800;
 	
 	public MainMenu(ToDoList list) {
-		
 		if(list == null)
 			toDoList = new ToDoList();
 		else
 			toDoList = list;
-		
 		
 		
 		addTask = new JTextField();
@@ -53,7 +59,53 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		bar = new JMenuBar();
 		
-		bar.add(new JMenu("file"));// make it fit and to the left
+		fileMenu = new JMenu("File");
+		
+		backup = new JMenuItem("Backup");
+		
+		backup.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//back up to a chosen file
+			}
+		});
+		
+		restore = new JMenuItem("Restore");
+		
+		restore.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//closed action items opens
+			}
+		});
+		
+		print = new JMenuItem("Print");
+		
+		print.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//print
+			}
+		});
+		
+		fileMenu.add(backup);
+		
+		fileMenu.add(restore);
+		
+		fileMenu.add(print);
+		
+		bar.add(fileMenu);
+		
+		closedItems = new JMenuItem("Completed Action Items");
+		
+		closedItems.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//open completed action items
+			}
+		});
+		
+		closedItems.setPreferredSize(new Dimension(50, 50));//y is it so big
+		
+		bar.add(closedItems);
+		
+		//bar.add(Box.createGlue());
 		
 		bar.setPreferredSize(new Dimension(50,50));
 		
@@ -61,7 +113,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			  public void windowClosing(WindowEvent e) {
 				  try
 			        {
-						FileOutputStream fileOut = new FileOutputStream("src/" + "todolist" + ".java");
+						FileOutputStream fileOut = new FileOutputStream("src/" + "todolist" + ".java");//should save to default file
 						ObjectOutputStream out = new ObjectOutputStream(fileOut);
 						out.writeObject(toDoList);
 						out.close();
@@ -80,6 +132,16 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		scrollPane = new JScrollPane(panel);
 		
+		scrollPane.setPreferredSize(new Dimension(WIDTH,HEIGHT*2));
+		
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		//display = new JList<Task>((Task[]) activeTasks.toArray());
+		
+		display = new JList<Task>();
+		
+		scrollPane.add(display);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
@@ -87,7 +149,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		frame.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
-		scrollPane.setPreferredSize(new Dimension(WIDTH,HEIGHT*2));
+		
 		
 		frame.add(bar);
 		frame.add(scrollPane);// I dont think we need a horizontal scroll bar

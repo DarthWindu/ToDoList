@@ -5,6 +5,7 @@ import backend.*;
 import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.LEADING;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -133,8 +134,6 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		});
 
-		
-		//Good God //Jeez this is messy
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(true);
@@ -143,38 +142,33 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				.addGroup(layout.createParallelGroup(LEADING)
 						.addComponent(name)
 						.addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(LEADING)
+								.addGroup(layout.createParallelGroup()
 										.addComponent(radioButton)
 										.addComponent(radioButton2)
 										.addComponent(radioButton3)
-										.addComponent(radioButton4))
-								.addGroup(layout.createSequentialGroup()
-										.addGroup(layout.createParallelGroup()
-												.addComponent(checkUrgent)
-												.addComponent(checkCurrent)
-												.addComponent(checkEventual))
-										.addGroup(layout.createParallelGroup()
-												.addComponent(UrgentMonth)
-												.addComponent(CurrentMonth)
-												.addComponent(EventualMonth))
-										.addGroup(layout.createParallelGroup()
-												.addComponent(UrgentDay)
-												.addComponent(CurrentDay)
-												.addComponent(EventualDay))
-										.addGroup(layout.createParallelGroup())
+										.addComponent(radioButton4)))
+						.addGroup(layout.createParallelGroup()
+								.addComponent(checkUrgent)
+								.addComponent(checkCurrent)
+								.addComponent(checkEventual)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup()
+										.addComponent(UrgentMonth)
+										.addComponent(CurrentMonth)
+										.addComponent(EventualMonth))
+								.addGroup(layout.createParallelGroup()
+										.addComponent(UrgentDay)
+										.addComponent(CurrentDay)
+										.addComponent(EventualDay))
+								.addGroup(layout.createParallelGroup()
 										.addComponent(UrgentYear)
 										.addComponent(CurrentYear)
-										.addComponent(EventualYear)
-
-										.addGroup(layout.createParallelGroup(LEADING)
-												.addComponent(print)
-												.addComponent(commentButton)
-												.addComponent(historyButton))))));
-
-
-
-		;
-
+										.addComponent(EventualYear))
+								.addGroup(layout.createParallelGroup()
+										.addComponent(print)
+										.addComponent(commentButton)
+										.addComponent(historyButton))))));
+		
 		//   layout.linkSize(SwingConstants.HORIZONTAL, findButton, cancelButton);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
@@ -188,32 +182,24 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 						.addComponent(radioButton3))
 				.addGroup(layout.createParallelGroup(LEADING)
 						.addComponent(radioButton4))
-
 				.addGroup(layout.createParallelGroup(LEADING)
-						.addGroup(layout.createSequentialGroup()
-
-
-								.addGroup(layout.createParallelGroup(LEADING)
-										.addComponent(checkUrgent)
-										.addComponent(UrgentMonth)
-										.addComponent(UrgentDay)
-										.addComponent(UrgentYear)
-										.addComponent(print))
-
-								.addGroup(layout.createParallelGroup(LEADING)
-										.addComponent(checkCurrent)
-										.addComponent(CurrentMonth)
-										.addComponent(CurrentDay)
-										.addComponent(CurrentYear)
-										.addComponent(historyButton))
-
-								.addGroup(layout.createParallelGroup(LEADING)
-										.addComponent(checkEventual)
-										.addComponent(EventualMonth)
-										.addComponent(EventualDay)
-										.addComponent(EventualYear)
-										.addComponent(commentButton)
-										))));
+						.addComponent(checkUrgent)
+						.addComponent(UrgentMonth)
+						.addComponent(UrgentDay)
+						.addComponent(UrgentYear)
+						.addComponent(print))
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(checkCurrent)
+						.addComponent(CurrentMonth)
+						.addComponent(CurrentDay)
+						.addComponent(CurrentYear)
+						.addComponent(historyButton))
+				.addGroup(layout.createParallelGroup(LEADING)
+						.addComponent(checkEventual)
+						.addComponent(EventualMonth)
+						.addComponent(EventualDay)
+						.addComponent(EventualYear)
+						.addComponent(commentButton)));
 
 
 
@@ -225,23 +211,6 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		groupButton.add(radioButton2);
 		groupButton.add(radioButton3);
 		groupButton.add(radioButton4);
-
-		this.add(name);
-		this.add(radioButton);
-		this.add(checkCurrent);
-		this.add(radioButton2);
-		this.add(checkUrgent);
-		this.add(radioButton3);
-		this.add(checkEventual);
-		this.add(radioButton4);
-		this.add(commentButton);
-		this.add(historyButton);
-		this.add(print);
-
-
-		//layout.setHorizontalGroup(group);
-		//layout.setVerticalGroup(group2);
-
 
 	}
 
@@ -265,6 +234,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		EditActionItem x = new EditActionItem(e);
 		frame.setContentPane(x);
 		frame.setVisible(true);
+		frame.setPreferredSize(new Dimension(600,300));
 		frame.pack();
 	}
 
