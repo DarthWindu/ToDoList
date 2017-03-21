@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,6 +43,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			toDoList = new ToDoList();
 		else
 			toDoList = list;
+		
+		activeTasks = toDoList.getActiveTasks();
 		
 		
 		addTask = new JTextField();
@@ -136,11 +139,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		//display = new JList<Task>((Task[]) activeTasks.toArray());
+		display = new JList(activeTasks.toArray());
 		
-		display = new JList<Task>();
-		
-		scrollPane.add(display);
+		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -149,7 +150,23 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		frame.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
+		addTask.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(!addTask.getText().equals("")){
+					toDoList.add(new Task(addTask.getText()));
+					
+					activeTasks = toDoList.getActiveTasks();
+					
+					display = new JList(activeTasks.toArray());
+					
+					scrollPane.setViewportView(display);
+					
+					addTask.setText("");
+				}
+			}
+		});
 		
+		//add listselectionlistener? for rightclick
 		
 		frame.add(bar);
 		frame.add(scrollPane);// I dont think we need a horizontal scroll bar
