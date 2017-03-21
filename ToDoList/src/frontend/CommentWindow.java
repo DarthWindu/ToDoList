@@ -4,9 +4,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import backend.Comment;
-import backend.HistoryItem;
-import backend.Task;
+import backend.*;
 
 public class CommentWindow {
 	private JFrame mainFrame;
@@ -27,27 +25,24 @@ public class CommentWindow {
 		prepareGUI();
 		userTask = task;
 	}
-//	public static void main(String[] args){
-//		CommentWindow swingControlDemo = new CommentWindow(/*DUMMY DATA GOES HERE*/);      
-//	}
 	private void prepareGUI(){
 		mainFrame = new JFrame("Comment Window");
-		mainFrame.setSize(500,200);
-		mainFrame.setLayout(new GridLayout(0,3));      
+		mainFrame.setSize(900,400);
+		mainFrame.setLayout(new GridLayout(0,2));
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 
 		mainFrame.add(controlPanel);
-		mainFrame.setVisible(true);  
+		mainFrame.setVisible(true);
 		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
-		userText = new JTextField(6);
+		userText = new JTextField(50);
 		if(userComment != null)
 			userText.setText(userComment.getComment());
-		//userText.setPreferredSize(new Dimension(200,24));
 
 		commit = new JButton("Commit Comment");
+		commit.setPreferredSize(new Dimension(200,30));
 		commit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
@@ -58,6 +53,7 @@ public class CommentWindow {
 			}
 		});
 		delete = new JButton("Delete Comment");
+		delete.setPreferredSize(new Dimension(200,30));
 		delete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
@@ -76,45 +72,45 @@ public class CommentWindow {
 	
 	private void prepareGUI_ONLYtask(){
 		mainFrame = new JFrame("Comment Window");
-		mainFrame.setSize(500,200);
-		mainFrame.setLayout(new GridLayout(0,3));      
+		mainFrame.setSize(900,400);
+		mainFrame.setLayout(new GridLayout(0,4));      
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 
 		mainFrame.add(controlPanel);
-		mainFrame.setVisible(true);  
+		mainFrame.setVisible(true);
+		
 		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
-		userText = new JTextField(6); 
-		userText.setPreferredSize( new Dimension(200,24));
-
+		userText = new JTextField(50); 
+		
 		JButton commit = new JButton("Commit Comment");
+		commit.setPreferredSize(new Dimension(100,100));
 		commit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Commit Comment")){
 					String g1 = userText.getText();
-					
 					userTask.addComment(g1);
 				}
 			}
 		});
-		/*JButton delete = new JButton("Delete Comment");
+		JButton delete = new JButton("Delete Comment");
+		delete.setPreferredSize(new Dimension(100,100));
 		delete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Delete Comment")){
 					String g1 = userText.getText();
-					
 					userTask.deleteComment(userComment);
 				}
 			}
-		});*/
+		});
 		controlPanel.add(namelabel);
 		controlPanel.add(userText);
 		controlPanel.add(commit);
-		//controlPanel.add(delete);
+		controlPanel.add(delete);
 		mainFrame.setVisible(true);  
 	}
 }

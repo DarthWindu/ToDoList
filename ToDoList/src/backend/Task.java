@@ -170,9 +170,13 @@ public class Task implements Serializable{
 	}
 	
 	public void deleteComment(Comment comment) {
+		boolean found = false;
+		
 		for(Comment com: comments) {
-			if(com.isEqual(comment))
+			if(com.isEqual(comment) && !found) {
 				comments.remove(com);
+				found = true;
+			}
 		}
 	}
 }
