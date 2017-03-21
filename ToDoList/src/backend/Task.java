@@ -175,30 +175,4 @@ public class Task implements Serializable{
 				comments.remove(com);
 		}
 	}
-
-	//METHODS THAT NEED TO BE DESIGNED/WORKED ON---------------------------------------------------
-	//Joe: we should not need this
-	/*public void checkElevation() //This method needs to be redesigned and discussed extensively, especially with the serialization. This will be a major source for bugs.
-	{//Doesn't really work - just a rough outline - uncertain of what to do in every situation except if the date meets it.
-		//Also, what if 
-		PlannedPriorityChange mostRecentPPC = priorityChangeDates.get(0);
-		Date mostRecent = mostRecentPPC.getDateOfChange();
-		
-		for (int counter = 1; counter < priorityChangeDates.size(); counter ++)
-		{
-			if (priorityChangeDates.get(counter).getDateOfChange().after(mostRecent)) {
-				mostRecentPPC = priorityChangeDates.get(counter);
-				mostRecent = mostRecentPPC.getDateOfChange();
-			}
-		}
-		
-		Date currentDate = Calendar.getInstance().getTime();
-		if (currentDate.after(mostRecent)) 
-		{
-			//Prompt user if user wants to change
-		} else if (currentDate.getYear() == mostRecent.getYear() && currentDate.getMonth() == mostRecent.getMonth() && currentDate.getDate() == mostRecent.getDate())
-		{
-			setStatus(mostRecentPPC.getNewPriorityLevel());
-		}
-	}*/
 }

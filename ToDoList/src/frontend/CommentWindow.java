@@ -23,9 +23,9 @@ public class CommentWindow {
 	}
 	
 	public CommentWindow(Task task, Comment commentToEdit){
+		userComment = commentToEdit;
 		prepareGUI();
 		userTask = task;
-		userComment = commentToEdit;
 	}
 //	public static void main(String[] args){
 //		CommentWindow swingControlDemo = new CommentWindow(/*DUMMY DATA GOES HERE*/);      
@@ -34,7 +34,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(500,200);
 		mainFrame.setLayout(new GridLayout(0,3));      
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
@@ -43,6 +43,8 @@ public class CommentWindow {
 		mainFrame.setVisible(true);  
 		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
 		userText = new JTextField(6);
+		if(userComment != null)
+			userText.setText(userComment.getComment());
 		//userText.setPreferredSize(new Dimension(200,24));
 
 		commit = new JButton("Commit Comment");
@@ -76,7 +78,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(500,200);
 		mainFrame.setLayout(new GridLayout(0,3));      
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
