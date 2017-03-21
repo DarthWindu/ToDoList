@@ -12,6 +12,7 @@ public class CommentWindow {
 	private JPanel controlPanel;
 	private JButton commit,delete;
 	private JTextField userText;
+	private JScrollPane scrollPane;
 	private Task userTask = null;
 	private Comment userComment = null;
 
@@ -27,17 +28,35 @@ public class CommentWindow {
 	}
 	private void prepareGUI(){
 		mainFrame = new JFrame("Comment Window");
-		mainFrame.setSize(900,400);
-		mainFrame.setLayout(new GridLayout(0,2));
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setSize(900,800);
+		mainFrame.setLayout(new GridLayout(0,1));
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		controlPanel = new JPanel();
-		controlPanel.setLayout(new FlowLayout());
+		controlPanel.setLayout(new GridLayout(3,6));
+		//controlPanel.setLayout(new FlowLayout());
+		JLabel label1 = new JLabel();
+		JLabel label2;
+		JLabel label3;
+		JLabel label4;
+		JLabel label5;
+		JLabel label6;
+		JLabel label7;
+		JLabel label8;
+		JLabel label9;
+		JLabel label10;
+		JLabel label11;
+		JLabel label12;
+		JLabel label13;
+		JLabel label14;
+		scrollPane = new JScrollPane(controlPanel);
 
-		mainFrame.add(controlPanel);
+		mainFrame.add(scrollPane);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		mainFrame.setVisible(true);
 		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
-		userText = new JTextField(50);
+		userText = new JTextField(25);
 		if(userComment != null)
 			userText.setText(userComment.getComment());
 
@@ -65,6 +84,7 @@ public class CommentWindow {
 		});
 		controlPanel.add(namelabel);
 		controlPanel.add(userText);
+		controlPanel.add(label1);
 		controlPanel.add(commit);
 		controlPanel.add(delete);
 		mainFrame.setVisible(true);
