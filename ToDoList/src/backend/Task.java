@@ -39,16 +39,16 @@ public class Task implements Serializable{
 	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
 	private Date[] priorityChange;
 	private Date dateCreated;
-	
+
 	public static final int DEFAULT_STATUS = 2;//Default status (2) means Current
 	public static final int INACTIVE = 0,
-							EVENTUAL = 1,
-							CURRENT = 2,
-							URGENT = 3,
-							COMPLETED = 4;
-	
-//CONSTRUCTORS----------------------------------------------------------
-	
+			EVENTUAL = 1,
+			CURRENT = 2,
+			URGENT = 3,
+			COMPLETED = 4;
+
+	//CONSTRUCTORS----------------------------------------------------------
+
 	public Task(String name) 
 	{
 		//Date date = Calendar.getInstance().getTime();
@@ -57,14 +57,14 @@ public class Task implements Serializable{
 		//NOTE that Calendar.getInstance().getTime() might not yield desired result (mm.dd.yy hh:mm am/pm)
 		//TODO: make new historyItem
 	}
-	
+
 	Task(String name, Date date) 
 	{
 		this(name, date, DEFAULT_STATUS); // !! - might be an issue calling a static variable in constructor
 		this.initVariables();
 		//TODO: make new historyItem
 	}
-	
+
 	Task(String name, Date date, int initPriority) 
 	{
 		this.initVariables();
@@ -73,9 +73,9 @@ public class Task implements Serializable{
 		status = new Integer(initPriority);
 		//TODO: make new historyItem
 	}
-	
-//METHODS ---------------------------------------------------------------------------
-	
+
+	//METHODS ---------------------------------------------------------------------------
+
 	private void initVariables() 
 	{
 		//Might need to change because Serialization may require this method NOT to be called
@@ -84,13 +84,13 @@ public class Task implements Serializable{
 		nameChanges = new ArrayList<NameChange>();
 		historyEvents = new ArrayList<HistoryItem>();
 	}
-	
+
 	/**@return status: integer representation of Priority level*/
 	public int getStatus()
 	{
 		return status.intValue();
 	}
-	
+
 	/** @param newStatus - PriorityLevel
 	 * Adds PrirityChange and HistoryItem events, and changes status/priority level
 	 */
@@ -101,12 +101,12 @@ public class Task implements Serializable{
 		priorityChanges.add(change);
 		historyEvents.add(change);
 		status = new Integer(newStatus);
-		
+
 		if(newStatus == COMPLETED)
 			MainMenu.getList().switchTaskToCompleted(this);
-		
+
 	}
-	
+
 	/** @param newName for task
 	 * Adds a NameChange Event and a HistoryItem event
 	 * Also changes the task Name
@@ -119,31 +119,31 @@ public class Task implements Serializable{
 		historyEvents.add(change);
 		taskName = newName;
 	}
-	
+
 	/** @return List of comments */
 	public ArrayList<Comment> getComments()
 	{
 		return comments;//NEED TO ADD addComment method
 	}
-	
+
 	/** @return List of history items */
 	public ArrayList<HistoryItem> getHistoryItems()
 	{
 		return historyEvents;
 	}
-	
+
 	/** @return priorityChange Events */
 	public ArrayList<PriorityChange> getPriorityChanges()
 	{
 		return priorityChanges;
 	}
-	
+
 	/**  @return nameChange Events*/
 	public ArrayList<NameChange> getNameChanges()
 	{
 		return nameChanges;
 	}
-	
+
 	/** @param comment*/
 	public void addComment(String comment)
 	{
@@ -152,31 +152,35 @@ public class Task implements Serializable{
 		comments.add(newComment);
 		historyEvents.add(newComment);
 	}
-	
+
 	public Date[] getDates()
 	{
 		return priorityChange;
 	}
-	
+
 	public String getName()
 	{
 		return taskName;
 	}
-	
+
 	public boolean isEqual(Task task) 
 	{
 		return (taskName.equals(task.getName()) && (status.intValue() == task.getStatus()));
 		//Returns true if both tasks' names and status values match
 	}
-	
+
 	public void deleteComment(Comment comment) {
-		boolean found = false;
-		
+		Comment commCheck = null;
+
 		for(Comment com: comments) {
-			if(com.isEqual(comment) && !found) {
-				comments.remove(com);
-				found = true;
-			}
+			if(com.isEqual(comment))
+				commCheck = com;
 		}
+		if(commCheck != null)
+			comments.remove(commCheck);
+	}
+	
+	public String toString(){
+		return getName();
 	}
 }
