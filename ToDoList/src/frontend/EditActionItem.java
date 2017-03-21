@@ -43,15 +43,15 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		//	this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
 		name = new JTextField(tasker.getName());
-		CurrentMonth = new JTextField();
-		CurrentDay = new JTextField();
-		CurrentYear = new JTextField();
-		UrgentMonth = new JTextField();
-		UrgentDay = new JTextField();
-		UrgentYear = new JTextField();
-		EventualMonth = new JTextField();
-		EventualDay = new JTextField();
-		EventualYear = new JTextField();
+		CurrentMonth = new JTextField("MM");
+		CurrentDay = new JTextField("DD");
+		CurrentYear = new JTextField("YY");
+		UrgentMonth = new JTextField("MM");
+		UrgentDay = new JTextField("DD");
+		UrgentYear = new JTextField("YY");
+		EventualMonth = new JTextField("MM");
+		EventualDay = new JTextField("DD");
+		EventualYear = new JTextField("YY");
 
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
@@ -76,6 +76,121 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				tasker.changeName(name.getText());
 			}
 		});
+		
+		
+
+		CurrentMonth.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				CurrentMonth.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		CurrentDay.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				CurrentDay.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		CurrentYear.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				CurrentYear.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		UrgentMonth.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				UrgentMonth.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		UrgentDay.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				UrgentDay.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		UrgentYear.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				UrgentYear.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		EventualMonth.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				EventualMonth.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		EventualDay.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				EventualDay.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		EventualYear.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e)
+			{
+				EventualYear.setText("");
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		
+		});
+		
+		
+		
+		
 
 		name.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "enter");
 		name.getActionMap().put("enter", new AbstractAction(){
@@ -101,6 +216,9 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		});
 
 
+		/////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////
 		print.addActionListener(new ActionListener ()
 		{
 			public void actionPerformed( ActionEvent ae ) {
@@ -168,35 +286,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 										.addComponent(print)
 										.addComponent(commentButton)
 										.addComponent(historyButton)))));
-		/*	.addComponent(name
-				.addGroup(layout.createParallelGroup()
-						.addComponent(radioButton)
-						.addComponent(radioButton2)
-						.addComponent(radioButton3)
-						.addComponent(radioButton4)))
-		.addGroup(layout.createParallelGroup()
-				.addComponent(checkUrgent)
-				.addComponent(checkCurrent)
-				.addComponent(checkEventual)
-				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup()
-								.addComponent(UrgentMonth)
-								.addComponent(CurrentMonth)
-								.addComponent(EventualMonth))
-						.addGroup(layout.createParallelGroup()
-								.addComponent(UrgentDay)
-								.addComponent(CurrentDay)
-								.addComponent(EventualDay))
-						.addGroup(layout.createParallelGroup()
-								.addComponent(UrgentYear)
-								.addComponent(CurrentYear)
-								.addComponent(EventualYear))
-						.addGroup(layout.createParallelGroup()
-								.addComponent(print)
-								.addComponent(commentButton)
-								.addComponent(historyButton))));*/
 
-		//   layout.linkSize(SwingConstants.HORIZONTAL, findButton, cancelButton);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addComponent(name)
