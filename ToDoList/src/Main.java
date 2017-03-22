@@ -15,11 +15,30 @@ import javafx.stage.Stage;
 import backend.*;
 import frontend.*;
 
-public class Main extends Application{
+public class Main{
 	protected static ToDoList todoList = new ToDoList();
 	
 	public static void main(String[] args) {
-        Application.launch(Main.class, (java.lang.String[])null);
+        //Application.launch(Main.class, (java.lang.String[])null);
+		try {
+			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			todoList = (ToDoList) in.readObject();
+			MainMenu a = new MainMenu(todoList);
+			in.close();
+			fileIn.close();
+		} catch (FileNotFoundException e1) {
+			MainMenu a = new MainMenu(null);
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		if (todoList.getActiveTasks() == null) {
+			todoList = new ToDoList();
+		}
     }
 
 	
