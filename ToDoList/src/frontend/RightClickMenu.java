@@ -71,13 +71,21 @@ public class RightClickMenu{
 		menu.setVisible(true);
 	}
 	
-	public void popup(Task t, boolean setCanComplete){//has to work with
+	public void popup(Task t, boolean setCanComplete){//has to work with completed items menu
 		task = t;
 		
-		if(canComplete)
-		
+		if(canComplete){
+			//set completed to be usable 
+		}else{
+			//gray out set completed
+		}
+			
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
 		
 		menu.setVisible(true);
+	}
+	
+	public void hide(){
+		menu.setVisible(false);
 	}
 }

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -35,6 +36,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	
 	JMenu fileMenu;
 	JMenuItem backup, restore, print, closedItems;
+	
+	RightClickMenu rightClick;
+	
 	private static ToDoList toDoList;
 	final static int WIDTH = 1000;
 	final static int HEIGHT = 800;
@@ -45,6 +49,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		else
 			toDoList = list;
 		
+		toDoList.checkPriorityChange(Calendar.getInstance().getTime());
+		
 		activeTasks = toDoList.getActiveTasks();
 		
 		
@@ -54,6 +60,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 
 			}
 		});
+		
+		rightClick = new RightClickMenu(null);
+		rightClick.hide();
 		
 		frame = new JFrame("To Do List");
 		
@@ -77,7 +86,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		restore.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//closed action items opens
+				//restore list from chosen file
 			}
 		});
 		
@@ -105,13 +114,13 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			}
 		});
 		
-		closedItems.setPreferredSize(new Dimension(50, 50));//y is it so big
+		//closedItems.setPreferredSize(new Dimension(50, 50));//y is it so big
 		
 		bar.add(closedItems);
 		
 		//bar.add(Box.createGlue());
 		
-		bar.setPreferredSize(new Dimension(50,50));
+		//bar.setPreferredSize(new Dimension(50,50));
 		
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
@@ -124,7 +133,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 						fileOut.close();
 			        }catch(IOException i)
 			        {
-			            i.printStackTrace();
 			        }
 
 			  }
@@ -140,13 +148,50 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		display = new JList(activeTasks.toArray());
+		display = new JList<Task>();
 		
 		display.getModel();
 		
 		//	ListCellRenderer<Task> cl = new ListCellRenderer<Task>();
 		
 		//display.setCellRenderer(cellRenderer);
+		
+		display.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent me) {// TODO this is where right click should open
+				System.out.println(display.getSelectedValue().getName());
+				
+				if(me.getButton() == MouseEvent.BUTTON2)
+					rightClick.popup(display.getSelectedValue(), true);
+				
+				
+			}
+
+			
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		scrollPane.setViewportView(display);
 		
@@ -174,6 +219,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		});
 		
 		//add listselectionlistener? for rightclick
+		
+		
+		
 		
 		frame.add(bar);
 		frame.add(scrollPane);// I dont think we need a horizontal scroll bar
@@ -203,8 +251,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		String msg;
 		int notches = e.getWheelRotation();
-		
 	}
-	
 	
 }
