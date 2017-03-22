@@ -2,6 +2,7 @@ package backend;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ToDoList implements Serializable{
 	
@@ -48,6 +49,21 @@ public class ToDoList implements Serializable{
 	public void switchTaskToCompleted(Task task){
 		activeTasks.remove(task);
 		completedTasks.add(task);
+	}
+	
+	public void checkPriorityChange(Date date){
+		for(Task task : activeTasks){
+			Date[] priority = task.getDates();
+			for(int i = 0; i < priority.length; i++){
+				if(priority[i] != null){
+					if(date.after(priority[i])){
+						task.setStatus(i + 1);
+						task.storeDate(null,i);
+					}
+				}
+
+			}
+		}
 	}
 	
 	

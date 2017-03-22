@@ -37,7 +37,7 @@ public class Task implements Serializable{
 	private ArrayList<PriorityChange> priorityChanges;
 	private ArrayList<NameChange> nameChanges;
 	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
-	private Date[] priorityChange;
+	private Date[] priorityChange = new Date[3];
 	private Date dateCreated;
 
 	public static final int DEFAULT_STATUS = 2;//Default status (2) means Current
@@ -178,6 +178,10 @@ public class Task implements Serializable{
 		}
 		if(commCheck != null)
 			comments.remove(commCheck);
+	}
+	
+	public void storeDate(Date day, int index){
+		priorityChange[index] = day;
 	}
 	
 	public String toString(){
