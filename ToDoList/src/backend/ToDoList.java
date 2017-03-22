@@ -26,6 +26,21 @@ public class ToDoList implements Serializable{
 		activeTasks.remove(task);
 	}
 	
+	public void sortTasks(){
+		 int n = activeTasks.size();  
+	        Task temp;  
+	         for(int i=0; i < n; i++){  
+	                 for(int k=1; k < (n-i); k++){  
+	                          if(activeTasks.get(k-1).getStatus() > activeTasks.get(k).getStatus()){    
+	                                 temp = activeTasks.get(k-1);  
+	                                 activeTasks.set(k-1, activeTasks.get(k));
+	                                 activeTasks.set(k, temp);
+	                         }  
+	                          
+	                 }  
+	         }  
+	}
+	
 	public ArrayList<Task> getCompletedTasks(){
 		return completedTasks;
 	}
