@@ -6,9 +6,9 @@ import javax.swing.*;
 
 import backend.*;
 
-public class CommentWindow {
+public class CommentWindow implements WindowListener{
 	private JFrame mainFrame;
-	private JLabel statusLabel;
+	//private JLabel statusLabel;
 	private JPanel controlPanel;
 	private JButton commit,delete;
 	private JTextField userText;
@@ -20,7 +20,7 @@ public class CommentWindow {
 		prepareGUI_ONLYtask();
 		userTask = task;
 	}
-	
+
 	public CommentWindow(Task task, Comment commentToEdit){
 		userComment = commentToEdit;
 		prepareGUI();
@@ -30,66 +30,87 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(900,800);
 		mainFrame.setLayout(new GridLayout(0,1));
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		mainFrame.addWindowListener(new WindowAdapter() {
+
+			public void windowClosed(WindowEvent e) {
+				
+			}
+        });
 
 		controlPanel = new JPanel();
-		controlPanel.setLayout(new GridLayout(3,6));
-		//controlPanel.setLayout(new FlowLayout());
-		JLabel label1 = new JLabel();
-		JLabel label2;
-		JLabel label3;
-		JLabel label4;
-		JLabel label5;
-		JLabel label6;
-		JLabel label7;
-		JLabel label8;
-		JLabel label9;
-		JLabel label10;
-		JLabel label11;
-		JLabel label12;
-		JLabel label13;
-		JLabel label14;
+		controlPanel.setSize(900,1000);
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		controlPanel.setLayout(gridbag);
+		c.fill = GridBagConstraints.HORIZONTAL;
+
 		scrollPane = new JScrollPane(controlPanel);
 
-		mainFrame.add(scrollPane);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
 		mainFrame.setVisible(true);
-		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
+		mainFrame.add(scrollPane);
+
+		JLabel  nameLabel = new JLabel("Comment", JLabel.RIGHT);
+		c.insets = new Insets(10,0,0,20);
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		gridbag.setConstraints(nameLabel, c);
+		controlPanel.add(nameLabel);
+
 		userText = new JTextField(25);
 		if(userComment != null)
 			userText.setText(userComment.getComment());
+		c.insets = new Insets(10,0,0,0);
+		c.gridx = 1;
+		c.gridy = 0;
+		gridbag.setConstraints(userText, c);
+		controlPanel.add(userText);
 
 		commit = new JButton("Commit Comment");
-		commit.setPreferredSize(new Dimension(200,30));
+		commit.setPreferredSize(new Dimension(100,30));
 		commit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Commit Comment")){
 					String g1 = userText.getText();
 					userTask.addComment(g1);
+					mainFrame.dispose();
 				}
 			}
 		});
+		c.weighty = 1.0;
+		c.anchor = GridBagConstraints.SOUTH;//bottom of space
+		c.insets = new Insets(10,20,20,20);    //top padding
+		c.gridx = 2;       					//aligned with button 2
+		c.gridy = 2;       					//third row
+		gridbag.setConstraints(commit, c);
+		controlPanel.add(commit);
+
 		delete = new JButton("Delete Comment");
-		delete.setPreferredSize(new Dimension(200,30));
+		delete.setPreferredSize(new Dimension(100,30));
 		delete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Delete Comment")){
 					String g1 = userText.getText();
 					userTask.deleteComment(new Comment(g1));
+					mainFrame.dispose();
 				}
 			}
 		});
-		controlPanel.add(namelabel);
-		controlPanel.add(userText);
-		controlPanel.add(label1);
-		controlPanel.add(commit);
+		c.weighty = 1.0;
+		c.anchor = GridBagConstraints.SOUTH;//bottom of space
+		c.insets = new Insets(10,0,20,20);    //top padding
+		c.gridx = 1;       					//aligned with button 2
+		c.gridy = 2;  
+		gridbag.setConstraints(delete,c);
 		controlPanel.add(delete);
-		mainFrame.setVisible(true);
 	}
-	
+
 	private void prepareGUI_ONLYtask(){
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(900,400);
@@ -101,10 +122,10 @@ public class CommentWindow {
 
 		mainFrame.add(controlPanel);
 		mainFrame.setVisible(true);
-		
+
 		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
 		userText = new JTextField(50); 
-		
+
 		JButton commit = new JButton("Commit Comment");
 		commit.setPreferredSize(new Dimension(100,100));
 		commit.addActionListener(new ActionListener(){
@@ -133,4 +154,14 @@ public class CommentWindow {
 		controlPanel.add(delete);
 		mainFrame.setVisible(true);  
 	}
+	public void windowClosed(WindowEvent e) {
+		
+	}
+	
+	public void windowActivated(WindowEvent e){}
+	public void windowClosing(WindowEvent e){}
+	public void windowDeactivated(WindowEvent e){}
+	public void windowDeiconified(WindowEvent e){}
+	public void windowIconified(WindowEvent e){}
+	public void windowOpened(WindowEvent e){}
 }
