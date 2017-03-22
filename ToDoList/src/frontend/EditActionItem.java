@@ -328,7 +328,13 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		groupButton.add(radioButton2);
 		groupButton.add(radioButton3);
 		groupButton.add(radioButton4);
+		
+		JFrame frame = new JFrame(tasker.getName());
 
+		frame.setContentPane(this);
+		frame.setPreferredSize(new Dimension(600,300));
+		frame.pack();
+		frame.setVisible(true);
 	}
 
 
@@ -345,14 +351,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("This");
-		Task e = new Task("NameOfTask");
-
-		EditActionItem x = new EditActionItem(e);
-		frame.setContentPane(x);
-		frame.setVisible(true);
-		frame.setPreferredSize(new Dimension(600,300));
-		frame.pack();
+		
 	}
 
 	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{

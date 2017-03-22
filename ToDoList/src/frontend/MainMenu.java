@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 import javax.swing.JMenuBar;
 import javax.swing.ScrollPaneConstants;
 
@@ -141,6 +142,12 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		display = new JList(activeTasks.toArray());
 		
+		display.getModel();
+		
+		//	ListCellRenderer<Task> cl = new ListCellRenderer<Task>();
+		
+		//display.setCellRenderer(cellRenderer);
+		
 		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -198,4 +205,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		int notches = e.getWheelRotation();
 		
 	}
+	
+	
 }
