@@ -32,7 +32,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(900,800);
 		mainFrame.setLayout(new GridLayout(0,1));
-		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		mainFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e) {
 				history.makeWindow();
@@ -115,7 +115,7 @@ public class CommentWindow {
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(900,800);
 		mainFrame.setLayout(new GridLayout(0,1));
-		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		controlPanel = new JPanel();
 		controlPanel.setSize(900,1000);
