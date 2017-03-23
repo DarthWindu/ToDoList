@@ -103,7 +103,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CurrentDay.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -115,7 +115,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CurrentYear.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -127,7 +127,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				UrgentMonth.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -139,7 +139,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				UrgentDay.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -151,7 +151,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				UrgentYear.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -163,7 +163,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				EventualMonth.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -175,7 +175,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				EventualDay.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -187,7 +187,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				EventualYear.setText("");
 			}
 
-			@Override
+			
 			public void focusLost(FocusEvent arg0) {
 
 			}
