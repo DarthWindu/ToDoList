@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.JMenuBar;
 import javax.swing.ScrollPaneConstants;
 
@@ -35,6 +37,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	
 	JMenu fileMenu;
 	JMenuItem backup, restore, print, closedItems;
+	
+	RightClickMenu rightClick;
+	
 	private static ToDoList toDoList;
 	final static int WIDTH = 1000;
 	final static int HEIGHT = 800;
@@ -45,6 +50,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		else
 			toDoList = list;
 		
+		toDoList.checkPriorityChange(Calendar.getInstance().getTime());
+		
 		activeTasks = toDoList.getActiveTasks();
 		
 		
@@ -54,6 +61,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 
 			}
 		});
+		
+		rightClick = new RightClickMenu(null);
+		rightClick.hide();
 		
 		frame = new JFrame("To Do List");
 		
@@ -77,7 +87,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		restore.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//closed action items opens
+				//restore list from chosen file
 			}
 		});
 		
@@ -105,13 +115,13 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			}
 		});
 		
-		closedItems.setPreferredSize(new Dimension(50, 50));//y is it so big
+		//closedItems.setPreferredSize(new Dimension(50, 50));//y is it so big
 		
 		bar.add(closedItems);
 		
 		//bar.add(Box.createGlue());
 		
-		bar.setPreferredSize(new Dimension(50,50));
+		//bar.setPreferredSize(new Dimension(50,50));
 		
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
@@ -124,7 +134,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 						fileOut.close();
 			        }catch(IOException i)
 			        {
-			            i.printStackTrace();
 			        }
 
 			  }
@@ -140,14 +149,72 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		display = new JList(activeTasks.toArray());
+		display = new JList(toDoList.getActiveTasks().toArray());
 		
-		display.getModel();
+		display.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//may need to change
+		
+		//display.getModel();
 		
 		//	ListCellRenderer<Task> cl = new ListCellRenderer<Task>();
 		
 		//display.setCellRenderer(cellRenderer);
 		
+		display.addMouseListener( new MouseAdapter(){//doesn't work when there is stuff added in???
+			public void mouseClicked(MouseEvent e){
+				
+				System.out.println("a");
+		        if (e.getButton() == MouseEvent.BUTTON3)
+		        {
+		        	
+		            //int row = display.locationToIndex(e.getPoint());
+		            //display.setSelectedIndex(row);
+		            
+		            //(Task)toDoList.getActiveTasks().toArray()[display.locationToIndex(e.getPoint())]
+		            display.setSelectedIndex(display.locationToIndex(e.getPoint()));
+		            rightClick.popup(display.getSelectedValue(), true);//
+		            
+		            
+		        }
+		    }
+		   });
+		/*
+		display.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent me) {// TODO this is where right click should open
+				System.out.println(display.getSelectedValue().getName());
+				
+				if(me.getButton() == MouseEvent.BUTTON2)
+					rightClick.popup(display.getSelectedValue(), true);
+				
+				
+			}
+
+			
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		*/
 		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -162,6 +229,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 				if(!addTask.getText().equals("")){
 					toDoList.add(new Task(addTask.getText()));
 					
+					toDoList.checkPriorityChange(Calendar.getInstance().getTime());
+					
 					activeTasks = toDoList.getActiveTasks();
 					
 					display = new JList(activeTasks.toArray());
@@ -174,6 +243,9 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		});
 		
 		//add listselectionlistener? for rightclick
+		
+		
+		
 		
 		frame.add(bar);
 		frame.add(scrollPane);// I dont think we need a horizontal scroll bar
@@ -203,8 +275,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		String msg;
 		int notches = e.getWheelRotation();
-		
 	}
-	
 	
 }

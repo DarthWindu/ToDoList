@@ -22,7 +22,7 @@
                         <MenuItem fx:id="menuPrint" mnemonicParsing="false" text="Print" />
                   </items>
                 </Menu>
-                <Menu fx:id="menuCAI" mnemonicParsing="false" text="Closed Action Items" />
+                <Menu fx:id="menuCAI" mnemonicParsing="false" onMenuValidation="#completedTasksOnAction" />
                   <Menu fx:id="menuQuit" mnemonicParsing="false" text="Quit" />
                 <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
                   <items>

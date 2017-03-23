@@ -1,8 +1,7 @@
 package frontend;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +15,7 @@ public class HistoryWindow implements MouseListener{
 	JPanel panel,holder;
 	JScrollPane scrollPane;
 	JLabel changeType,changeText;
+	Task t;
 	long firstClick = 0;
 	boolean commented = false;
 	boolean in,out;
@@ -23,10 +23,11 @@ public class HistoryWindow implements MouseListener{
 	HistoryWindow(Task task) {
 		ArrayList<HistoryItem> history = task.getHistoryItems();
 		String text = "";
+		t = task;
 
 		frame = new JFrame("History Window");
 		frame.setSize(new Dimension(1600,850));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		panel = new JPanel();
 		panel.setSize(new Dimension(1600,850));
@@ -93,7 +94,6 @@ public class HistoryWindow implements MouseListener{
 						in = true;
 						out = false;
 					}
-
 					public void mouseExited(MouseEvent e) {
 						in = false;
 						out = true;
@@ -109,7 +109,7 @@ public class HistoryWindow implements MouseListener{
 							JPanel a = (JPanel)e.getSource();
 							JLabel b = (JLabel)a.getComponent(1);
 							String withdraw = b.getText();
-							System.out.println(withdraw);
+							//System.out.println(withdraw);
 							for(HistoryItem hist: history) {
 								try {
 									Comment comm = (Comment)hist;
@@ -141,5 +141,9 @@ public class HistoryWindow implements MouseListener{
 	public void mouseExited(MouseEvent e) {}
 	public void mousePressed(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}
-
+	
+	public void makeWindow() {
+		frame.dispose();
+		HistoryWindow history = new HistoryWindow(t);
+	}
 }
