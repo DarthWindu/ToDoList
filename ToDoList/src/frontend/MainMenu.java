@@ -18,7 +18,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.JMenuBar;
@@ -160,7 +159,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		//display.setCellRenderer(cellRenderer);
 		
-		display.addMouseListener(new MouseAdapter(){//doesn't work when there is stuff added in???
+		display.addMouseListener( new MouseAdapter(){//doesn't work when there is stuff added in???
 			public void mouseClicked(MouseEvent e){
 				
 				System.out.println("a");
@@ -177,15 +176,51 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		            
 		        }
 		    }
+		   });
+		/*
+		display.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent me) {// TODO this is where right click should open
+				System.out.println(display.getSelectedValue().getName());
+				
+				if(me.getButton() == MouseEvent.BUTTON2)
+					rightClick.popup(display.getSelectedValue(), true);
+				
+				
+			}
+
+			
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 		});
-		
-		//scrollPane.setViewportView(display);
-		
-		scrollPane.setPreferredSize(new Dimension(200,200));
-		
-		scrollPane.getViewport().add(display);
+		*/
+		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		scrollPane.setVisible(true);
 		
 		frame.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		
@@ -194,19 +229,26 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 				if(!addTask.getText().equals("")){
 					toDoList.add(new Task(addTask.getText()));
 					
-					updateMain();
+					toDoList.checkPriorityChange(Calendar.getInstance().getTime());
+					
+					activeTasks = toDoList.getActiveTasks();
+					
+					display = new JList(activeTasks.toArray());
+					
+					scrollPane.setViewportView(display);
 					
 					addTask.setText("");
 				}
 			}
 		});
 		
+		//add listselectionlistener? for rightclick
+		
+		
+		
 		
 		frame.add(bar);
-		
-		
 		frame.add(scrollPane);// I dont think we need a horizontal scroll bar
-		
 		frame.add(addTask);
 		
 		frame.pack();
@@ -235,15 +277,4 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		int notches = e.getWheelRotation();
 	}
 	
-	public void updateMain(){
-		toDoList.checkPriorityChange(Calendar.getInstance().getTime());
-		
-		activeTasks = toDoList.getActiveTasks();
-		
-		display = new JList(activeTasks.toArray());
-	}
-	
 }
-
-
-
