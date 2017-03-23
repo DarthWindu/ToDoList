@@ -20,8 +20,8 @@ public class HistoryWindow implements MouseListener{
 	boolean commented = false;
 	boolean in,out;
 
-	HistoryWindow(Task task) {
-		ArrayList<HistoryItem> history = task.getHistoryItems();
+	HistoryWindow(final Task task) {
+		final ArrayList<HistoryItem> history = task.getHistoryItems();
 		String text = "";
 		t = task;
 
@@ -114,7 +114,7 @@ public class HistoryWindow implements MouseListener{
 								try {
 									Comment comm = (Comment)hist;
 									if(comm.getComment().equals(withdraw))
-										new CommentWindow(task,comm);
+										new CommentWindow(task,comm,getHistory());
 								} catch(Exception ex){}
 							}
 						}
@@ -141,9 +141,13 @@ public class HistoryWindow implements MouseListener{
 	public void mouseExited(MouseEvent e) {}
 	public void mousePressed(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}
-	
+
 	public void makeWindow() {
 		frame.dispose();
 		HistoryWindow history = new HistoryWindow(t);
 	}
+	public HistoryWindow getHistory() {
+		return this;
+	}
 }
+
