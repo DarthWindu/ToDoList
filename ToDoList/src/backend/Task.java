@@ -169,22 +169,36 @@ public class Task implements Serializable{
 		//Returns true if both tasks' names and status values match
 	}
 
-	public void deleteComment(Comment comment) {
+	public void deleteComment(Comment comment)
+	{
 		Comment commCheck = null;
 
 		for(Comment com: comments) {
-			if(com.isEqual(comment))
+			if(com.getComment().equals(comment.getComment()))
 				commCheck = com;
 		}
-		if(commCheck != null)
+		if(commCheck != null) {
 			comments.remove(commCheck);
+			historyEvents.remove(commCheck);
+		}
 	}
-	
-	public void storeDate(Date day, int index){
+
+	public void storeDate(Date day, int index)
+	{
 		priorityChange[index] = day;
 	}
-	
-	public String toString(){
+
+	public String toString()
+	{
 		return getName();
+	}
+
+	public void changeComment(String change, Comment comment)
+	{
+		for(Comment comm: comments) {
+			if(comm.equals(comment)) {
+				comm.setComment(change);
+			}
+		}
 	}
 }
