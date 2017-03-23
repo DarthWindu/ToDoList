@@ -2,6 +2,7 @@ package frontend;
 
 import backend.*;
 
+
 import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.LEADING;
 
@@ -14,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -33,7 +36,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	UrgentMonth, UrgentDay, UrgentYear, EventualMonth, EventualDay, EventualYear;
 	Task tasker;
 	ButtonGroup groupButton;
-	EditActionItem(Task task)
+	public EditActionItem(Task task)
 	{
 		tasker = task;
 		groupButton = new ButtonGroup();
@@ -68,7 +71,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		name.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent e){
-				name.setText("");
+				//name.setText(""); <--what were you thinking?
 			}
 
 			public void focusLost(FocusEvent e)
@@ -329,12 +332,19 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		groupButton.add(radioButton3);
 		groupButton.add(radioButton4);
 		
-		JFrame frame = new JFrame(tasker.getName());
+		//JFrame frame = new JFrame(tasker.getName());
+		JDialog dialog = new JDialog();
+		dialog.setContentPane(this);
+		dialog.setModal(true);
+		dialog.setPreferredSize(new Dimension(600,300));
+		dialog.setSize(600, 300);
+		dialog.setVisible(true);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-		frame.setContentPane(this);
+		/*frame.setContentPane(this);
 		frame.setPreferredSize(new Dimension(600,300));
 		frame.pack();
-		frame.setVisible(true);
+		frame.setVisible(true);*/
 	}
 
 

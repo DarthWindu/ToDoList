@@ -102,8 +102,8 @@ public class Task implements Serializable{
 		historyEvents.add(change);
 		status = new Integer(newStatus);
 
-		if(newStatus == COMPLETED)
-			MainMenu.getList().switchTaskToCompleted(this);
+		//if(newStatus == COMPLETED)
+		//	MainMenu.getList().switchTaskToCompleted(this);
 
 	}
 

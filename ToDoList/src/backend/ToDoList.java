@@ -6,6 +6,10 @@ import java.util.Date;
 
 public class ToDoList implements Serializable{
 	
+	/**
+	 * Don't change this
+	 */
+	private static final long serialVersionUID = 1582472173711463948L;
 	private ArrayList<Task> activeTasks;
 	private ArrayList<Task> completedTasks;
 	//initializes variables
@@ -64,6 +68,29 @@ public class ToDoList implements Serializable{
 
 			}
 		}
+	}
+	
+	public Task getTask(String taskName) {
+		for (int counter = 0; counter < activeTasks.size(); counter ++) {
+			if (activeTasks.get(counter).getName().equals(taskName)) {
+				return activeTasks.get(counter);
+			}
+		}
+		
+		return null;
+		//No Task with this name was found
+	}
+	
+	public boolean setTaskCompleted(String taskName) {
+		boolean stopForLoop = false;
+		for (int counter = 0; counter < activeTasks.size() && !stopForLoop; counter ++) {
+			if (activeTasks.get(counter).getName().equals(taskName)) {
+				completedTasks.add(activeTasks.remove(counter));
+				stopForLoop = true;
+			}
+		}
+		
+		return !stopForLoop;//True if successfully switched.
 	}
 	
 	
