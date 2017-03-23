@@ -130,7 +130,6 @@ public class MainController {
 		//Double Click Action Listener for List view of active tasks
 		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-			@Override
 			public void handle(MouseEvent click) {
 
 				if (click.getClickCount() == 2) {
@@ -149,7 +148,7 @@ public class MainController {
                 ButtonBuilder.create()
                 .text("Completed Tasks")
                 .onAction(new EventHandler<ActionEvent>(){
-                    @Override public void handle(ActionEvent event) {
+                    public void handle(ActionEvent event) {
                         //TODO
                     	System.out.println("CAI Action Fired");
         				//Use ListView's getSelected Item
@@ -179,7 +178,7 @@ public class MainController {
 		contextMenu.getItems().addAll(completed, deleteTask, edit);
 
 		completed.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
+			
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
@@ -190,7 +189,7 @@ public class MainController {
 			}
 		});
 		deleteTask.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
+			
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
@@ -200,7 +199,7 @@ public class MainController {
 			}
 		});
 		edit.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
+			
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
@@ -236,7 +235,6 @@ public class MainController {
 
 		myCustomListView.setItems(data);
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-			@Override
 			public ListCell<String> call(ListView<String> list) {
 				return new TaskCell();
 			}
@@ -281,7 +279,6 @@ public class MainController {
 		}
 		myCustomListView.setItems(data);
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-			@Override
 			public ListCell<String> call(ListView<String> list) {
 				return new TaskCell();
 			}
