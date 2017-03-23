@@ -319,6 +319,11 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				}
 			}
 		});
+		
+		//window listener that stores dates when window is closed
+		//Date(int year, int month, int date)
+		//call task.storeDate(new Date(), int index)^^^
+		// index for eventual is 0, current is 1, urgent is 2
 
 
 
@@ -492,6 +497,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		frame.setContentPane(this);
 		frame.setPreferredSize(new Dimension(600,300));
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 	}
