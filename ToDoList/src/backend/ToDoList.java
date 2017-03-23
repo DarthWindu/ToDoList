@@ -81,6 +81,17 @@ public class ToDoList implements Serializable{
 		//No Task with this name was found
 	}
 	
+	public Task getCompletedTask(String taskName) {
+		for (int counter = 0; counter < completedTasks.size(); counter ++) {
+			if (completedTasks.get(counter).getName().equals(taskName)) {
+				return completedTasks.get(counter);
+			}
+		}
+		
+		return null;
+		//No Task with this name was found
+	}
+	
 	public boolean setTaskCompleted(String taskName) {
 		boolean stopForLoop = false;
 		for (int counter = 0; counter < activeTasks.size() && !stopForLoop; counter ++) {

@@ -50,7 +50,7 @@ public class Main extends Application{
             ScrollPane page = (ScrollPane) FXMLLoader.load(getClass().getResource("test1.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("FXML is Simple");
+            primaryStage.setTitle("ToDoList - Student Edition");
             primaryStage.show();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

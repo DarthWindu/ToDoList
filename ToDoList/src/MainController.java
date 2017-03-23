@@ -163,7 +163,7 @@ public class MainController {
         					e.printStackTrace();
         				}
         			    stage.setScene(new Scene(root));
-        			    stage.setTitle("My modal window");
+        			    stage.setTitle("Completed Tasks");
         			    stage.initModality(Modality.WINDOW_MODAL);
         			    stage.initOwner(
         			        ((Node)event.getSource()).getScene().getWindow() );
