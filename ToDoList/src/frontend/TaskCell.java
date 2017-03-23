@@ -1,13 +1,7 @@
 package frontend;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;

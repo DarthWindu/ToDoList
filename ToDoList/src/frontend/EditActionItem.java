@@ -3,20 +3,16 @@ package frontend;
 import backend.*;
 
 
-import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.LEADING;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -70,10 +66,12 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		final BufferedImage im = createImage(this);
 
 		name.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e){
 				//name.setText(""); <--what were you thinking?
 			}
 
+			@Override
 			public void focusLost(FocusEvent e)
 			{
 				tasker.changeName(name.getText());
@@ -83,6 +81,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 
 		CurrentMonth.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				CurrentMonth.setText("");
@@ -95,6 +94,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		CurrentDay.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				CurrentDay.setText("");
@@ -107,6 +107,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		CurrentYear.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				CurrentYear.setText("");
@@ -119,6 +120,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		UrgentMonth.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				UrgentMonth.setText("");
@@ -131,6 +133,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		UrgentDay.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				UrgentDay.setText("");
@@ -143,6 +146,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		UrgentYear.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				UrgentYear.setText("");
@@ -155,6 +159,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		EventualMonth.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				EventualMonth.setText("");
@@ -167,6 +172,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		EventualDay.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				EventualDay.setText("");
@@ -179,6 +185,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 		});
 		EventualYear.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				EventualYear.setText("");
@@ -197,6 +204,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		name.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "enter");
 		name.getActionMap().put("enter", new AbstractAction(){
+			@Override
 			public void actionPerformed(ActionEvent arg3)
 			{
 				tasker.changeName(name.getText());
@@ -205,6 +213,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		});
 		historyButton.addActionListener(new ActionListener()
 		{
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				HistoryWindow hist = new HistoryWindow(tasker);
@@ -212,6 +221,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		});
 		commentButton.addActionListener(new ActionListener ()
 		{
+			@Override
 			public void actionPerformed(ActionEvent arg1)
 			{
 				CommentWindow cw = new CommentWindow(tasker);
@@ -224,10 +234,12 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		/////////////////////////////////////////////////////
 		print.addActionListener(new ActionListener ()
 		{
+			@Override
 			public void actionPerformed( ActionEvent ae ) {
 				PrinterJob job = PrinterJob.getPrinterJob();
 				job.setPrintable( new Printable()
 				{
+					@Override
 					public int print(Graphics pg, PageFormat pf, int pageNum)
 					{
 						if(pageNum != 0)
@@ -339,7 +351,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		dialog.setPreferredSize(new Dimension(600,300));
 		dialog.setSize(600, 300);
 		dialog.setVisible(true);
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		/*frame.setContentPane(this);
 		frame.setPreferredSize(new Dimension(600,300));
@@ -348,6 +360,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	}
 
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 
 	}
@@ -364,6 +377,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		
 	}
 
+	@Override
 	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
 		return pageIndex;
 

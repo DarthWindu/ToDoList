@@ -30,6 +30,7 @@ class Printer extends JPanel implements Printable  {
 
 	public void hookUpEvents() {
 		print.addActionListener( new ActionListener() {
+			@Override
 			public void actionPerformed( ActionEvent ae ) {
 				PrinterJob job = PrinterJob.getPrinterJob();
 				job.setPrintable( new Printer() );
@@ -45,6 +46,7 @@ class Printer extends JPanel implements Printable  {
 		});
 	}
 
+	@Override
 	public int print( Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.translate(pf.getImageableX(), pf.getImageableY());

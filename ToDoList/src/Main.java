@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 import backend.*;
-import frontend.*;
 
 public class Main extends Application{
 	protected static ToDoList todoList = new ToDoList();
@@ -26,11 +24,12 @@ public class Main extends Application{
     }
 
 	
+	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primStage = primaryStage;
 		//import code the saved to do list is saved in todoList
 		try {
-			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
+			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			todoList = (ToDoList) in.readObject();
 			in.close();
@@ -72,7 +71,7 @@ public class Main extends Application{
 	  //export code
 	    try
         {
-			FileOutputStream fileOut = new FileOutputStream("src/" + "todolist" + ".java");
+			FileOutputStream fileOut = new FileOutputStream("./" + "todolist" + ".java");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(todoList); // change this to the toDoList you are trying to save - Done
 			out.close();
