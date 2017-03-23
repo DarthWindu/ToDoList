@@ -40,19 +40,17 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		groupButton = new ButtonGroup();
 
 
-		//this.setLayout(new GridLayout(0,2));
-		//	this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-
-		name = new JTextField(tasker.getName());
+		//Hundreds and hundreds of variables.
+		name = new JTextField(task.getName());
 		CurrentMonth = new JTextField("MM");
 		CurrentDay = new JTextField("DD");
-		CurrentYear = new JTextField("YY");
+		CurrentYear = new JTextField("YYYY");
 		UrgentMonth = new JTextField("MM");
 		UrgentDay = new JTextField("DD");
-		UrgentYear = new JTextField("YY");
+		UrgentYear = new JTextField("YYYY");
 		EventualMonth = new JTextField("MM");
 		EventualDay = new JTextField("DD");
-		EventualYear = new JTextField("YY");
+		EventualYear = new JTextField("YYYY");
 
 		CurrentMonth.setEnabled(false);
 		CurrentDay.setEnabled(false);
@@ -63,7 +61,6 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		EventualMonth.setEnabled(false);
 		EventualDay.setEnabled(false);
 		EventualYear.setEnabled(false);
-
 
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
@@ -80,7 +77,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		name.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent e){
-				name.setText("");
+				//name.setText("");
 			}
 
 			public void focusLost(FocusEvent e)
@@ -103,7 +100,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CurrentDay.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -115,7 +112,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				CurrentYear.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -127,7 +124,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				UrgentMonth.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -139,7 +136,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				UrgentDay.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -151,7 +148,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				UrgentYear.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -163,7 +160,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				EventualMonth.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -175,7 +172,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				EventualDay.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -187,7 +184,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 				EventualYear.setText("");
 			}
 
-			
+
 			public void focusLost(FocusEvent arg0) {
 
 			}
@@ -226,6 +223,10 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void keyTyped( KeyEvent e ){
 				if (CurrentMonth.getText().length()>=2)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
@@ -234,14 +235,22 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void keyTyped( KeyEvent e ){
 				if (CurrentDay.getText().length()>=2)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
 
 		CurrentYear.addKeyListener(new KeyAdapter(){
 			public void keyTyped( KeyEvent e ){
-				if (CurrentYear.getText().length()>=2)
+				if (CurrentYear.getText().length()>=4)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
@@ -249,6 +258,10 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void keyTyped( KeyEvent e ){
 				if (UrgentMonth.getText().length()>=2)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
@@ -256,13 +269,21 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void keyTyped( KeyEvent e ){
 				if (UrgentDay.getText().length()>=2)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
 		UrgentYear.addKeyListener(new KeyAdapter(){
 			public void keyTyped( KeyEvent e ){
-				if (UrgentYear.getText().length()>=2)
+				if (UrgentYear.getText().length()>=4)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
@@ -270,6 +291,10 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void keyTyped( KeyEvent e ){
 				if (EventualMonth.getText().length()>=2)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
@@ -277,15 +302,24 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			public void keyTyped( KeyEvent e ){
 				if (EventualDay.getText().length()>=2)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
 
 		EventualYear.addKeyListener(new KeyAdapter(){
 			public void keyTyped( KeyEvent e ){
-				if (EventualYear.getText().length()>=2)
+				if (EventualYear.getText().length()>=4)
 					e.consume();
+				char c = e.getKeyChar();
+				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();  // ignore event
+				}
 			}
 		});
+
 
 
 
@@ -427,7 +461,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 					UrgentYear.setEnabled(false);
 				}
 			}
-			
+
 		});
 		checkEventual.addActionListener(new ActionListener()
 		{
@@ -444,11 +478,11 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 					EventualDay.setEnabled(false);
 					EventualYear.setEnabled(false);
 				}
-			
+
 			}
 		});
 
-	
+
 		groupButton.add(radioButton);
 		groupButton.add(radioButton2);
 		groupButton.add(radioButton3);
@@ -476,8 +510,8 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	}
 
 	public static void main(String[] args) {
-		Task a = new Task("X");
-		EditActionItem x = new EditActionItem(a);
+		Task w = new Task("WOO");
+		EditActionItem a = new EditActionItem(w);
 	}
 
 	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
