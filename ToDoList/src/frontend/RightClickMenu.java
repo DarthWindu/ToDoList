@@ -8,14 +8,12 @@ import java.awt.event.*;
 
 public class RightClickMenu{
 	private Task task;
-	private boolean canComplete;
 	JPopupMenu menu;
+	JMenuItem completeItem = new JMenuItem("Set priority to completed");
 	EditActionItem edit;
 	
 	RightClickMenu(Task passedTask){
 		menu = new JPopupMenu();
-		
-		JMenuItem completeItem = new JMenuItem("Set priority to completed");
 		
 		task = passedTask;
 		
@@ -41,14 +39,8 @@ public class RightClickMenu{
 		
 		editItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//edit = new EditActionItem(task);
+				edit = new EditActionItem(task);
 				
-				JFrame frame = new JFrame(task.getName());
-				
-				EditActionItem x = new EditActionItem(task);
-				frame.setContentPane(x);
-				frame.setVisible(true);
-				frame.pack();
 				
 				menu.setVisible(false);
 			}
@@ -71,14 +63,10 @@ public class RightClickMenu{
 		menu.setVisible(true);
 	}
 	
-	public void popup(Task t, boolean setCanComplete){//has to work with completed items menu
+	public void popup(Task t, boolean canComplete){//has to work with completed items menu
 		task = t;
 		
-		if(canComplete){
-			//set completed to be usable 
-		}else{
-			//gray out set completed
-		}
+		completeItem.setEnabled(canComplete);
 			
 		menu.setLocation(MouseInfo.getPointerInfo().getLocation());
 		

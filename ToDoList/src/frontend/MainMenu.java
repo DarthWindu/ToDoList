@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.JMenuBar;
 import javax.swing.ScrollPaneConstants;
 
@@ -148,14 +149,35 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		display = new JList<Task>();
+		display = new JList(toDoList.getActiveTasks().toArray());
 		
-		display.getModel();
+		display.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//may need to change
+		
+		//display.getModel();
 		
 		//	ListCellRenderer<Task> cl = new ListCellRenderer<Task>();
 		
 		//display.setCellRenderer(cellRenderer);
 		
+		display.addMouseListener( new MouseAdapter(){//doesn't work when there is stuff added in???
+			public void mouseClicked(MouseEvent e){
+				
+				System.out.println("a");
+		        if (e.getButton() == MouseEvent.BUTTON3)
+		        {
+		        	
+		            //int row = display.locationToIndex(e.getPoint());
+		            //display.setSelectedIndex(row);
+		            
+		            //(Task)toDoList.getActiveTasks().toArray()[display.locationToIndex(e.getPoint())]
+		            display.setSelectedIndex(display.locationToIndex(e.getPoint()));
+		            rightClick.popup(display.getSelectedValue(), true);//
+		            
+		            
+		        }
+		    }
+		   });
+		/*
 		display.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent me) {// TODO this is where right click should open
@@ -192,7 +214,7 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			}
 			
 		});
-		
+		*/
 		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,6 +228,8 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 			public void actionPerformed(ActionEvent e) {
 				if(!addTask.getText().equals("")){
 					toDoList.add(new Task(addTask.getText()));
+					
+					toDoList.checkPriorityChange(Calendar.getInstance().getTime());
 					
 					activeTasks = toDoList.getActiveTasks();
 					
