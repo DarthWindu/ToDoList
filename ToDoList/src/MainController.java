@@ -9,10 +9,13 @@ import frontend.EditActionItem;
 import frontend.MainMenu;
 import frontend.TaskCell;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -49,11 +52,16 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class MainController {
+	
+	public static int TDL_CHANGE_STATUS = 0;// 0 means unchanged, 1 means changed, add other meanings if necessary. Used to determine overwrite of default save.
+	public static int TDL_UNCHANGED = 0,
+					TDL_CHANGED = 1;
 
 	private ObservableList<String> data;
 	private ToDoList tdl = null;
@@ -130,13 +138,14 @@ public class MainController {
 		//Double Click Action Listener for List view of active tasks
 		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+			@Override
 			public void handle(MouseEvent click) {
 
 				if (click.getClickCount() == 2) {
 					//Use ListView's getSelected Item
 					String item = myCustomListView.getSelectionModel().getSelectedItem();
 					System.out.println("Double Click on: " + item);//Works
-					Task taskToEdit = Main.todoList.getTask(item);
+					Task taskToEdit = tdl.getTask(item);
 					new EditActionItem(taskToEdit);
 					loadTaskNames();//Works
 					//use this to do whatever you want to. Open Link etc.
@@ -148,11 +157,11 @@ public class MainController {
                 ButtonBuilder.create()
                 .text("Completed Tasks")
                 .onAction(new EventHandler<ActionEvent>(){
-                    public void handle(ActionEvent event) {
+                    @Override public void handle(ActionEvent event) {
                         //TODO
                     	System.out.println("CAI Action Fired");
         				//Use ListView's getSelected Item
-        				
+
         				Stage stage = new Stage();
         			    Parent root = null;
         				try {
@@ -169,7 +178,8 @@ public class MainController {
         			    stage.show();
                  } })
                 .build());
-		
+		//-------------------------------------------------------------------------------------------------------------------
+
 		//Set Right Click Menu
 		final ContextMenu contextMenu = new ContextMenu();
 		MenuItem completed = new MenuItem("Set task to completed");
@@ -178,32 +188,32 @@ public class MainController {
 		contextMenu.getItems().addAll(completed, deleteTask, edit);
 
 		completed.setOnAction(new EventHandler<ActionEvent>() {
-			
+			@Override
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToComplete = Main.todoList.getTask(item);
+				Task taskToComplete = tdl.getTask(item);
 				taskToComplete.setStatus(Task.COMPLETED);
 				tdl.setTaskCompleted(item);
 				loadTaskNames();
 			}
 		});
 		deleteTask.setOnAction(new EventHandler<ActionEvent>() {
-			
+			@Override
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToDelete = Main.todoList.getTask(item);
+				Task taskToDelete = tdl.getTask(item);
 				tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
 				loadTaskNames();
 			}
 		});
 		edit.setOnAction(new EventHandler<ActionEvent>() {
-			
+			@Override
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToEdit = Main.todoList.getTask(item);
+				Task taskToEdit = tdl.getTask(item);
 				contextMenu.hide();
 				new EditActionItem(taskToEdit);
 				loadTaskNames();//Works
@@ -212,6 +222,43 @@ public class MainController {
 		myCustomListView.setContextMenu(contextMenu);
 		//-------------------------------------------------------------------------------
 
+		menuCreateBackup.setOnAction(new EventHandler<ActionEvent>() {
+
+	          @Override
+	          public void handle(ActionEvent event) {
+	              FileChooser fileChooser = new FileChooser();
+
+	              //Set extension filter
+	              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
+	              fileChooser.getExtensionFilters().add(extFilter);
+
+	              //Show save file dialog
+	              File file = fileChooser.showSaveDialog(Main.primStage);
+
+	              if(file != null){
+	                  saveFile(file);
+	              }
+	          }
+	      });
+		//-----------------------------------------------------------------------------------
+		menuRestore_Backup.setOnAction(new EventHandler<ActionEvent>() {
+
+	          @Override
+	          public void handle(ActionEvent event) {
+	              FileChooser fileChooser = new FileChooser();
+
+	              //Set extension filter
+	              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
+	              fileChooser.getExtensionFilters().add(extFilter);
+
+	              //Show open file dialog
+	              File file = fileChooser.showOpenDialog(Main.primStage);
+
+	              if(file != null){
+	                  loadFromSave(file);
+	              }
+	          }
+	      });
 
 		//Load Task Names into List
 		tdl = Main.todoList;
@@ -231,10 +278,11 @@ public class MainController {
 			data = FXCollections.observableArrayList();
 		}
 
-		//SAMPLE - 
+		//SAMPLE -
 
 		myCustomListView.setItems(data);
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+			@Override
 			public ListCell<String> call(ListView<String> list) {
 				return new TaskCell();
 			}
@@ -261,7 +309,7 @@ public class MainController {
 	}
 
 	public void loadTaskNames() {
-		tdl = Main.todoList;
+		//tdl = Main.todoList;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
 			if (tasks != null) {
@@ -279,14 +327,62 @@ public class MainController {
 		}
 		myCustomListView.setItems(data);
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+			@Override
 			public ListCell<String> call(ListView<String> list) {
 				return new TaskCell();
 			}
 		});
 	}
-	
+
 	@FXML
 	public void completedTasksOnAction(ActionEvent evt) {
 		System.out.print("hkjhkjfd");
+	}
+
+	public boolean saveFile(File file) {
+		try
+        {
+			FileOutputStream fileOut = new FileOutputStream(file);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(tdl); // change this to the toDoList you are trying to save - Done
+			out.close();
+			fileOut.close();
+			return true;
+        }catch(IOException i)
+        {
+            i.printStackTrace();
+            return false;
+        }
+	}
+
+	public boolean loadFromSave(File file) {
+		ToDoList todoList_temp = null;
+		try {
+			FileInputStream fileIn = new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			todoList_temp = (ToDoList) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (FileNotFoundException e1) {
+			//MainMenu a = new MainMenu(null);
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		if (todoList_temp.getActiveTasks() == null) {
+			//ToDoList could not be de-serialized
+			System.out.println("Loading FAILED!!!!");
+			return false;
+		} else {
+			System.out.println("Loading Succeeded!");
+			tdl = todoList_temp;//Could cause bug
+			Main.todoList = todoList_temp;//Could cause bug
+			//MainController.TDL_CHANGE_STATUS = MainController.TDL_CHANGED;
+			loadTaskNames();
+			return true;
+		}
 	}
 }

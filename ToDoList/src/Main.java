@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,6 +18,8 @@ import frontend.*;
 
 public class Main extends Application{
 	protected static ToDoList todoList = new ToDoList();
+	protected static Stage primStage = null;
+	//public static File originOfToDoList;
 	
 	public static void main(String[] args) {
         Application.launch(Main.class, (java.lang.String[])null);
@@ -24,6 +27,7 @@ public class Main extends Application{
 
 	
 	public void start(Stage primaryStage) throws Exception {
+		primStage = primaryStage;
 		//import code the saved to do list is saved in todoList
 		try {
 			FileInputStream fileIn = new FileInputStream("src/" + "todolist" + ".java");
@@ -41,11 +45,12 @@ public class Main extends Application{
 		}
 		
 		if (todoList.getActiveTasks() == null) {
+			//ToDoList could not be de-serialized
 			todoList = new ToDoList();
 		}
 		
 		//Show Gui
-		
+		//MainController.TDL_CHANGE_STATUS = MainController.TDL_UNCHANGED;
 		try {
             ScrollPane page = (ScrollPane) FXMLLoader.load(getClass().getResource("test1.fxml"));
             Scene scene = new Scene(page);
