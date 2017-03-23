@@ -46,12 +46,15 @@ public class RightClickMenu{
 			}
 		});
 		
+		
+		//vv This is right?!??!?!
+		/*
 		menu.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				menu.setVisible(false);
 			}
 		});
-		
+		*/
 		menu.add(completeItem);
 		
 		menu.add(deleteItem);
