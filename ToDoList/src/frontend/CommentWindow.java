@@ -30,7 +30,7 @@ public class CommentWindow {
 	}
 	private void prepareGUI(){
 		mainFrame = new JFrame("Comment Window");
-		mainFrame.setSize(900,800);
+		mainFrame.setSize(600,300);
 		mainFrame.setLayout(new GridLayout(0,1));
 		mainFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		mainFrame.addWindowListener(new WindowAdapter() {
@@ -40,18 +40,19 @@ public class CommentWindow {
 		});
 
 		controlPanel = new JPanel();
-		controlPanel.setSize(900,1000);
+		controlPanel.setSize(600,300);
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		controlPanel.setLayout(gridbag);
 		c.fill = GridBagConstraints.HORIZONTAL;
 
-		scrollPane = new JScrollPane(controlPanel);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		scrollPane = new JScrollPane(controlPanel);
+//		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		mainFrame.setVisible(true);
-		mainFrame.add(scrollPane);
+		mainFrame.add(controlPanel);
+		//mainFrame.add(scrollPane);
 
 		JLabel  nameLabel = new JLabel("Comment", JLabel.RIGHT);
 		c.insets = new Insets(10,0,0,20);
@@ -84,7 +85,7 @@ public class CommentWindow {
 		});
 		c.weighty = 1.0;
 		c.anchor = GridBagConstraints.SOUTH;//bottom of space
-		c.insets = new Insets(10,20,20,20); //top padding
+		c.insets = new Insets(10,0,20,20); //top padding
 		c.gridx = 2;       					//aligned with button 2
 		c.gridy = 2;       					//third row
 		gridbag.setConstraints(commit, c);

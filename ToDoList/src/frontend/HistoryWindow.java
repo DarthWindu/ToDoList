@@ -26,11 +26,11 @@ public class HistoryWindow implements MouseListener{
 		t = task;
 
 		frame = new JFrame("History Window");
-		frame.setSize(new Dimension(1600,850));
+		frame.setSize(new Dimension(800,500));
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		panel = new JPanel();
-		panel.setSize(new Dimension(1600,850));
+		panel.setSize(new Dimension(800,500));
 		panel.setLayout(new GridLayout(0,1,0,20));
 		panel.addMouseListener(this);
 
