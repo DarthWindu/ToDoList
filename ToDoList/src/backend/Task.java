@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextBuilder;
-
 /**
  * @author Pujit M.
  * 
@@ -184,8 +178,15 @@ public class Task implements Serializable{
 			if(com.isEqual(comment))
 				commCheck = com;
 		}
-		if(commCheck != null)
+		
+		/*for (int counter = 0; counter < comments.size(); counter ++) {
+			
+		}*/
+		if(commCheck != null) {
 			comments.remove(commCheck);
+			historyEvents.remove(commCheck);
+		}
+			
 	}
 
 	/*public void storeDate(Date day, int index){

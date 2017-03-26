@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXListView;
 
 import backend.Task;
 import backend.ToDoList;
-import frontend.EditActionItem;
 import frontend.EditActionWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

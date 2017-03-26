@@ -9,7 +9,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.text.Text;
 
 public class TaskCell extends ListCell<String>{ //Chaange string to Text if you choose that route
 	private int indexToDelete = -1;
@@ -144,24 +143,27 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 			//this.setItem(item);
 			this.setText(item);
 		}
-		
-		if (Main.todoList.getTask(item) != null) {
-			switch (Main.todoList.getTask(item).getStatus()) {
-			case Task.URGENT: super.setStyle("-fx-font-weight: bold");
-				break;
+		try {
+			if (Main.todoList.getTask(item) != null) {
+				switch (Main.todoList.getTask(item).getStatus()) {
+				case Task.URGENT: super.setStyle("-fx-font-weight: bold");
+					break;
+					
+				case Task.CURRENT: super.setStyle("-fx-font-weight: normal");
+					break;
 				
-			case Task.CURRENT: super.setStyle("-fx-font-weight: normal");
-				break;
-			
-			case Task.EVENTUAL: super.setStyle("-fx-font-style: italic");
-				break;
+				case Task.EVENTUAL: super.setStyle("-fx-font-style: italic");
+					break;
+					
+				case Task.INACTIVE: super.setStyle("-fx-font-style: italic");
+					break;
 				
-			case Task.INACTIVE: super.setStyle("-fx-font-style: italic");
-				break;
-			
-			default: super.setStyle("-fx-font-weight: normal");
+				default: super.setStyle("-fx-font-weight: normal");
+				}
 			}
+		}catch (NullPointerException e) {
 		}
+		
 		
 	}
 }

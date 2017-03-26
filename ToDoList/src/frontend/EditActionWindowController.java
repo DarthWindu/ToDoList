@@ -208,6 +208,9 @@ public class EditActionWindowController {
 
 	private void initTaskInfo() {
 		task = EditActionWindow.taskBeingEdited;
+		if (task == null) {
+			System.out.println("null");
+		}
 		txtfName.setText(task.getName());
 
 		switch(task.getStatus()) {

@@ -3,9 +3,7 @@ package frontend;
 import java.io.IOException;
 
 import backend.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -21,7 +19,7 @@ public class EditActionWindow {
 	    Parent root = null;
 		try {
 			root = FXMLLoader.load(
-			    EditActionWindowController.class.getResource("editActionWindow.fxml"));
+			    EditActionWindowController.class.getResource("/frontend/editActionWindow.fxml"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

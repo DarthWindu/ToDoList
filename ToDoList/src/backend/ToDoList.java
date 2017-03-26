@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class ToDoList implements Serializable{
@@ -70,7 +69,8 @@ public class ToDoList implements Serializable{
 	         if (inactiveItemsCounter > 0) {
 	        	 setInactiveDates(inactiveTasks);
 	        	 Collections.sort(activeTasks.subList(indexOfFirstInactive, indexOfLastInactive), new Comparator<Task>() {
-	        		  public int compare(Task o1, Task o2) {
+	        		  @Override
+					public int compare(Task o1, Task o2) {
 	        			  
 	        			  System.out.println("Task 1: " + o1);
 	        			  System.out.println("Task 2: " + o2);
@@ -167,6 +167,22 @@ public class ToDoList implements Serializable{
 	
 	public Task getTask(String taskName) {
 		for (int counter = 0; counter < activeTasks.size(); counter ++) {
+			if (containsDate(taskName)) {
+				int oldDash = taskName.indexOf("-");
+				int newDash = taskName.indexOf("-", oldDash + 1);
+				oldDash = newDash;
+				
+				newDash = taskName.indexOf("-", oldDash + 1);
+				oldDash = newDash;
+				taskName = taskName.substring(newDash);
+				//System.out.println("prioir: " + taskName);
+				newDash = taskName.indexOf("-");
+				
+				
+				taskName = taskName.substring(newDash + 1).trim();
+				//System.out.println(taskName);
+			}
+			
 			if (activeTasks.get(counter).getName().equals(taskName)) {
 				return activeTasks.get(counter);
 			}
@@ -174,6 +190,17 @@ public class ToDoList implements Serializable{
 		
 		return null;
 		//No Task with this name was found
+	}
+	
+	private boolean containsDate(String taskName) {
+		return taskName.toUpperCase().contains("MONDAY") ||
+				taskName.toUpperCase().contains("SUNDAY") ||
+				taskName.toUpperCase().contains("TUESDAY") ||
+				taskName.toUpperCase().contains("WEDNESDAY") ||
+				taskName.toUpperCase().contains("THURSDAY") ||
+				taskName.toUpperCase().contains("FRIDAY") ||
+				taskName.toUpperCase().contains("SATURDAY");
+				
 	}
 	
 	public Task getCompletedTask(String taskName) {

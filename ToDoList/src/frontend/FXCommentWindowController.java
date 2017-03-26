@@ -45,10 +45,10 @@ public class FXCommentWindowController {
     	}
     	
     	//Should the window close here?
-    	/*
+    	
     	  Stage stage = (Stage) btnCommit.getScene().getWindow();
     	  stage.close();
-    	 */
+    	 
     }
 
     @FXML
@@ -67,10 +67,10 @@ public class FXCommentWindowController {
     		txtaComment.setText("");
     	}
     	
-    	/*
+    	
   	  Stage stage = (Stage) btnDelete.getScene().getWindow();
   	  stage.close();
-  	 */
+  	 
     }
 
     @FXML
