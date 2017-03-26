@@ -11,7 +11,7 @@ public class CommentWindow {
 	//private JLabel statusLabel;
 	private JPanel controlPanel;
 	private JButton commit,delete;
-	private JTextField userText;
+	private JTextArea userText;
 	private JScrollPane scrollPane;
 	private Task userTask = null;
 	private Comment userComment = null;
@@ -28,6 +28,7 @@ public class CommentWindow {
 		prepareGUI();
 		userTask = task;
 	}
+	
 	private void prepareGUI(){
 		mainFrame = new JFrame("Comment Window");
 		mainFrame.setSize(600,300);
@@ -62,7 +63,9 @@ public class CommentWindow {
 		gridbag.setConstraints(nameLabel, c);
 		controlPanel.add(nameLabel);
 
-		userText = new JTextField(25);
+		userText = new JTextArea();
+		userText.setPreferredSize(new Dimension(100, 100));
+		
 		if(userComment != null)
 			userText.setText(userComment.getComment());
 		c.insets = new Insets(10,0,0,0);
@@ -140,7 +143,9 @@ public class CommentWindow {
 		gridbag.setConstraints(nameLabel, c);
 		controlPanel.add(nameLabel);
 
-		userText = new JTextField(25);
+		userText = new JTextArea();
+		userText.setPreferredSize(new Dimension(100, 100));
+		
 		if(userComment != null)
 			userText.setText(userComment.getComment());
 		c.insets = new Insets(10,0,0,0);
