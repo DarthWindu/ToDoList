@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXTextField;
 import backend.Task;
 import backend.ToDoList;
 import frontend.EditActionItem;
+import frontend.EditActionWindow;
+import frontend.FXCommentWindow;
 import frontend.TaskCell;
 
 import java.io.File;
@@ -29,7 +31,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBuilder;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -37,6 +41,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -45,10 +50,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class MainController {
-	
+
 	public static int TDL_CHANGE_STATUS = 0;// 0 means unchanged, 1 means changed, add other meanings if necessary. Used to determine overwrite of default save.
 	public static int TDL_UNCHANGED = 0,
-					TDL_CHANGED = 1;
+			TDL_CHANGED = 1;
 
 	private ObservableList<String> data;
 	private ToDoList tdl = null;
@@ -106,8 +111,10 @@ public class MainController {
 	@SuppressWarnings("deprecation")
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	public void initialize() {
-		assert myScrollPane != null : "fx:id=\"myScrollPane\" was not injected: check your FXML file 'test1.fxml'.";
-		assert myAnchorPane != null : "fx:id=\"myAnchorPane\" was not injected: check your FXML file 'test1.fxml'.";
+		/*	Aliveness tests - @author Pujit
+		 * 
+		 * assert myScrollPane != null : "fx:id=\"myScrollPane\" was not injected: check your FXML file 'test1.fxml'.";
+		 * assert myAnchorPane != null : "fx:id=\"myAnchorPane\" was not injected: check your FXML file 'test1.fxml'.";
 		assert mainMenuBar != null : "fx:id=\"mainMenuBar\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuFile != null : "fx:id=\"menuFile\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuCreateBackup != null : "fx:id=\"menuCreateBackup\" was not injected: check your FXML file 'test1.fxml'.";
@@ -120,162 +127,22 @@ public class MainController {
 		assert myCustomListView != null : "fx:id=\"myCustomListView\" was not injected: check your FXML file 'test1.fxml'.";
 		assert myTextField != null : "fx:id=\"myTextField\" was not injected: check your FXML file 'test1.fxml'.";
 
+		 */
+
+
 		//ALL ACTION HANDLERS GO HERE
 
-		//Double Click Action Listener for List view of active tasks
-		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent click) {
-
-				if (click.getClickCount() == 2) {
-					//Use ListView's getSelected Item
-					String item = myCustomListView.getSelectionModel().getSelectedItem();
-					System.out.println("Double Click on: " + item);//Works
-					Task taskToEdit = tdl.getTask(item);
-					new EditActionItem(taskToEdit);
-					loadTaskNames();//Works
-					//use this to do whatever you want to. Open Link etc.
-				}
-			}
-		});
-		//-----------------------------------------------------------------------
-		menuCAI.setGraphic(
-                ButtonBuilder.create()
-                .text("Completed Tasks")
-                .onAction(new EventHandler<ActionEvent>(){
-                    @Override public void handle(ActionEvent event) {
-                        //TODO
-                    	System.out.println("CAI Action Fired");
-        				//Use ListView's getSelected Item
-
-        				Stage stage = new Stage();
-        			    Parent root = null;
-        				try {
-        					root = FXMLLoader.load(CompletedTasksController.class.getResource("completedTasks.fxml"));
-        				} catch (IOException e) {
-        					// TODO Auto-generated catch block
-        					e.printStackTrace();
-        				}
-        			    stage.setScene(new Scene(root));
-        			    stage.setTitle("Completed Tasks");
-        			    stage.initModality(Modality.WINDOW_MODAL);
-        			    stage.initOwner(
-        			        ((Node)event.getSource()).getScene().getWindow() );
-        			    stage.show();
-                 } })
-                .build());
-		//-------------------------------------------------------------------------------------------------------------------
-
-		//Set Right Click Menu
-		final ContextMenu contextMenu = new ContextMenu();
-		MenuItem completed = new MenuItem("Set task to completed");
-		MenuItem deleteTask = new MenuItem("Delete");
-		MenuItem edit = new MenuItem("Edit");
-		contextMenu.getItems().addAll(completed, deleteTask, edit);
-
-		completed.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
-				System.out.println("Right Click on: " + item);//Works
-				Task taskToComplete = tdl.getTask(item);
-				taskToComplete.setStatus(Task.COMPLETED);
-				tdl.setTaskCompleted(item);
-				loadTaskNames();
-			}
-		});
-		deleteTask.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
-				System.out.println("Right Click on: " + item);//Works
-				Task taskToDelete = tdl.getTask(item);
-				tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
-				loadTaskNames();
-			}
-		});
-		edit.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
-				System.out.println("Right Click on: " + item);//Works
-				Task taskToEdit = tdl.getTask(item);
-				contextMenu.hide();
-				new EditActionItem(taskToEdit);
-				loadTaskNames();//Works
-			}
-		});
-		myCustomListView.setContextMenu(contextMenu);
-		//-------------------------------------------------------------------------------
-
-		menuCreateBackup.setOnAction(new EventHandler<ActionEvent>() {
-
-	          @Override
-	          public void handle(ActionEvent event) {
-	              FileChooser fileChooser = new FileChooser();
-
-	              //Set extension filter
-	              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
-	              fileChooser.getExtensionFilters().add(extFilter);
-
-	              //Show save file dialog
-	              File file = fileChooser.showSaveDialog(Main.primStage);
-
-	              if(file != null){
-	                  saveFile(file);
-	              }
-	          }
-	      });
-		//-----------------------------------------------------------------------------------
-		menuRestore_Backup.setOnAction(new EventHandler<ActionEvent>() {
-
-	          @Override
-	          public void handle(ActionEvent event) {
-	              FileChooser fileChooser = new FileChooser();
-
-	              //Set extension filter
-	              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
-	              fileChooser.getExtensionFilters().add(extFilter);
-
-	              //Show open file dialog
-	              File file = fileChooser.showOpenDialog(Main.primStage);
-
-	              if(file != null){
-	                  loadFromSave(file);
-	              }
-	          }
-	      });
-
-		//Load Task Names into List
-		tdl = Main.todoList;
-		if (tdl != null) {
-			ArrayList<Task> tasks = tdl.getActiveTasks();
-			if (tasks != null) {
-				ArrayList<String> taskNames = new ArrayList<String>();
-				for (Task activeTask: tasks) {
-					taskNames.add(activeTask.getName());
-				}
-				data = FXCollections.observableArrayList(taskNames);
-			} else {
-				data = FXCollections.observableArrayList();
-			}
-		} else {
-			System.out.println("TDL is NULL");
-			data = FXCollections.observableArrayList();
-		}
-
-		//SAMPLE -
-
-		myCustomListView.setItems(data);
-		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-			@Override
-			public ListCell<String> call(ListView<String> list) {
-				return new TaskCell();
-			}
-		});
+		setDoubleClickAction();
+		setClickCompTasksAction();
+		setListRightClickMenu();
+		initBackupFunctionality();
+		initRestoreFunctionality();
+		initLoadTasks();	
 	}
-
+	
+	//==================================================================
+	//FXML ACTION LISTENERS - AUTO INJECTED ==> Begins
+	//==================================================================
 	@FXML
 	public void onEnter(ActionEvent ae){
 		//When 'Enter' is pressed in the textfield
@@ -295,7 +162,28 @@ public class MainController {
 		//System.out.println("test") ;
 	}
 
+
+
+	@FXML
+	public void completedTasksOnAction(ActionEvent evt) {
+		System.out.print("hkjhkjfd");
+	}
+	//==================================================================
+	//FXML ACTION LISTENERS - AUTO INJECTED ==> ENDS
+	//==================================================================
+	
+	
+	
+	
+	
+	//==================================================================
+	//Utility Methods ==> BEGIN
+	//==================================================================
+	
 	public void loadTaskNames() {
+		//SHOULD CHECK ELEVATIONS ALSO GO HERE?
+		
+		
 		//tdl = Main.todoList;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
@@ -321,25 +209,20 @@ public class MainController {
 		});
 	}
 
-	@FXML
-	public void completedTasksOnAction(ActionEvent evt) {
-		System.out.print("hkjhkjfd");
-	}
-
 	public boolean saveFile(File file) {
 		try
-        {
+		{
 			FileOutputStream fileOut = new FileOutputStream(file);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(tdl); // change this to the toDoList you are trying to save - Done
 			out.close();
 			fileOut.close();
 			return true;
-        }catch(IOException i)
-        {
-            i.printStackTrace();
-            return false;
-        }
+		}catch(IOException i)
+		{
+			i.printStackTrace();
+			return false;
+		}
 	}
 
 	public boolean loadFromSave(File file) {
@@ -372,4 +255,183 @@ public class MainController {
 			return true;
 		}
 	}
+	//==================================================================
+	//Utility Methods ==> END
+	//==================================================================
+	
+	
+	
+	
+	//==================================================================
+	//INITIALIZATION Methods ==> BEGIN
+	//==================================================================
+
+	private void setDoubleClickAction() {
+		//Double Click Action Listener for List view of active tasks
+		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent click) {
+
+				if (click.getClickCount() == 2) {
+					//Use ListView's getSelected Item
+					String item = myCustomListView.getSelectionModel().getSelectedItem();
+					System.out.println("Double Click on: " + item);//Works
+					Task taskToEdit = tdl.getTask(item);
+					new EditActionWindow(taskToEdit, Main.primStage.getScene());//loads modally
+					//new EditActionItem(taskToEdit);
+					//System.out.println("fall through");
+					loadTaskNames();//Works
+					//use this to do whatever you want to. Open Link etc.
+				}
+			}
+		});
+		//-----------------------------------------------------------------------
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setClickCompTasksAction() {
+		menuCAI.setGraphic(
+				ButtonBuilder.create()
+				.text("Completed Tasks")
+				.onAction(new EventHandler<ActionEvent>(){
+					@Override public void handle(ActionEvent event) {
+						//TODO
+						System.out.println("CAI Action Fired");
+						//Use ListView's getSelected Item
+
+						new CompletedTasksWindow(Main.primStage);
+					} })
+				.build());
+		//-------------------------------------------------------------------------------------------------------------------
+	}
+
+	private void setListRightClickMenu() {
+		//Set Right Click Menu
+		final ContextMenu contextMenu = new ContextMenu();
+		MenuItem completed = new MenuItem("Set task to completed");
+		MenuItem deleteTask = new MenuItem("Delete");
+		MenuItem edit = new MenuItem("Edit");
+		contextMenu.getItems().addAll(completed, deleteTask, edit);
+
+		completed.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
+				System.out.println("Right Click on: " + item);//Works
+				Task taskToComplete = tdl.getTask(item);
+				taskToComplete.setStatus(Task.COMPLETED);
+				tdl.setTaskCompleted(item);
+				loadTaskNames();
+			}
+		});
+		deleteTask.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
+				System.out.println("Right Click on: " + item);//Works
+				Task taskToDelete = tdl.getTask(item);
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this comment?");
+	    		alert.showAndWait().ifPresent(response -> {
+	    		     if (response == ButtonType.OK) {
+	    		    	 //If response exists and is OK
+	    		    	 tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
+	    					loadTaskNames();
+	    		     }
+	    		 });
+				
+			}
+		});
+		edit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
+				System.out.println("Right Click on: " + item);//Works
+				Task taskToEdit = tdl.getTask(item);
+				contextMenu.hide();
+				new EditActionWindow(taskToEdit, Main.primStage.getScene());
+				loadTaskNames();//Works
+			}
+		});
+		myCustomListView.setContextMenu(contextMenu);
+		//-------------------------------------------------------------------------------
+	}
+
+	private void initBackupFunctionality() {
+		menuCreateBackup.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+
+				//Set extension filter
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
+				fileChooser.getExtensionFilters().add(extFilter);
+
+				//Show save file dialog
+				File file = fileChooser.showSaveDialog(Main.primStage);
+
+				if(file != null){
+					saveFile(file);
+				}
+			}
+		});
+		//-----------------------------------------------------------------------------------
+	}
+
+	private void initRestoreFunctionality() {
+		menuRestore_Backup.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				FileChooser fileChooser = new FileChooser();
+
+				//Set extension filter
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
+				fileChooser.getExtensionFilters().add(extFilter);
+
+				//Show open file dialog
+				File file = fileChooser.showOpenDialog(Main.primStage);
+
+				if(file != null){
+					loadFromSave(file);
+				}
+			}
+		});
+	}
+
+	private void initLoadTasks() {
+		//Load Task Names into List
+		tdl = Main.todoList;
+		tdl.checkElevations();//Checks if priorities need to be updated
+		if (tdl != null) {
+			ArrayList<Task> tasks = tdl.getActiveTasks();
+			if (tasks != null) {
+				ArrayList<String> taskNames = new ArrayList<String>();
+				for (Task activeTask: tasks) {
+					//activeTask.checkElevation();
+					taskNames.add(activeTask.getName());
+				}
+				data = FXCollections.observableArrayList(taskNames);
+			} else {
+				data = FXCollections.observableArrayList();
+			}
+		} else {
+			System.out.println("TDL is NULL");
+			data = FXCollections.observableArrayList();
+		}
+
+		//SAMPLE -
+
+		myCustomListView.setItems(data);
+		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+			@Override
+			public ListCell<String> call(ListView<String> list) {
+				return new TaskCell();
+			}
+		});
+	}
+	//==================================================================
+	//INITIALIZATION Methods ==> END
+	//==================================================================
 }

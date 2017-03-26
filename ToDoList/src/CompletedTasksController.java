@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXListView;
 import backend.Task;
 import backend.ToDoList;
 import frontend.EditActionItem;
+import frontend.EditActionWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +60,7 @@ public class CompletedTasksController {
 				System.out.println("Right Click on: " + item);//Works
 				Task taskToEdit = Main.todoList.getCompletedTask(item);
 				contextMenu.hide();
-				new EditActionItem(taskToEdit);
+				new EditActionWindow(taskToEdit, CompletedTasksWindow.compTasksStage.getScene());
 				loadTaskNames();//Works
 			}
 		});
@@ -75,7 +76,7 @@ public class CompletedTasksController {
 					String item = myListView.getSelectionModel().getSelectedItem();
 					System.out.println("Double Click on: " + item);//Works
 					Task taskToEdit = Main.todoList.getCompletedTask(item);
-					new EditActionItem(taskToEdit);
+					new EditActionWindow(taskToEdit, CompletedTasksWindow.compTasksStage.getScene());
 					loadTaskNames();//Works
 					//use this to do whatever you want to. Open Link etc.
 				}

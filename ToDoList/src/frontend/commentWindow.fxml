@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.FXCommentWindowController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="589.0" prefWidth="747.0">
+         <children>
+            <JFXTextArea fx:id="txtaComment" focusColor="#8aa840" labelFloat="true" layoutX="14.0" layoutY="35.0" prefHeight="419.0" prefWidth="726.0" promptText="Comment" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXTextArea>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="449.0" layoutY="514.0" opacity="0.09" stroke="BLACK" strokeType="INSIDE" width="131.0" />
+            <JFXButton fx:id="btnCommit" buttonType="RAISED" layoutX="449.0" layoutY="514.0" onAction="#btnCommitAction" prefHeight="25.0" prefWidth="130.0" ripplerFill="#4ed003" text="Commit" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="602.0" layoutY="514.0" opacity="0.09" stroke="BLACK" strokeType="INSIDE" width="131.0" />
+            <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="602.0" layoutY="514.0" onAction="#btnDeleteAction" prefHeight="25.0" prefWidth="130.0" ripplerFill="RED" text="Delete" />
+         </children></AnchorPane>
+  </content>
+</ScrollPane>

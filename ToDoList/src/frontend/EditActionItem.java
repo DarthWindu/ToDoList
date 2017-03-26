@@ -216,7 +216,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				HistoryWindow hist = new HistoryWindow(tasker);
+				//HistoryWindow hist = new HistoryWindow(tasker, );
 			}
 		});
 		commentButton.addActionListener(new ActionListener ()

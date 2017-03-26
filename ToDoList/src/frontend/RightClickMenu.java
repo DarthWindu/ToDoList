@@ -18,6 +18,7 @@ public class RightClickMenu{
 		task = passedTask;
 		
 		completeItem.addActionListener(new ActionListener(){//might need to use popupmenulisteners?
+			@Override
 			public void actionPerformed(ActionEvent arg0){
 				task.setStatus(Task.COMPLETED);
 				
@@ -28,6 +29,7 @@ public class RightClickMenu{
 		JMenuItem deleteItem = new JMenuItem("Delete");
 		
 		deleteItem.addActionListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				MainMenu.getList().delete(task);
 				
@@ -38,6 +40,7 @@ public class RightClickMenu{
 		JMenuItem editItem = new JMenuItem("Edit");
 		
 		editItem.addActionListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				edit = new EditActionItem(task);
 				
@@ -46,15 +49,13 @@ public class RightClickMenu{
 			}
 		});
 		
-		
-		//vv This is right?!??!?!
-		/*
 		menu.addMouseListener(new MouseAdapter(){
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				menu.setVisible(false);
 			}
 		});
-		*/
+		
 		menu.add(completeItem);
 		
 		menu.add(deleteItem);

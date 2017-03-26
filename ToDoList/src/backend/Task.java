@@ -1,10 +1,10 @@
 package backend;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import frontend.MainMenu;
 
 /**
  * @author Pujit M.
@@ -37,7 +37,8 @@ public class Task implements Serializable{
 	private ArrayList<PriorityChange> priorityChanges;
 	private ArrayList<NameChange> nameChanges;
 	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
-	private Date[] priorityChange = new Date[3];
+	//private Date[] priorityChange = new Date[3];
+	private LocalDate dateUrgentElev = null, dateCurrentElev = null, dateEventualElev = null;
 	private Date dateCreated;
 
 	public static final int DEFAULT_STATUS = 2;//Default status (2) means Current
@@ -153,10 +154,10 @@ public class Task implements Serializable{
 		historyEvents.add(newComment);
 	}
 
-	public Date[] getDates()
+	/*public Date[] getDates()
 	{
 		return priorityChange;
-	}
+	}*/
 
 	public String getName()
 	{
@@ -169,36 +170,109 @@ public class Task implements Serializable{
 		//Returns true if both tasks' names and status values match
 	}
 
-	public void deleteComment(Comment comment)
-	{
+	public void deleteComment(Comment comment) {
 		Comment commCheck = null;
 
 		for(Comment com: comments) {
-			if(com.getComment().equals(comment.getComment()))
+			if(com.isEqual(comment))
 				commCheck = com;
 		}
-		if(commCheck != null) {
+		if(commCheck != null)
 			comments.remove(commCheck);
-			historyEvents.remove(commCheck);
+	}
+	
+	/*public void storeDate(Date day, int index){
+		priorityChange[index] = day;
+	}*/
+	
+	/**
+	 * Returns LocalDate representation of date Task should elevate to urgent.
+	 * Returns null if no date has been set.
+	 * @return
+	 */
+	public LocalDate getUrgentElevDate() {
+		return dateUrgentElev;
+	}
+	
+	/**
+	 * Returns LocalDate representation of date Task should elevate to current.
+	 * Returns null if no date has been set.
+	 * @return
+	 */
+	public LocalDate getCurrentElevDate() {
+		return dateCurrentElev;
+	}
+	
+	/**
+	 * Returns LocalDate representation of date Task should elevate to eventual.
+	 * Returns null if no date has been set.
+	 * @return
+	 */
+	public LocalDate getEventualElevDate() {
+		return dateEventualElev;
+	}
+	
+	public void setUrgentElevDate(LocalDate date) {
+		dateUrgentElev = date;
+	}
+	
+	public void setCurrentElevDate(LocalDate date) {
+		dateCurrentElev = date;
+	}
+	
+	public void setEventualElevDate(LocalDate date) {
+		dateEventualElev = date;
+	}
+	
+	public void checkElevation() {
+		for (int priorityToCheck = this.getStatus() + 1; priorityToCheck <= Task.URGENT; priorityToCheck ++) {
+			checkElevation(priorityToCheck);
 		}
 	}
-
-	public void storeDate(Date day, int index)
-	{
-		priorityChange[index] = day;
+	
+	private void checkElevation(int priority) {
+		switch(priority) {
+		case Task.EVENTUAL: analyzeElev(Task.EVENTUAL, dateEventualElev);
+			break;
+			
+		case Task.CURRENT: analyzeElev(Task.CURRENT, dateCurrentElev);
+			break;
+		
+		case Task.URGENT: analyzeElev(Task.URGENT, dateUrgentElev);
+			break;
+		}
 	}
-
-	public String toString()
-	{
-		return getName();
-	}
-
-	public void changeComment(String change, Comment comment)
-	{
-		for(Comment comm: comments) {
-			if(comm.equals(comment)) {
-				comm.setComment(change);
+	
+	/*Basis for analyzeElev(int urgency, LocalDate date):
+	 * 
+	 * private void checkUrgentElev() {
+		if (this.getStatus() < Task.URGENT) {
+			//If Task is not yet urgent
+			if (dateUrgentElev != null) {
+				//If there is a specified date to elevate to urgent
+				if (dateUrgentElev.isEqual(LocalDate.now()) || dateUrgentElev.isBefore(LocalDate.now())) {
+					this.setStatus(Task.URGENT);
+					dateUrgentElev = null;//Reset dateUrgentElev
+				}
 			}
 		}
+	}*/
+	
+	private void analyzeElev(int urgency, LocalDate date) {
+		if (this.getStatus() < urgency) {
+			//If Task is not yet as urgent (as indicated by value of urgency)
+			if (date != null) {
+				//If there is a specified date to elevate to this urgent
+				if (date.isEqual(LocalDate.now()) || date.isBefore(LocalDate.now())) {
+					this.setStatus(urgency);
+					date = null;//Reset date - should point internally to an elevation date
+				}
+			}
+		}
+	}
+	
+	@Override
+	public String toString(){
+		return getName();
 	}
 }

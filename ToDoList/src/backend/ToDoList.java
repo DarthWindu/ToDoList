@@ -55,7 +55,7 @@ public class ToDoList implements Serializable{
 		completedTasks.add(task);
 	}
 	
-	public void checkPriorityChange(Date date){
+	/*public void checkPriorityChange(Date date){
 		for(Task task : activeTasks){
 			Date[] priority = task.getDates();
 			for(int i = 0; i < priority.length; i++){
@@ -67,6 +67,12 @@ public class ToDoList implements Serializable{
 				}
 
 			}
+		}
+	}*/
+	
+	public void checkElevations() {
+		for (Task task : activeTasks) {
+			task.checkElevation();
 		}
 	}
 	
