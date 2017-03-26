@@ -1,8 +1,12 @@
 package backend;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 public class ToDoList implements Serializable{
 	
@@ -43,7 +47,92 @@ public class ToDoList implements Serializable{
 	                         }  
 	                          
 	                 }  
-	         }  
+	         }
+	         Collections.reverse(activeTasks);
+	         ArrayList<Task> inactiveTasks = new ArrayList<Task>();
+	         
+	         int inactiveItemsCounter = 0;
+	         int indexOfFirstInactive = 0;
+	         int indexOfLastInactive = activeTasks.size() ;
+	         
+	         for (int counter = 0; counter < activeTasks.size(); counter ++) {
+	        	 Task task = activeTasks.get(counter);
+	        	 if (task.getStatus() == Task.INACTIVE) {
+	        		 inactiveTasks.add(task);
+	        		 if (inactiveItemsCounter == 0) {
+	        			 //First Inactive Item
+	        			 indexOfFirstInactive = counter;
+	        		 }
+	        		 inactiveItemsCounter ++;
+	        	 }
+	         }
+	         
+	         if (inactiveItemsCounter > 0) {
+	        	 setInactiveDates(inactiveTasks);
+	        	 Collections.sort(activeTasks.subList(indexOfFirstInactive, indexOfLastInactive), new Comparator<Task>() {
+	        		  public int compare(Task o1, Task o2) {
+	        			  
+	        			  System.out.println("Task 1: " + o1);
+	        			  System.out.println("Task 2: " + o2);
+	        			  System.out.println("Task 1 Elev: " + o1.getEarliestElevDate());
+	        			  System.out.println("Task 2 Elev: " + o2.getEarliestElevDate());
+	        			  
+	        		      return o2.getEarliestElevDate().compareTo(o1.getEarliestElevDate());
+	        		  }
+	        		});
+	         }
+	         
+	          
+	        // Collections.sort(inactiveT, c);
+	}
+	
+	private void setInactiveDates(List<Task> inactiveTasks) {
+		if (inactiveTasks.size() > 0) {
+			
+			if (checkIfElevDateExists(inactiveTasks.get(0))) {
+				inactiveTasks.get(0).setShowDate(true);
+			}
+		}
+		
+		 for (int counter = 1; counter < inactiveTasks.size(); counter ++) {
+			 Task current = inactiveTasks.get(counter);
+			 Task above = inactiveTasks.get(counter - 1);
+			 
+        	 if (checkIfElevDateExists(above) && checkIfElevDateExists(current)){
+        		 if (above.getEventualElevDate() != null) {
+        			 compareAndSetDates(current, above.getEventualElevDate());
+        		 } else if (above.getCurrentElevDate() != null) {
+        			 compareAndSetDates(current, above.getCurrentElevDate());
+        		 } else if (above.getUrgentElevDate() != null) {
+        			 compareAndSetDates(current, above.getUrgentElevDate());
+        		 }
+        	 } else if (!checkIfElevDateExists(above) && checkIfElevDateExists(current)) {
+        		 current.setShowDate(true);
+        	 }
+         }
+	}
+	
+	private void compareAndSetDates(Task currentTask, LocalDate aboveDate) {
+		if (currentTask.getEventualElevDate() != null) {
+			 if(!currentTask.getEventualElevDate().isEqual(aboveDate)) {
+				 currentTask.setShowDate(true);
+			 }
+		 } else if (currentTask.getCurrentElevDate() != null) {
+			 if(!currentTask.getCurrentElevDate().isEqual(aboveDate)) {
+				 currentTask.setShowDate(true);
+			 }
+		 } else {
+			 //Urgent Elev Date exists
+			 if (!currentTask.getUrgentElevDate().isEqual(aboveDate)) {
+				 currentTask.setShowDate(true);
+			 }
+		 }
+	}
+	
+	private boolean checkIfElevDateExists(Task task) {
+		return (task.getEventualElevDate() != null ||
+				task.getCurrentElevDate() != null ||
+				task.getUrgentElevDate() != null);
 	}
 	
 	public ArrayList<Task> getCompletedTasks(){

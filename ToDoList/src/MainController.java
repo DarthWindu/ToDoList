@@ -8,7 +8,6 @@ import backend.ToDoList;
 import frontend.EditActionItem;
 import frontend.EditActionWindow;
 import frontend.FXCommentWindow;
-import frontend.TaskCell;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +43,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -190,7 +190,7 @@ public class MainController {
 			if (tasks != null) {
 				ArrayList<String> taskNames = new ArrayList<String>();
 				for (Task activeTask: tasks) {
-					taskNames.add(activeTask.getName());
+					taskNames.add(activeTask.getFormattedName());
 				}
 				data = FXCollections.observableArrayList(taskNames);
 			} else {
@@ -403,6 +403,7 @@ public class MainController {
 	private void initLoadTasks() {
 		//Load Task Names into List
 		tdl = Main.todoList;
+		tdl.sortTasks();
 		tdl.checkElevations();//Checks if priorities need to be updated
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
@@ -410,7 +411,7 @@ public class MainController {
 				ArrayList<String> taskNames = new ArrayList<String>();
 				for (Task activeTask: tasks) {
 					//activeTask.checkElevation();
-					taskNames.add(activeTask.getName());
+					taskNames.add(activeTask.getFormattedName());
 				}
 				data = FXCollections.observableArrayList(taskNames);
 			} else {

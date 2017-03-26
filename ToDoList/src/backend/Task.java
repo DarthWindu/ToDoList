@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBuilder;
+
 /**
  * @author Pujit M.
  * 
@@ -32,6 +38,7 @@ public class Task implements Serializable{
 	 */
 	private static final long serialVersionUID = 2850384200535302052L;
 	private String taskName;
+	private boolean showDate = false;
 	private Integer status; //Integer is serializable - we could change to int if primitive types are serializable, but I'm not sure
 	private ArrayList<Comment> comments = new ArrayList<Comment>();//Changed from design - Changed from HistoryItem List to Comment List
 	private ArrayList<PriorityChange> priorityChanges;
@@ -180,11 +187,11 @@ public class Task implements Serializable{
 		if(commCheck != null)
 			comments.remove(commCheck);
 	}
-	
+
 	/*public void storeDate(Date day, int index){
 		priorityChange[index] = day;
 	}*/
-	
+
 	/**
 	 * Returns LocalDate representation of date Task should elevate to urgent.
 	 * Returns null if no date has been set.
@@ -193,7 +200,7 @@ public class Task implements Serializable{
 	public LocalDate getUrgentElevDate() {
 		return dateUrgentElev;
 	}
-	
+
 	/**
 	 * Returns LocalDate representation of date Task should elevate to current.
 	 * Returns null if no date has been set.
@@ -202,7 +209,7 @@ public class Task implements Serializable{
 	public LocalDate getCurrentElevDate() {
 		return dateCurrentElev;
 	}
-	
+
 	/**
 	 * Returns LocalDate representation of date Task should elevate to eventual.
 	 * Returns null if no date has been set.
@@ -211,38 +218,38 @@ public class Task implements Serializable{
 	public LocalDate getEventualElevDate() {
 		return dateEventualElev;
 	}
-	
+
 	public void setUrgentElevDate(LocalDate date) {
 		dateUrgentElev = date;
 	}
-	
+
 	public void setCurrentElevDate(LocalDate date) {
 		dateCurrentElev = date;
 	}
-	
+
 	public void setEventualElevDate(LocalDate date) {
 		dateEventualElev = date;
 	}
-	
+
 	public void checkElevation() {
 		for (int priorityToCheck = this.getStatus() + 1; priorityToCheck <= Task.URGENT; priorityToCheck ++) {
 			checkElevation(priorityToCheck);
 		}
 	}
-	
+
 	private void checkElevation(int priority) {
 		switch(priority) {
 		case Task.EVENTUAL: analyzeElev(Task.EVENTUAL, dateEventualElev);
-			break;
-			
+		break;
+
 		case Task.CURRENT: analyzeElev(Task.CURRENT, dateCurrentElev);
-			break;
-		
+		break;
+
 		case Task.URGENT: analyzeElev(Task.URGENT, dateUrgentElev);
-			break;
+		break;
 		}
 	}
-	
+
 	/*Basis for analyzeElev(int urgency, LocalDate date):
 	 * 
 	 * private void checkUrgentElev() {
@@ -257,7 +264,7 @@ public class Task implements Serializable{
 			}
 		}
 	}*/
-	
+
 	private void analyzeElev(int urgency, LocalDate date) {
 		if (this.getStatus() < urgency) {
 			//If Task is not yet as urgent (as indicated by value of urgency)
@@ -270,7 +277,70 @@ public class Task implements Serializable{
 			}
 		}
 	}
+
+
+	public String getFormattedName() {
+		String formattedString = this.getName();
+		
+		switch(this.getStatus()) {
+		case Task.URGENT: 
+			//formattedString.setText(this.getName());
+			//formattedString.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 12)); 
+			break;
+
+		case Task.CURRENT: 
+		break;
+
+		case Task.EVENTUAL: //formattedString.setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, 12)); 
+		break;
+
+		case Task.INACTIVE:
+			if (showDate) {
+				if (this.getEventualElevDate() != null) {
+					formattedString = (inactiveNameDateFormatter(this.getEventualElevDate()));
+				} else if (this.getCurrentElevDate() != null) {
+					formattedString = inactiveNameDateFormatter(this.getCurrentElevDate());
+				} else if (this.getUrgentElevDate() != null) {
+					formattedString = (inactiveNameDateFormatter(this.getUrgentElevDate()));
+				} else {
+					formattedString = ("No date of elevation set - " + this.getName());
+				}
+			} else {
+				//formattedString = "<i>" + this.getName() + "</i>";
+			}
+			
+			//formattedString.setFont(Font.font(Font.getDefault().getFamily(), FontPosture.ITALIC, 12)); 
+			
+			break;
+
+		default: break;
+		}
+
+		return formattedString;
+
+	}
+
+	private String inactiveNameDateFormatter(LocalDate date) {
+		return date + ", "+ date.getDayOfWeek() + " - " + this.getName();
+	}
+
+	public void setShowDate(boolean shudIshowDate) {
+		showDate = shudIshowDate;
+	}
 	
+	public LocalDate getEarliestElevDate() {
+		if (this.getEventualElevDate() != null) {
+			return this.getEventualElevDate();
+		} else if (this.getCurrentElevDate() != null) {
+			return this.getCurrentElevDate();
+		} else if (this.getUrgentElevDate() != null) {
+			return this.getUrgentElevDate();
+		} else {
+			return LocalDate.MIN;
+		}
+	}
+	
+
 	@Override
 	public String toString(){
 		return getName();
