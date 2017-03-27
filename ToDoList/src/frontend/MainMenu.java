@@ -156,11 +156,11 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		//display.getModel();
 		
-		//	ListCellRenderer<Task> cl = new ListCellRenderer<Task>();
+		//ListCellRenderer<Task> cl = new ListCellRenderer<Task>();
 		
 		//display.setCellRenderer(cellRenderer);
 		
-		display.addMouseListener(new MouseAdapter(){//doesn't work when there is stuff added in???
+		display.addMouseListener(new MouseListener(){//doesn't work when there is stuff added in???
 			public void mouseClicked(MouseEvent e){
 				
 				System.out.println("a");
@@ -177,13 +177,21 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		            
 		        }
 		    }
+
+			public void mouseEntered(MouseEvent arg0) {}
+
+			public void mouseExited(MouseEvent arg0) {}
+
+			public void mousePressed(MouseEvent arg0) {}
+
+			public void mouseReleased(MouseEvent arg0) {}
 		});
 		
 		//scrollPane.setViewportView(display);
 		
 		scrollPane.setPreferredSize(new Dimension(200,200));
 		
-		scrollPane.getViewport().add(display);
+		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
