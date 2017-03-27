@@ -189,8 +189,6 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		
 		//scrollPane.setViewportView(display);
 		
-		scrollPane.setPreferredSize(new Dimension(200,200));
-		
 		scrollPane.setViewportView(display);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -249,6 +247,35 @@ public class MainMenu extends JPanel implements MouseListener,MouseWheelListener
 		activeTasks = toDoList.getActiveTasks();
 		
 		display = new JList(activeTasks.toArray());
+		
+		scrollPane.setViewportView(display);
+		
+		display.addMouseListener(new MouseListener(){//doesn't work when there is stuff added in???
+			public void mouseClicked(MouseEvent e){
+				
+				System.out.println("a");
+		        if (e.getButton() == MouseEvent.BUTTON3)
+		        {
+		        	
+		            //int row = display.locationToIndex(e.getPoint());
+		            //display.setSelectedIndex(row);
+		            
+		            //(Task)toDoList.getActiveTasks().toArray()[display.locationToIndex(e.getPoint())]
+		            display.setSelectedIndex(display.locationToIndex(e.getPoint()));
+		            rightClick.popup(display.getSelectedValue(), true);//
+		            
+		            
+		        }
+		    }
+
+			public void mouseEntered(MouseEvent arg0) {}
+
+			public void mouseExited(MouseEvent arg0) {}
+
+			public void mousePressed(MouseEvent arg0) {}
+
+			public void mouseReleased(MouseEvent arg0) {}
+		});
 	}
 	
 }
