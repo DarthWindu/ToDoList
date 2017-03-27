@@ -71,7 +71,7 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		radioButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0) {
-				changePriority(task,3);
+				task.changePriority(task,3);
 			}
 
 		});
