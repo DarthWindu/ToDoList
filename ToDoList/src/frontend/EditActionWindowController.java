@@ -86,7 +86,19 @@ public class EditActionWindowController {
 
 	@FXML
 	void btnHistoryOnAction(ActionEvent event) {
-		new HistoryWindow(task, EditActionWindow.editActionStage.getScene());
+		/*SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new HistoryWindow(task, EditActionWindow.editActionStage);
+			}
+		});*/
+		/*Platform.runLater(new Runnable() {
+			@Override
+			public void run() {*/
+				new FXHistoryWindow(task, EditActionWindow.editActionStage.getScene());
+			/*}
+		});*/
+		
 	}
 
 	@FXML

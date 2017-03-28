@@ -8,14 +8,16 @@ import static javax.swing.GroupLayout.Alignment.LEADING;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -35,6 +37,10 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		tasker = task;
 		groupButton = new ButtonGroup();
 
+
+		//this.setLayout(new GridLayout(0,2));
+		//	this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+
 		name = new JTextField(tasker.getName());
 		CurrentMonth = new JTextField("MM");
 		CurrentDay = new JTextField("DD");
@@ -45,16 +51,6 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		EventualMonth = new JTextField("MM");
 		EventualDay = new JTextField("DD");
 		EventualYear = new JTextField("YY");
-
-		CurrentMonth.setEnabled(false);
-		CurrentDay.setEnabled(false);
-		CurrentYear.setEnabled(false);
-		UrgentMonth.setEnabled(false);
-		UrgentDay.setEnabled(false);
-		UrgentYear.setEnabled(false);
-		EventualMonth.setEnabled(false);
-		EventualDay.setEnabled(false);
-		EventualYear.setEnabled(false);
 
 		radioButton = new JRadioButton("Urgent");
 		radioButton2 = new JRadioButton("Current");
@@ -69,152 +65,146 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 		final BufferedImage im = createImage(this);
 
-		radioButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-
-		});
-		
-		
 		name.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e){
 				//name.setText(""); <--what were you thinking?
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent e)
 			{
 				tasker.changeName(name.getText());
 			}
 		});
-
-
+		
+		
 
 		CurrentMonth.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				CurrentMonth.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		CurrentDay.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				CurrentDay.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		CurrentYear.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				CurrentYear.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		UrgentMonth.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				UrgentMonth.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		UrgentDay.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				UrgentDay.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		UrgentYear.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				UrgentYear.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		EventualMonth.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				EventualMonth.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		EventualDay.addFocusListener(new FocusListener(){
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				EventualDay.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
 		EventualYear.addFocusListener(new FocusListener(){
-
+			@Override
 			public void focusGained(FocusEvent e)
 			{
 				EventualYear.setText("");
 			}
 
-
+			@Override
 			public void focusLost(FocusEvent arg0) {
-
+				
 			}
-
+		
 		});
-
-
+		
+		
+		
+		
 
 		name.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "enter");
 		name.getActionMap().put("enter", new AbstractAction(){
-
+			@Override
 			public void actionPerformed(ActionEvent arg3)
 			{
 				tasker.changeName(name.getText());
@@ -223,15 +213,15 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		});
 		historyButton.addActionListener(new ActionListener()
 		{
-
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				HistoryWindow hist = new HistoryWindow(tasker);
+				//HistoryWindow hist = new HistoryWindow(tasker, );
 			}
 		});
 		commentButton.addActionListener(new ActionListener ()
 		{
-
+			@Override
 			public void actionPerformed(ActionEvent arg1)
 			{
 				CommentWindow cw = new CommentWindow(tasker);
@@ -239,122 +229,17 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 		});
 
 
-
-		CurrentMonth.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (CurrentMonth.getText().length()>=2)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-
-		CurrentDay.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (CurrentDay.getText().length()>=2)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-
-		CurrentYear.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (CurrentYear.getText().length()>=4)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-		UrgentMonth.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (UrgentMonth.getText().length()>=2)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-		UrgentDay.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (UrgentDay.getText().length()>=2)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-		UrgentYear.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (UrgentYear.getText().length()>=4)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-		EventualMonth.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (EventualMonth.getText().length()>=2)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-		EventualDay.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (EventualDay.getText().length()>=2)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-		EventualYear.addKeyListener(new KeyAdapter(){
-			public void keyTyped( KeyEvent e ){
-				if (EventualYear.getText().length()>=4)
-					e.consume();
-				char c = e.getKeyChar();
-				if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();  // ignore event
-				}
-			}
-		});
-
-
-
-
 		/////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////
 		print.addActionListener(new ActionListener ()
 		{
-
+			@Override
 			public void actionPerformed( ActionEvent ae ) {
 				PrinterJob job = PrinterJob.getPrinterJob();
 				job.setPrintable( new Printable()
 				{
-
+					@Override
 					public int print(Graphics pg, PageFormat pf, int pageNum)
 					{
 						if(pageNum != 0)
@@ -450,145 +335,32 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 
 
 
-		checkCurrent.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0) {
-				if (checkCurrent.isSelected())
-				{
-					CurrentMonth.setEnabled(true);
-					CurrentDay.setEnabled(true);
-					CurrentYear.setEnabled(true);
-				} else 
-				{
-					CurrentMonth.setEnabled(false);
-					CurrentDay.setEnabled(false);
-					CurrentYear.setEnabled(false);
-				}
-			}
-
-		});
-
-
-		checkUrgent.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				if (checkUrgent.isSelected())
-				{
-					UrgentMonth.setEnabled(true);
-					UrgentDay.setEnabled(true);
-					UrgentYear.setEnabled(true);
-				} else 
-				{
-					UrgentMonth.setEnabled(false);
-					UrgentDay.setEnabled(false);
-					UrgentYear.setEnabled(false);
-				}
-			}
-
-		});
-		checkEventual.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				if (checkEventual.isSelected())
-				{
-					EventualMonth.setEnabled(true);
-					EventualDay.setEnabled(true);
-					EventualYear.setEnabled(true);
-				} else 
-				{
-					EventualMonth.setEnabled(false);
-					EventualDay.setEnabled(false);
-					EventualYear.setEnabled(false);
-				}
-
-			}
-		});
+		checkCurrent.addActionListener(this);
+		checkUrgent.addActionListener(this);
+		checkEventual.addActionListener(this);
 
 		groupButton.add(radioButton);
 		groupButton.add(radioButton2);
 		groupButton.add(radioButton3);
 		groupButton.add(radioButton4);
-
+		
 		//JFrame frame = new JFrame(tasker.getName());
 		JDialog dialog = new JDialog();
 		dialog.setContentPane(this);
-		//dialog.setModal(true);
+		dialog.setModal(true);
 		dialog.setPreferredSize(new Dimension(600,300));
 		dialog.setSize(600, 300);
 		dialog.setVisible(true);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-
-
-
-		//window listener that stores dates when window is closed
-		//Date(int year, int month, int date)
-		//call task.storeDate(new Date(), int index)^^^
-		// index for eventual is 0, current is 1, urgent is 2
-
-		//Also add in exception handlers for preventing incorrect format for
-		//dates and months and years.
-
-		dialog.addWindowListener(new WindowListener()
-		{
-
-			public void windowActivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void windowClosed(WindowEvent e) {
-
-				tasker.setCurrentElevDate(new LocalDate(Integer.parseInt(CurrentMonth.getText()),Integer.parseInt(CurrentDay.getText()), Integer.parseInt(CurrentYear.getText())));
-				
-
-			}
-
-			public void windowClosing(WindowEvent e) {
-				
-
-			}
-
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-		});
-
-		
-		
 		/*frame.setContentPane(this);
 		frame.setPreferredSize(new Dimension(600,300));
 		frame.pack();
 		frame.setVisible(true);*/
-		
-		
 	}
 
 
-	public void changePriority(Task task, int status)
-	{
-		task.setStatus(status);
-	}
-	
+	@Override
 	public void actionPerformed(ActionEvent e) {
 
 	}
@@ -602,11 +374,10 @@ public class EditActionItem extends JPanel implements ActionListener, Printable 
 	}
 
 	public static void main(String[] args) {
-		Task x = new Task("GG");
-		new EditActionItem(x);
+		
 	}
 
-
+	@Override
 	public int print(Graphics g , PageFormat pf , int pageIndex) throws PrinterException{
 		return pageIndex;
 
