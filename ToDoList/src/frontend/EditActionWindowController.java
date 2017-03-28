@@ -136,7 +136,9 @@ public class EditActionWindowController {
 
 	@FXML
 	void currentDatePickerOnHiding(Event event) {
-		datePickerOnHiding(currentDatePicker, chkbCurrent);
+		if (currentDatePicker.getValue() != null) {
+			datePickerOnHiding(currentDatePicker, chkbCurrent);
+		}
 	}
 
 	@FXML
@@ -148,7 +150,9 @@ public class EditActionWindowController {
 
 	@FXML
 	void eventualDatePickerOnHiding(Event event) {
-		datePickerOnHiding(eventualDatePicker, chkbEventual);
+		if (eventualDatePicker.getValue() != null) {
+			datePickerOnHiding(eventualDatePicker, chkbEventual);
+		}
 	}
 
 	@FXML
@@ -181,7 +185,9 @@ public class EditActionWindowController {
 
 	@FXML
 	void urgentDatePickerOnHiding(Event event) {
-		datePickerOnHiding(urgentDatePicker, chkbUrgent);
+		if (urgentDatePicker.getValue() != null) {
+			datePickerOnHiding(urgentDatePicker, chkbUrgent);
+		}
 	}
 
 	@FXML
@@ -211,7 +217,7 @@ public class EditActionWindowController {
 		if (datePicker.getValue().isBefore(LocalDate.now()) ||datePicker.getValue().isEqual(LocalDate.now())) {
 			txtfMessage.setVisible(true);
 			txtfMessage.setText("Please select a future date.");
-			urgentDatePicker.setValue(null);
+			datePicker.setValue(null);
 		} else {
 			txtfMessage.setVisible(false);
 			chkBox.setSelected(true);

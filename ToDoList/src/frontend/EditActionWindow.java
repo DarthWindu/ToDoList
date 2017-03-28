@@ -25,7 +25,7 @@ public class EditActionWindow {
 			e.printStackTrace();
 		}
 	    stage.setScene(new Scene(root));
-	    stage.setTitle("My modal window");
+	    stage.setTitle("Edit Task");
 	    stage.initModality(Modality.WINDOW_MODAL);
 	    stage.initOwner(
 	        (scene.getWindow()));

@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="myScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1122.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+<ScrollPane fx:id="myScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
   <content>
-    <AnchorPane fx:id="myAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="789.0" prefWidth="1096.0">
+    <AnchorPane fx:id="myAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="567.0" prefWidth="818.0">
          <children>
             <MenuBar fx:id="mainMenuBar" layoutY="2.0" prefHeight="25.0" prefWidth="1096.0">
               <menus>
@@ -27,16 +27,10 @@
                         <MenuItem fx:id="menuItemCAI" mnemonicParsing="false" onAction="#onViewCAIaction" text="View Completed Action Items" />
                     </items>
                   </Menu>
-                  <Menu fx:id="menuQuit" mnemonicParsing="false" text="Quit" />
-                <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
               </menus>
             </MenuBar>
-            <JFXListView fx:id="myCustomListView" layoutX="24.0" layoutY="40.0" prefHeight="624.0" prefWidth="1040.0" />
-            <JFXTextField fx:id="myTextField" layoutX="24.0" layoutY="703.0" onAction="#onEnter" prefHeight="25.0" prefWidth="418.0" promptText="New Action Item">
+            <JFXListView fx:id="myCustomListView" layoutX="24.0" layoutY="40.0" prefHeight="437.0" prefWidth="781.0" />
+            <JFXTextField fx:id="myTextField" layoutX="24.0" layoutY="523.0" onAction="#onEnter" prefHeight="25.0" prefWidth="418.0" promptText="New Action Item">
                <font>
                   <Font size="16.0" />
                </font>

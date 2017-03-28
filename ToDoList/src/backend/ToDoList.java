@@ -67,19 +67,19 @@ public class ToDoList implements Serializable{
 	         }
 	         
 	         if (inactiveItemsCounter > 0) {
-	        	 setInactiveDates(inactiveTasks);
 	        	 Collections.sort(activeTasks.subList(indexOfFirstInactive, indexOfLastInactive), new Comparator<Task>() {
 	        		  @Override
 					public int compare(Task o1, Task o2) {
 	        			  
-	        			  System.out.println("Task 1: " + o1);
+	        			  /*System.out.println("Task 1: " + o1);
 	        			  System.out.println("Task 2: " + o2);
 	        			  System.out.println("Task 1 Elev: " + o1.getEarliestElevDate());
-	        			  System.out.println("Task 2 Elev: " + o2.getEarliestElevDate());
+	        			  System.out.println("Task 2 Elev: " + o2.getEarliestElevDate());*/
 	        			  
-	        		      return o2.getEarliestElevDate().compareTo(o1.getEarliestElevDate());
+	        		      return o1.getEarliestElevDate().compareTo(o2.getEarliestElevDate());//To reverse, switch o1 and o2
 	        		  }
 	        		});
+	        	 setInactiveDates(inactiveTasks);
 	         }
 	         
 	          
@@ -91,13 +91,23 @@ public class ToDoList implements Serializable{
 			
 			if (checkIfElevDateExists(inactiveTasks.get(0))) {
 				inactiveTasks.get(0).setShowDate(true);
+				System.out.println("First task set");
 			}
 		}
 		
 		 for (int counter = 1; counter < inactiveTasks.size(); counter ++) {
 			 Task current = inactiveTasks.get(counter);
 			 Task above = inactiveTasks.get(counter - 1);
-			 
+			 try {
+				 if (current.getEarliestElevDate().isEqual(above.getEarliestElevDate())) {
+					 current.setShowDate(false);
+				 } else {
+					 current.setShowDate(true);
+				 }
+			 } catch (Exception ex) {
+				 System.out.println(ex);
+			 }
+			 /*System.out.println(current + ": ");
         	 if (checkIfElevDateExists(above) && checkIfElevDateExists(current)){
         		 if (above.getEventualElevDate() != null) {
         			 compareAndSetDates(current, above.getEventualElevDate());
@@ -105,10 +115,15 @@ public class ToDoList implements Serializable{
         			 compareAndSetDates(current, above.getCurrentElevDate());
         		 } else if (above.getUrgentElevDate() != null) {
         			 compareAndSetDates(current, above.getUrgentElevDate());
+        		 } else {
+        			 current.setShowDate(false);
         		 }
         	 } else if (!checkIfElevDateExists(above) && checkIfElevDateExists(current)) {
         		 current.setShowDate(true);
-        	 }
+        		 System.out.println("SHOW DATE true bc above Elev date DNE");
+        	 } else {
+        		 current.setShowDate(false);
+        	 }*/
          }
 	}
 	
@@ -116,15 +131,18 @@ public class ToDoList implements Serializable{
 		if (currentTask.getEventualElevDate() != null) {
 			 if(!currentTask.getEventualElevDate().isEqual(aboveDate)) {
 				 currentTask.setShowDate(true);
+				 System.out.println("SHOW DATE true bc above Eventual Elev is not Equal");
 			 }
 		 } else if (currentTask.getCurrentElevDate() != null) {
 			 if(!currentTask.getCurrentElevDate().isEqual(aboveDate)) {
 				 currentTask.setShowDate(true);
+				 System.out.println("SHOW DATE true bc above Current Elev is not Equal");
 			 }
 		 } else {
 			 //Urgent Elev Date exists
 			 if (!currentTask.getUrgentElevDate().isEqual(aboveDate)) {
 				 currentTask.setShowDate(true);
+				 System.out.println("SHOW DATE true bc above Urgent Elev is not Equal");
 			 }
 		 }
 	}
@@ -214,10 +232,22 @@ public class ToDoList implements Serializable{
 		//No Task with this name was found
 	}
 	
-	public boolean setTaskCompleted(String taskName) {
+	/*public boolean setTaskCompleted(String taskName) {
 		boolean stopForLoop = false;
 		for (int counter = 0; counter < activeTasks.size() && !stopForLoop; counter ++) {
 			if (activeTasks.get(counter).getName().equals(taskName)) {
+				completedTasks.add(activeTasks.remove(counter));
+				stopForLoop = true;
+			}
+		}
+		
+		return !stopForLoop;//True if successfully switched.
+	}*/
+	
+	public boolean setTaskCompleted(Task taskName) {
+		boolean stopForLoop = false;
+		for (int counter = 0; counter < activeTasks.size() && !stopForLoop; counter ++) {
+			if (activeTasks.get(counter).getName().equals(taskName.getName())) {
 				completedTasks.add(activeTasks.remove(counter));
 				stopForLoop = true;
 			}

@@ -2,6 +2,7 @@ package frontend;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import com.jfoenix.controls.JFXListView;
@@ -42,6 +43,7 @@ public class FXHistoryWindow {
 		for (HistoryItem hist : task.getHistoryItems()) {
 			histories.add(new HistoryBox(hist, 5.0));
 		}
+		Collections.reverse(histories);
 		myCustomListView.setItems(FXCollections.observableArrayList(histories));
 		
 		myCustomListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -65,7 +67,7 @@ public class FXHistoryWindow {
 		});
 		
 		pane.setContent(myCustomListView);
-		stage.setScene(new Scene(pane, 400, 850));
+		stage.setScene(new Scene(pane, 500, 650));
 		stage.setTitle("History window");
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.initOwner(
@@ -78,6 +80,7 @@ public class FXHistoryWindow {
 		for (HistoryItem hist : myTask.getHistoryItems()) {
 			histories.add(new HistoryBox(hist, 5.0));
 		}
+		Collections.reverse(histories);
 		myCustomListView.setItems(FXCollections.observableArrayList(histories));
 	}
 	

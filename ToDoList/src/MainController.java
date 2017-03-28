@@ -24,7 +24,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
@@ -142,12 +141,25 @@ public class MainController {
 		String text = myTextField.getText();
 		text = text.trim();//Removes leading/trialing whitespace
 		if (!text.equals("")) {
-			data.add(text);
-			try {
-				tdl.add(new Task(text));
-			}catch (NullPointerException e) {
-				//e.printStackTrace();
-				System.out.println("tdl is NULL");
+			if (tdl.getTask(text) == null) {
+				if (tdl.getCompletedTask(text) == null) {
+					
+					data.add(text);
+					try {
+						tdl.add(new Task(text));
+					}catch (NullPointerException e) {
+						//e.printStackTrace();
+						System.out.println("tdl is NULL");
+					}
+					
+					
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION, "This task has already been completed!");
+					alert.showAndWait();
+				}
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
+				alert.showAndWait();
 			}
 		}
 
@@ -181,7 +193,7 @@ public class MainController {
 	public void loadTaskNames() {
 		//SHOULD CHECK ELEVATIONS ALSO GO HERE?
 		
-		
+		tdl.sortTasks();
 		//tdl = Main.todoList;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
@@ -303,7 +315,7 @@ public class MainController {
 				System.out.println("Right Click on: " + item);//Works
 				Task taskToComplete = tdl.getTask(item);
 				taskToComplete.setStatus(Task.COMPLETED);
-				tdl.setTaskCompleted(item);
+				tdl.setTaskCompleted(taskToComplete);
 				loadTaskNames();
 			}
 		});
@@ -313,7 +325,7 @@ public class MainController {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
 				Task taskToDelete = tdl.getTask(item);
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this comment?");
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
 	    		alert.showAndWait().ifPresent(response -> {
 	    		     if (response == ButtonType.OK) {
 	    		    	 //If response exists and is OK
