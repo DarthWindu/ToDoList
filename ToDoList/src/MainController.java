@@ -77,6 +77,9 @@ public class MainController {
 
 	@FXML // fx:id="menuCAI"
 	private Menu menuCAI; // Value injected by FXMLLoader
+	
+	@FXML
+	private MenuItem menuItemCAI;
 
 	@FXML // fx:id="menuQuit"
 	private Menu menuQuit; // Value injected by FXMLLoader
@@ -123,7 +126,7 @@ public class MainController {
 		//ALL ACTION HANDLERS GO HERE
 
 		setDoubleClickAction();
-		setClickCompTasksAction();
+		//setClickCompTasksAction();
 		setListRightClickMenu();
 		initBackupFunctionality();
 		initRestoreFunctionality();
@@ -157,6 +160,11 @@ public class MainController {
 	@FXML
 	public void completedTasksOnAction(ActionEvent evt) {
 		System.out.print("hkjhkjfd");
+	}
+	
+	@FXML
+	public void onViewCAIaction(ActionEvent evt) {
+		new CompletedTasksWindow(Main.primStage);
 	}
 	//==================================================================
 	//FXML ACTION LISTENERS - AUTO INJECTED ==> ENDS
@@ -279,22 +287,6 @@ public class MainController {
 		//-----------------------------------------------------------------------
 	}
 
-	@SuppressWarnings("deprecation")
-	private void setClickCompTasksAction() {
-		menuCAI.setGraphic(
-				ButtonBuilder.create()
-				.text("Completed Tasks")
-				.onAction(new EventHandler<ActionEvent>(){
-					@Override public void handle(ActionEvent event) {
-						//TODO
-						System.out.println("CAI Action Fired");
-						//Use ListView's getSelected Item
-
-						new CompletedTasksWindow(Main.primStage);
-					} })
-				.build());
-		//-------------------------------------------------------------------------------------------------------------------
-	}
 
 	private void setListRightClickMenu() {
 		//Set Right Click Menu
