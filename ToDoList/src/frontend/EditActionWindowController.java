@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import backend.Task;
-
+import main.Main;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -17,7 +17,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 
 public class EditActionWindowController {
 	private Task task = null;
@@ -166,22 +168,22 @@ public class EditActionWindowController {
 
 	@FXML
 	void radCurrentAction(ActionEvent event) {
-		task.setStatus(Task.CURRENT);
+		setStatus(Task.CURRENT);
 	}
 
 	@FXML
 	void radEventualAction(ActionEvent event) {
-		task.setStatus(Task.EVENTUAL);
+		setStatus(Task.EVENTUAL);
 	}
 
 	@FXML
 	void radInactiveAction(ActionEvent event) {
-		task.setStatus(Task.INACTIVE);
+		setStatus(Task.INACTIVE);
 	}
 
 	@FXML
 	void radUrgentAction(ActionEvent event) {
-		task.setStatus(Task.URGENT);
+		setStatus(Task.URGENT);
 	}
 
 	@FXML
@@ -232,6 +234,16 @@ public class EditActionWindowController {
 			chkBox.setSelected(true);
 		}
 	}
+	
+	private void setStatus(int newStatus) {
+		if (task.getStatus() == Task.COMPLETED) {
+			System.out.println("Get From Comp List: " + Main.todoList.getCompletedTask(task.getName()));
+			System.out.println(Main.todoList.setCompletedTaskActive(task));
+			
+		} 
+		task.setStatus(newStatus);
+	}
+	
 
 	private void initTaskInfo() {
 		task = EditActionWindow.taskBeingEdited;
@@ -285,8 +297,19 @@ public class EditActionWindowController {
 				{
 					//System.out.println("Textfield out focus");
 					String newName = txtfName.getText().trim();
-					if (!newName.equals("") && ! newName.equals(task.getName())) {
-						task.changeName(txtfName.getText().trim());
+					if (!newName.equals("") && !newName.equals(task.getName())) {
+						if (Main.todoList.getTask(newName) == null) {
+							if (Main.todoList.getCompletedTask(newName) == null) {
+								task.changeName(txtfName.getText().trim());
+							} else {
+								Alert alert = new Alert(AlertType.INFORMATION, "This task has already been completed!");
+								alert.showAndWait();
+							}
+						} else {
+							Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
+							alert.showAndWait();
+						}
+						
 					}
 				}
 			}

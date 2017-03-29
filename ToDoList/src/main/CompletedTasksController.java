@@ -1,4 +1,6 @@
+package main;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.jfoenix.controls.JFXListView;
 
@@ -15,6 +17,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class CompletedTasksController {
@@ -50,15 +53,20 @@ public class CompletedTasksController {
 			public void handle(ActionEvent event) {
 				String item = myListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToDelete = Main.todoList.getCompletedTask(item);
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
-				alert.showAndWait().ifPresent(response -> {
-					if (response == ButtonType.OK) {
-						//If response exists and is OK
-						tdl.getCompletedTasks().remove(taskToDelete);//Function is not verified to be working
-						loadTaskNames();
+				try {
+					Task taskToDelete = Main.todoList.getCompletedTask(item);
+					if (taskToDelete != null) {
+						Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
+						alert.showAndWait().ifPresent(response -> {
+							if (response == ButtonType.OK) {
+								//If response exists and is OK
+								tdl.getCompletedTasks().remove(taskToDelete);//Function is not verified to be working
+								loadTaskNames();
+							}
+						});
 					}
-				});
+					
+				}catch (Exception ex) {}
 			}
 		});
 		edit.setOnAction(new EventHandler<ActionEvent>() {
@@ -66,10 +74,15 @@ public class CompletedTasksController {
 			public void handle(ActionEvent event) {
 				String item = myListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToEdit = Main.todoList.getCompletedTask(item);
-				contextMenu.hide();
-				new EditActionWindow(taskToEdit, CompletedTasksWindow.compTasksStage.getScene());
-				loadTaskNames();//Works
+				try {
+					Task taskToEdit = Main.todoList.getCompletedTask(item);
+					if (taskToEdit != null) {
+						contextMenu.hide();
+						new EditActionWindow(taskToEdit, CompletedTasksWindow.compTasksStage.getScene());
+						loadTaskNames();//Works
+					}
+					
+				}catch (Exception ex) {}
 			}
 		});
 		myListView.setContextMenu(contextMenu);
@@ -79,7 +92,7 @@ public class CompletedTasksController {
 			@Override
 			public void handle(MouseEvent click) {
 
-				if (click.getClickCount() == 2) {
+				if (click.getClickCount() == 2 && click.getButton() == MouseButton.PRIMARY) {
 					//Use ListView's getSelected Item
 					String item = myListView.getSelectionModel().getSelectedItem();
 					System.out.println("Double Click on: " + item);//Works
@@ -102,6 +115,7 @@ public class CompletedTasksController {
 				for (Task compTask: tasks) {
 					taskNames.add(compTask.getName());
 				}
+				Collections.reverse(taskNames);
 				data = FXCollections.observableArrayList(taskNames);
 			} else {
 				data = FXCollections.observableArrayList();

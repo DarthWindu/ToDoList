@@ -1,3 +1,4 @@
+package main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,11 +12,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import backend.*;
 
 public class Main extends Application{
-	protected static ToDoList todoList = new ToDoList();
+	public static ToDoList todoList = new ToDoList();
 	protected static Stage primStage = null;
 	//public static File originOfToDoList;
 	
@@ -27,6 +29,8 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primStage = primaryStage;
+		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
+		primaryStage.setResizable(false);
 		//import code the saved to do list is saved in todoList
 		try {
 			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");

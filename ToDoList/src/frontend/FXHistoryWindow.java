@@ -17,11 +17,14 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.Main;
 
 public class FXHistoryWindow {
 	private Stage stage;
@@ -33,11 +36,14 @@ public class FXHistoryWindow {
 	FXHistoryWindow(Task task, Scene scene) {
 		myTask = task;
 		stage = new Stage();
+		stage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
+		stage.setResizable(false);
 		pane = new ScrollPane();
+		pane.setVbarPolicy(ScrollBarPolicy.NEVER);
 		//historyBox = new VBox(8);
 		myCustomListView = new JFXListView<HistoryBox>();
-		myCustomListView.setPrefWidth(350.0);
-		myCustomListView.setPrefHeight(820.0);
+		myCustomListView.setPrefWidth(505.0);
+		myCustomListView.setPrefHeight(655.0);
 		
 		ArrayList<HistoryBox> histories = new ArrayList<HistoryBox>();
 		for (HistoryItem hist : task.getHistoryItems()) {

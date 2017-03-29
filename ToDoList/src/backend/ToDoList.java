@@ -253,7 +253,22 @@ public class ToDoList implements Serializable{
 			}
 		}
 		
-		return !stopForLoop;//True if successfully switched.
+		return stopForLoop;//True if successfully switched.
+	}
+	
+	public boolean setCompletedTaskActive(Task taskName) {
+		boolean stopForLoop = false;
+		
+		for (int counter = 0; counter < completedTasks.size() && !stopForLoop; counter ++) {
+			//System.out.println(completedTasks.get);
+			if (completedTasks.get(counter).getName().equals(taskName.getName())) {
+				System.out.println("Found" + true);
+				activeTasks.add(completedTasks.remove(counter));
+				stopForLoop = true;
+			}
+		}
+		
+		return stopForLoop;//True if successfully switched.
 	}
 	
 	

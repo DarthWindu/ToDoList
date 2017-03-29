@@ -1,3 +1,4 @@
+package main;
 
 
 import com.jfoenix.controls.JFXListView;
@@ -15,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -33,6 +35,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -144,9 +147,10 @@ public class MainController {
 			if (tdl.getTask(text) == null) {
 				if (tdl.getCompletedTask(text) == null) {
 					
-					data.add(text);
+					//data.add(text);
+					data.add(0, text);
 					try {
-						tdl.add(new Task(text));
+						tdl.add(new Task(text,Calendar.getInstance().getTime(), Task.URGENT));
 					}catch (NullPointerException e) {
 						//e.printStackTrace();
 						System.out.println("tdl is NULL");
@@ -177,6 +181,7 @@ public class MainController {
 	@FXML
 	public void onViewCAIaction(ActionEvent evt) {
 		new CompletedTasksWindow(Main.primStage);
+		loadTaskNames();
 	}
 	//==================================================================
 	//FXML ACTION LISTENERS - AUTO INJECTED ==> ENDS
@@ -194,6 +199,7 @@ public class MainController {
 		//SHOULD CHECK ELEVATIONS ALSO GO HERE?
 		
 		tdl.sortTasks();
+		tdl.checkElevations();
 		//tdl = Main.todoList;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
@@ -252,18 +258,32 @@ public class MainController {
 			e1.printStackTrace();
 		}
 
-		if (todoList_temp.getActiveTasks() == null) {
-			//ToDoList could not be de-serialized
-			System.out.println("Loading FAILED!!!!");
+		try {
+			if (todoList_temp.getActiveTasks() == null) {
+				//ToDoList could not be de-serialized
+				System.out.println("Loading FAILED!!!!");
+				Alert alert = new Alert(AlertType.INFORMATION, "Restoration of this Todolist was not successful. No changes have been made.");
+				alert.showAndWait();
+				return false;
+			} else {
+				System.out.println("Loading Succeeded!");
+				tdl = todoList_temp;//Could cause bug
+				Main.todoList = todoList_temp;//Could cause bug
+				//MainController.TDL_CHANGE_STATUS = MainController.TDL_CHANGED;
+				loadTaskNames();
+				/*Alert alert = new Alert(AlertType.INFORMATION, "!");
+				alert.showAndWait();*/
+				return true;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Alert alert = new Alert(AlertType.INFORMATION, "Restoration of this Todolist was not successful. No changes have been made.");
+			alert.showAndWait();
 			return false;
-		} else {
-			System.out.println("Loading Succeeded!");
-			tdl = todoList_temp;//Could cause bug
-			Main.todoList = todoList_temp;//Could cause bug
-			//MainController.TDL_CHANGE_STATUS = MainController.TDL_CHANGED;
-			loadTaskNames();
-			return true;
 		}
+		
+		
+		
 	}
 	//==================================================================
 	//Utility Methods ==> END
@@ -283,7 +303,8 @@ public class MainController {
 			@Override
 			public void handle(MouseEvent click) {
 
-				if (click.getClickCount() == 2) {
+				if (click.getClickCount() == 2 && click.getButton() == MouseButton.PRIMARY) {
+					
 					//Use ListView's getSelected Item
 					String item = myCustomListView.getSelectionModel().getSelectedItem();
 					System.out.println("Double Click on: " + item);//Works
@@ -313,10 +334,12 @@ public class MainController {
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToComplete = tdl.getTask(item);
-				taskToComplete.setStatus(Task.COMPLETED);
-				tdl.setTaskCompleted(taskToComplete);
-				loadTaskNames();
+				try {
+					Task taskToComplete = tdl.getTask(item);
+					taskToComplete.setStatus(Task.COMPLETED);
+					tdl.setTaskCompleted(taskToComplete);
+					loadTaskNames();
+				}catch (Exception e) {/*Usually a Null Pointer*/}
 			}
 		});
 		deleteTask.setOnAction(new EventHandler<ActionEvent>() {
@@ -324,16 +347,17 @@ public class MainController {
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToDelete = tdl.getTask(item);
-				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
-	    		alert.showAndWait().ifPresent(response -> {
-	    		     if (response == ButtonType.OK) {
-	    		    	 //If response exists and is OK
-	    		    	 tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
-	    					loadTaskNames();
-	    		     }
-	    		 });
-				
+				try {
+					Task taskToDelete = tdl.getTask(item);
+					Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
+		    		alert.showAndWait().ifPresent(response -> {
+		    		     if (response == ButtonType.OK) {
+		    		    	 //If response exists and is OK
+		    		    	 tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
+		    					loadTaskNames();
+		    		     }
+		    		 });
+				}catch (Exception ex) {/*Usually a Null Pointer*/}
 			}
 		});
 		edit.setOnAction(new EventHandler<ActionEvent>() {
@@ -341,10 +365,12 @@ public class MainController {
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
-				Task taskToEdit = tdl.getTask(item);
-				contextMenu.hide();
-				new EditActionWindow(taskToEdit, Main.primStage.getScene());
-				loadTaskNames();//Works
+				try {
+					Task taskToEdit = tdl.getTask(item);
+					contextMenu.hide();//Hides context menu before opening Edit Action Window
+					new EditActionWindow(taskToEdit, Main.primStage.getScene());
+					loadTaskNames();//Works
+				}catch (Exception ex) {/*Usually a Null Pointer*/}
 			}
 		});
 		myCustomListView.setContextMenu(contextMenu);

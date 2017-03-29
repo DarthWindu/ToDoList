@@ -60,14 +60,14 @@ public class Task implements Serializable{
 		//TODO: make new historyItem
 	}
 
-	Task(String name, Date date) 
+	public Task(String name, Date date) 
 	{
 		this(name, date, DEFAULT_STATUS); // !! - might be an issue calling a static variable in constructor
 		this.initVariables();
 		//TODO: make new historyItem
 	}
 
-	Task(String name, Date date, int initPriority) 
+	public Task(String name, Date date, int initPriority) 
 	{
 		this.initVariables();
 		taskName = name;
@@ -103,7 +103,9 @@ public class Task implements Serializable{
 		priorityChanges.add(change);
 		historyEvents.add(change);
 		status = new Integer(newStatus);
-
+		if (this.getStatus() != Task.INACTIVE) {
+			this.setShowDate(false);
+		}
 		//if(newStatus == COMPLETED)
 		//	MainMenu.getList().switchTaskToCompleted(this);
 

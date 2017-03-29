@@ -25,14 +25,14 @@
             <JFXRadioButton fx:id="radCurrent" layoutX="48.0" layoutY="128.0" onAction="#radCurrentAction" text="Current" toggleGroup="$priorityGroup" />
             <JFXRadioButton fx:id="radEventual" layoutX="48.0" layoutY="151.0" onAction="#radEventualAction" text="Eventual" toggleGroup="$priorityGroup" />
             <JFXRadioButton fx:id="radInactive" layoutX="48.0" layoutY="174.0" onAction="#radInactiveAction" text="Inactive" toggleGroup="$priorityGroup" />
-            <JFXCheckBox fx:id="chkbUrgent" checkedColor="#10859c" layoutX="47.0" layoutY="271.0" onAction="#chkbUrgentAction" text="Elevates to Urgent on:" />
-            <JFXCheckBox fx:id="chkbCurrent" checkedColor="#10859c" layoutX="48.0" layoutY="313.0" onAction="#chkbCurrentAction" text="Elevates to Current on:" />
-            <JFXDatePicker fx:id="currentDatePicker" defaultColor="#08008f" editable="false" layoutX="209.0" layoutY="306.0" onHidden="#currentDatePickerOnHidden" onHiding="#currentDatePickerOnHiding" prefHeight="32.0" prefWidth="201.0" promptText="Task becomes Current on..." />
+            <JFXCheckBox fx:id="chkbUrgent" checkedColor="#009688" layoutX="47.0" layoutY="271.0" onAction="#chkbUrgentAction" text="Elevates to Urgent on:" />
+            <JFXCheckBox fx:id="chkbCurrent" checkedColor="#009688" layoutX="48.0" layoutY="313.0" onAction="#chkbCurrentAction" text="Elevates to Current on:" />
+            <JFXDatePicker fx:id="currentDatePicker" editable="false" layoutX="209.0" layoutY="306.0" onHidden="#currentDatePickerOnHidden" onHiding="#currentDatePickerOnHiding" prefHeight="32.0" prefWidth="201.0" promptText="Task becomes Current on..." />
             <JFXDatePicker fx:id="urgentDatePicker" editable="false" layoutX="209.0" layoutY="266.0" onHidden="#urgentDatePickerOnHidden" onHiding="#urgentDatePickerOnHiding" prefHeight="32.0" prefWidth="200.0" promptText="Task becomes Urgent on..." />
-            <JFXCheckBox fx:id="chkbEventual" layoutX="48.0" layoutY="353.0" onAction="#chkbEventualAction" text="Elevates to Eventual on:" />
+            <JFXCheckBox fx:id="chkbEventual" checkedColor="#009688" layoutX="48.0" layoutY="353.0" onAction="#chkbEventualAction" text="Elevates to Eventual on:" />
             <JFXDatePicker fx:id="eventualDatePicker" editable="false" layoutX="216.0" layoutY="348.0" onHidden="#eventualDatePickerOnHidden" onHiding="#eventualDatePickerOnHiding" prefHeight="28.0" prefWidth="196.0" promptText="Task becomes Eventual on..." />
-            <JFXButton fx:id="btnComment" buttonType="RAISED" layoutX="584.0" layoutY="88.0" onAction="#btnCommentAction" prefHeight="30.0" prefWidth="130.0" ripplerFill="#0040ff" text="Comment" />
-            <JFXButton fx:id="btnHistory" buttonType="RAISED" layoutX="584.0" layoutY="131.0" onAction="#btnHistoryOnAction" prefHeight="29.0" prefWidth="129.0" text="History" />
+            <JFXButton fx:id="btnComment" buttonType="RAISED" layoutX="584.0" layoutY="88.0" onAction="#btnCommentAction" prefHeight="30.0" prefWidth="130.0" ripplerFill="#00e6ff" text="Comment" />
+            <JFXButton fx:id="btnHistory" buttonType="RAISED" layoutX="584.0" layoutY="131.0" onAction="#btnHistoryOnAction" prefHeight="29.0" prefWidth="129.0" ripplerFill="#6200ff" text="History" />
             <JFXButton fx:id="btnPrint" buttonType="RAISED" disable="true" layoutX="586.0" layoutY="168.0" onAction="#btnPrintOnAction" prefHeight="29.0" prefWidth="129.0" text="Print" visible="false" />
             <JFXButton fx:id="btnClose" cancelButton="true" layoutX="641.0" layoutY="368.0" text="Close" visible="false" />
             <JFXTextField fx:id="txtfMessage" editable="false" focusColor="#d70a0a" layoutX="47.0" layoutY="410.0" prefHeight="25.0" prefWidth="398.0" visible="false" />
