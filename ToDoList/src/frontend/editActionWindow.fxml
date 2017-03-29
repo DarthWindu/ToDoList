@@ -17,7 +17,6 @@
             <JFXTextField fx:id="txtfName" focusColor="#315de4" labelFloat="true" layoutX="48.0" layoutY="32.0" prefHeight="35.0" prefWidth="372.0" promptText="Name" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c8c9" height="29.0" layoutX="584.0" layoutY="89.0" opacity="0.32" stroke="#0004f8" strokeType="INSIDE" width="130.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c8c9" height="29.0" layoutX="584.0" layoutY="131.0" opacity="0.32" stroke="#0004f8" strokeType="INSIDE" width="130.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c8c9" height="29.0" layoutX="585.0" layoutY="168.0" opacity="0.32" stroke="#0004f8" strokeType="INSIDE" width="130.0" />
             <JFXRadioButton fx:id="radUrgent" layoutX="48.0" layoutY="103.0" onAction="#radUrgentAction" text="Urgent">
                <toggleGroup>
                   <ToggleGroup fx:id="priorityGroup" />
@@ -34,7 +33,7 @@
             <JFXDatePicker fx:id="eventualDatePicker" editable="false" layoutX="216.0" layoutY="348.0" onHidden="#eventualDatePickerOnHidden" onHiding="#eventualDatePickerOnHiding" prefHeight="28.0" prefWidth="196.0" promptText="Task becomes Eventual on..." />
             <JFXButton fx:id="btnComment" buttonType="RAISED" layoutX="584.0" layoutY="88.0" onAction="#btnCommentAction" prefHeight="30.0" prefWidth="130.0" ripplerFill="#0040ff" text="Comment" />
             <JFXButton fx:id="btnHistory" buttonType="RAISED" layoutX="584.0" layoutY="131.0" onAction="#btnHistoryOnAction" prefHeight="29.0" prefWidth="129.0" text="History" />
-            <JFXButton fx:id="btnPrint" buttonType="RAISED" layoutX="586.0" layoutY="168.0" onAction="#btnPrintOnAction" prefHeight="29.0" prefWidth="129.0" text="Print" />
+            <JFXButton fx:id="btnPrint" buttonType="RAISED" disable="true" layoutX="586.0" layoutY="168.0" onAction="#btnPrintOnAction" prefHeight="29.0" prefWidth="129.0" text="Print" visible="false" />
             <JFXButton fx:id="btnClose" cancelButton="true" layoutX="641.0" layoutY="368.0" text="Close" visible="false" />
             <JFXTextField fx:id="txtfMessage" editable="false" focusColor="#d70a0a" layoutX="47.0" layoutY="410.0" prefHeight="25.0" prefWidth="398.0" visible="false" />
          </children></AnchorPane>

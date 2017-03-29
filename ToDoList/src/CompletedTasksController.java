@@ -10,20 +10,23 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 
 public class CompletedTasksController {
-	
+
 	private ToDoList tdl = null;
 
-    @FXML
-    private JFXListView<String> myListView;
-    
-    @FXML
-    public void initialize() {
-    	loadTaskNames();
+	@FXML
+	private JFXListView<String> myListView;
+
+	@FXML
+	public void initialize() {
+		loadTaskNames();
 		//-------------------------------------------
 		final ContextMenu contextMenu = new ContextMenu();
 		//MenuItem completed = new MenuItem("Set task to completed");
@@ -48,8 +51,14 @@ public class CompletedTasksController {
 				String item = myListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
 				Task taskToDelete = Main.todoList.getCompletedTask(item);
-				tdl.getCompletedTasks().remove(taskToDelete);//Function is not verified to be working
-				loadTaskNames();
+				Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
+				alert.showAndWait().ifPresent(response -> {
+					if (response == ButtonType.OK) {
+						//If response exists and is OK
+						tdl.getCompletedTasks().remove(taskToDelete);//Function is not verified to be working
+						loadTaskNames();
+					}
+				});
 			}
 		});
 		edit.setOnAction(new EventHandler<ActionEvent>() {
@@ -81,12 +90,12 @@ public class CompletedTasksController {
 				}
 			}
 		});
-    }
-    
-    private void loadTaskNames() {
-    	tdl = Main.todoList;
-    	ObservableList<String> data = null;
-    	if (tdl != null) {
+	}
+
+	private void loadTaskNames() {
+		tdl = Main.todoList;
+		ObservableList<String> data = null;
+		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getCompletedTasks();
 			if (tasks != null) {
 				ArrayList<String> taskNames = new ArrayList<String>();
@@ -102,6 +111,6 @@ public class CompletedTasksController {
 			data = FXCollections.observableArrayList();
 		}
 		myListView.setItems(data);
-    }
+	}
 
 }

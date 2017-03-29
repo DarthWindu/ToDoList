@@ -19,7 +19,7 @@
                   <items>
                     <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Create backup..." />
                         <MenuItem fx:id="menuRestore_Backup" mnemonicParsing="false" text="Restore from backup..." />
-                        <MenuItem fx:id="menuPrint" mnemonicParsing="false" text="Print" />
+                        <MenuItem fx:id="menuPrint" disable="true" mnemonicParsing="false" text="Print" visible="false" />
                   </items>
                 </Menu>
                   <Menu fx:id="menuCAI" mnemonicParsing="false" text="View">

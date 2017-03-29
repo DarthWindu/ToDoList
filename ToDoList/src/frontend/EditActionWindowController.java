@@ -110,6 +110,9 @@ public class EditActionWindowController {
 	void chkbCurrentAction(ActionEvent event) {
 		if (currentDatePicker.getValue() != null && chkbCurrent.isSelected()) {
 			task.setCurrentElevDate(currentDatePicker.getValue());
+		} else {
+			task.setCurrentElevDate(null);
+			task.setShowDate(false);
 		}
 	}
 
@@ -117,6 +120,9 @@ public class EditActionWindowController {
 	void chkbEventualAction(ActionEvent event) {
 		if (eventualDatePicker.getValue() != null && chkbEventual.isSelected()) {
 			task.setEventualElevDate(eventualDatePicker.getValue());
+		} else {
+			task.setEventualElevDate(null);
+			task.setShowDate(false);
 		}
 	}
 
@@ -124,6 +130,9 @@ public class EditActionWindowController {
 	void chkbUrgentAction(ActionEvent event) {
 		if (urgentDatePicker.getValue() != null && chkbUrgent.isSelected()) {
 			task.setUrgentElevDate(urgentDatePicker.getValue());
+		} else {
+			task.setUrgentElevDate(null);
+			task.setShowDate(false);
 		}
 	}
 

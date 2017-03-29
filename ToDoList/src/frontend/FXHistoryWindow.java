@@ -59,7 +59,7 @@ public class FXHistoryWindow {
 		                	new FXCommentWindow(task,comment, stage);
 		                	updateHistoryBox();
 		                } catch (Exception ex) {
-		                	ex.printStackTrace();
+		                	//ex.printStackTrace();
 		                }
 		            }
 		        }
@@ -88,6 +88,7 @@ public class FXHistoryWindow {
 	
 	private class HistoryBox extends VBox {
 		private HistoryItem item;
+		
 		HistoryBox(HistoryItem histItem, double spacing) {
 			this.setSpacing(spacing);
 			item = histItem;
@@ -107,19 +108,22 @@ public class FXHistoryWindow {
 			Label titleLabel = new Label(histTitle);
 			
 			String addText = "";
-
+			
+			//SET History Item Description
 			try{
-				NameChange name = (NameChange)histItem;
+				NameChange name = (NameChange)histItem;//If History Item is a namechange
 				addText = "Changed name from " + name.getOldName() + " to " + name.getNewName();
 			}catch(Exception e){}
 
 			try{
-				Comment com = (Comment)histItem;
+				Comment com = (Comment)histItem;//If History Item is a Comment
 				addText = com.getComment();
 			}catch(Exception e){}
 
+			
+						
 			try{
-				PriorityChange pri = (PriorityChange)histItem;
+				PriorityChange pri = (PriorityChange)histItem;//If History Item is a priority change
 				String priOld = "";
 				String priNew = "";
 
@@ -141,8 +145,10 @@ public class FXHistoryWindow {
 
 				addText = "Changed priority from " + priOld + " to " + priNew;
 			}catch(Exception e){}
+			//End SET History Item Description
 			
 			Label histText = new Label(addText);
+			histText.setWrapText(true);
 			
 			this.getChildren().add(titleLabel);
 			this.getChildren().add(histText);

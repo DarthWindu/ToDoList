@@ -36,11 +36,11 @@ public class Main extends Application{
 			fileIn.close();
 		} catch (FileNotFoundException e1) {
 			//MainMenu a = new MainMenu(null);
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		if (todoList.getActiveTasks() == null) {
