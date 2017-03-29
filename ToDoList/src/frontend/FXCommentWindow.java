@@ -31,7 +31,7 @@ public class FXCommentWindow {
 		
 		
 		stage.setScene(new Scene(root));
-		stage.setTitle("Completed Tasks");
+		stage.setTitle("Comment Window");
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.initOwner(
 				(parentStage.getScene().getWindow()));
