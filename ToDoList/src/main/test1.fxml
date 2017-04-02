@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="myScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+  <content>
+    <AnchorPane fx:id="myAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="567.0" prefWidth="818.0">
+         <children>
+            <MenuBar fx:id="mainMenuBar" layoutY="2.0" prefHeight="25.0" prefWidth="1096.0">
+              <menus>
+                <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Create backup..." />
+                        <MenuItem fx:id="menuRestore_Backup" mnemonicParsing="false" text="Restore from backup..." />
+                        <MenuItem fx:id="menuPrint" disable="true" mnemonicParsing="false" text="Print" visible="false" />
+                  </items>
+                </Menu>
+                  <Menu fx:id="menuCAI" mnemonicParsing="false" text="View">
+                    <items>
+                        <MenuItem fx:id="menuItemCAI" mnemonicParsing="false" onAction="#onViewCAIaction" text="View Completed Action Items" />
+                    </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <JFXListView fx:id="myCustomListView" layoutX="24.0" layoutY="40.0" prefHeight="437.0" prefWidth="781.0" />
+            <JFXTextField fx:id="myTextField" layoutX="24.0" layoutY="523.0" onAction="#onEnter" prefHeight="25.0" prefWidth="418.0" promptText="New Action Item">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </JFXTextField>
+         </children></AnchorPane>
+  </content>
+</ScrollPane>

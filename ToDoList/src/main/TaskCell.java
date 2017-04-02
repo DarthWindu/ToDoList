@@ -1,19 +1,17 @@
-package frontend;
+package main;
+
 
 import java.util.ArrayList;
-import java.util.List;
 
+import backend.Task;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
-public class TaskCell extends ListCell<String>{
+public class TaskCell extends ListCell<String>{ //Chaange string to Text if you choose that route
 	private int indexToDelete = -1;
 	public TaskCell() {
 		setOnDragDetected(event -> {
@@ -28,6 +26,7 @@ public class TaskCell extends ListCell<String>{
 
 			Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			ClipboardContent content = new ClipboardContent();
+			
 			content.putString(getItem());
 			/*dragboard.setDragView(
                 birdImages.get(
@@ -71,33 +70,64 @@ public class TaskCell extends ListCell<String>{
 			if (getItem() == null) {
 				return;
 			}
-
+			//System.out.println("Happening");
 			Dragboard db = event.getDragboard();
 			boolean success = false;
 
 			if (db.hasString()) {
 				//System.out.println("Entered Drop Block");
 				ObservableList<String> items = this.getListView().getItems();
+				//ArrayList<String> strItems = new ArrayList<String>();
+				/*for (Text txt : items) {
+					strItems.add(txt.getText());
+				}*/
 				int draggedIndex = items.indexOf(db.getString());
 				if (draggedIndex > -1) {
-					String cellToMove = items.remove(draggedIndex);
-					int indexOfThis = items.indexOf(this.getText());
+					int indexOfThis = items.indexOf(this.getItem());
+					ArrayList<Task> tasks = Main.todoList.getActiveTasks();
 					
-					if (indexOfThis == items.size() - 1)
-					{
-						items.add(cellToMove);
+					if (draggedIndex == items.size() - 1 && indexOfThis == items.size() - 2) {
+						//System.out.println("We in there");
+						items.add(items.remove(indexOfThis));
+						tasks.add(tasks.remove(indexOfThis));
+						success = true;
 					} else {
-						items.add(indexOfThis, cellToMove);
-					}
+						String cellToMove = items.remove(draggedIndex);
+						Task taskToMove = tasks.remove(draggedIndex);
+						//System.out.println(cellToMove);
+						
+						
+						if (indexOfThis == items.size() - 1)
+						{
+							items.add(cellToMove);
+							tasks.add(taskToMove);
+						}else {
+							items.add(indexOfThis, cellToMove);
+							tasks.add(indexOfThis, taskToMove);
+						}
 
+						//this.setText(db.getString());
+						success = true;
+					}
+					int index = 0;
+					if (draggedIndex < indexOfThis) {
+						//Dragged down - set priority to priority of task above
+						index = items.indexOf(db.getString());
+						int priorIndex = index - 1;
+						tasks.get(index).setStatus(tasks.get(priorIndex).getStatus());
+					} else {
+						//Dragged up - set priority to priority of task below
+						index = items.indexOf(db.getString());
+						int afterIndex = index + 1;
+						tasks.get(index).setStatus(tasks.get(afterIndex).getStatus());
+					}
 					
-					//this.setText(db.getString());
-
-					success = true;
+					this.setText(tasks.get(index).getName());
+					
 					//System.out.println("Drop should be successful");
-					for (String text : items) {
+					/*for (String text : items) {
 						//System.out.println("item: " + text);
-					}
+					}*/
 				}
 			}
 			event.setDropCompleted(success);
@@ -113,7 +143,30 @@ public class TaskCell extends ListCell<String>{
 		super.updateItem(item, empty);
 
 		if (item != null) {
+			//this.setItem(item);
 			this.setText(item);
 		}
+		try {
+			if (Main.todoList.getTask(item) != null) {
+				switch (Main.todoList.getTask(item).getStatus()) {
+				case Task.URGENT: super.setStyle("-fx-font-weight: bold");
+					break;
+					
+				case Task.CURRENT: super.setStyle("-fx-font-weight: normal");
+					break;
+				
+				case Task.EVENTUAL: super.setStyle("-fx-font-style: italic");
+					break;
+					
+				case Task.INACTIVE: super.setStyle("-fx-font-style: italic");
+					break;
+				
+				default: super.setStyle("-fx-font-weight: normal");
+				}
+			}
+		}catch (NullPointerException e) {
+		}
+		
+		
 	}
 }

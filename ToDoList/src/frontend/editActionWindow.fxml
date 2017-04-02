@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.EditActionWindowController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="449.0" prefWidth="781.0">
+         <children>
+            <JFXTextField fx:id="txtfName" focusColor="#315de4" labelFloat="true" layoutX="48.0" layoutY="32.0" prefHeight="35.0" prefWidth="372.0" promptText="Name" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c8c9" height="29.0" layoutX="584.0" layoutY="89.0" opacity="0.32" stroke="#0004f8" strokeType="INSIDE" width="130.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c8c9" height="29.0" layoutX="584.0" layoutY="131.0" opacity="0.32" stroke="#0004f8" strokeType="INSIDE" width="130.0" />
+            <JFXRadioButton fx:id="radUrgent" layoutX="48.0" layoutY="103.0" onAction="#radUrgentAction" text="Urgent">
+               <toggleGroup>
+                  <ToggleGroup fx:id="priorityGroup" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="radCurrent" layoutX="48.0" layoutY="128.0" onAction="#radCurrentAction" text="Current" toggleGroup="$priorityGroup" />
+            <JFXRadioButton fx:id="radEventual" layoutX="48.0" layoutY="151.0" onAction="#radEventualAction" text="Eventual" toggleGroup="$priorityGroup" />
+            <JFXRadioButton fx:id="radInactive" layoutX="48.0" layoutY="174.0" onAction="#radInactiveAction" text="Inactive" toggleGroup="$priorityGroup" />
+            <JFXCheckBox fx:id="chkbUrgent" checkedColor="#009688" layoutX="47.0" layoutY="271.0" onAction="#chkbUrgentAction" text="Elevates to Urgent on:" />
+            <JFXCheckBox fx:id="chkbCurrent" checkedColor="#009688" layoutX="48.0" layoutY="313.0" onAction="#chkbCurrentAction" text="Elevates to Current on:" />
+            <JFXDatePicker fx:id="currentDatePicker" editable="false" layoutX="209.0" layoutY="306.0" onHidden="#currentDatePickerOnHidden" onHiding="#currentDatePickerOnHiding" prefHeight="32.0" prefWidth="201.0" promptText="Task becomes Current on..." />
+            <JFXDatePicker fx:id="urgentDatePicker" editable="false" layoutX="209.0" layoutY="266.0" onHidden="#urgentDatePickerOnHidden" onHiding="#urgentDatePickerOnHiding" prefHeight="32.0" prefWidth="200.0" promptText="Task becomes Urgent on..." />
+            <JFXCheckBox fx:id="chkbEventual" checkedColor="#009688" layoutX="48.0" layoutY="353.0" onAction="#chkbEventualAction" text="Elevates to Eventual on:" />
+            <JFXDatePicker fx:id="eventualDatePicker" editable="false" layoutX="216.0" layoutY="348.0" onHidden="#eventualDatePickerOnHidden" onHiding="#eventualDatePickerOnHiding" prefHeight="28.0" prefWidth="196.0" promptText="Task becomes Eventual on..." />
+            <JFXButton fx:id="btnComment" buttonType="RAISED" layoutX="584.0" layoutY="88.0" onAction="#btnCommentAction" prefHeight="30.0" prefWidth="130.0" ripplerFill="#00e6ff" text="Comment" />
+            <JFXButton fx:id="btnHistory" buttonType="RAISED" layoutX="584.0" layoutY="131.0" onAction="#btnHistoryOnAction" prefHeight="29.0" prefWidth="129.0" ripplerFill="#6200ff" text="History" />
+            <JFXButton fx:id="btnPrint" buttonType="RAISED" disable="true" layoutX="586.0" layoutY="168.0" onAction="#btnPrintOnAction" prefHeight="29.0" prefWidth="129.0" text="Print" visible="false" />
+            <JFXButton fx:id="btnClose" cancelButton="true" layoutX="641.0" layoutY="368.0" text="Close" visible="false" />
+            <JFXTextField fx:id="txtfMessage" editable="false" focusColor="#d70a0a" layoutX="47.0" layoutY="410.0" prefHeight="25.0" prefWidth="398.0" visible="false" />
+         </children></AnchorPane>
+  </content>
+</ScrollPane>
