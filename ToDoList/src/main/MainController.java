@@ -196,8 +196,6 @@ public class MainController {
 	//==================================================================
 	
 	public void loadTaskNames() {
-		//SHOULD CHECK ELEVATIONS ALSO GO HERE?
-		
 		tdl.sortTasks();
 		tdl.checkElevations();
 		//tdl = Main.todoList;

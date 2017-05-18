@@ -28,6 +28,7 @@ public class Main extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		boolean testingMode = true;//Change to FALSE When Delivering
 		primStage = primaryStage;
 		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
 		primaryStage.setResizable(false);
@@ -36,6 +37,7 @@ public class Main extends Application{
 			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			todoList = (ToDoList) in.readObject();
+			todoList.setTestingFlag(testingMode);
 			in.close();
 			fileIn.close();
 		} catch (FileNotFoundException e1) {

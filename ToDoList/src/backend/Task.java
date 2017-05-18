@@ -92,6 +92,33 @@ public class Task implements Serializable{
 	{
 		return status.intValue();
 	}
+	
+	/**@return status: String representation of Priority level*/
+	public String getStatusString()
+	{
+		String strStatus = "NULL STATUS";
+		
+		switch (status.intValue()) {
+		
+		case INACTIVE: strStatus = "INACTIVE";
+		break;
+		
+		case EVENTUAL: strStatus = "EVENTUAL";
+		break;
+		
+		case CURRENT: strStatus = "CURRENT";
+		break;
+		
+		case URGENT: strStatus = "Urgent";
+		break;
+		
+		case COMPLETED: strStatus = "COMPLETED";
+		break;
+		
+		}
+		
+		return strStatus;
+	}
 
 	/** @param newStatus - PriorityLevel
 	 * Adds PrirityChange and HistoryItem events, and changes status/priority level
