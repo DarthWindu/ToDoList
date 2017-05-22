@@ -351,7 +351,7 @@ public class Task implements Serializable{
 	}
 
 	private String inactiveNameDateFormatter(LocalDate date) {
-		return date + ", "+ date.getDayOfWeek() + " - " + this.getName();
+		return date + ", "+ date.getDayOfWeek() + "-\n" + this.getName();
 	}
 
 	public void setShowDate(boolean shudIshowDate) {
