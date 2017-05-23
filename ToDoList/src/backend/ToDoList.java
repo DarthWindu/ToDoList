@@ -27,8 +27,8 @@ public class ToDoList implements Serializable{
 		return activeTasks;
 	}
 
-	public void add(Task task){
-		activeTasks.add(task);
+	public void add(int index, Task task){
+		activeTasks.add(index, task);
 	}
 
 	public void delete(Task task){
@@ -38,6 +38,7 @@ public class ToDoList implements Serializable{
 	public void sortTasks(){
 		int numElements = activeTasks.size();  
 		Task temp;  
+
 		for(int topElement=0; topElement < numElements; topElement++){  
 			for(int currentElement=1; currentElement < (numElements-topElement); currentElement++){  
 				if(activeTasks.get(currentElement-1).getStatus() < activeTasks.get(currentElement).getStatus()){  
@@ -48,8 +49,6 @@ public class ToDoList implements Serializable{
 					 * 		Commented out Collections.reverse(activeTasks).
 					 * Pujit M.
 					 */
-					
-					
 					//If the task before this one is more important, switch positions
 					temp = activeTasks.get(currentElement-1);  
 					activeTasks.set(currentElement-1, activeTasks.get(currentElement));
@@ -68,6 +67,8 @@ public class ToDoList implements Serializable{
 		for (int counter = 0; counter < activeTasks.size(); counter ++) {
 			Task task = activeTasks.get(counter);
 			if (task.getStatus() == Task.INACTIVE) {
+				System.out.println("TEST");
+
 				inactiveTasks.add(task);
 				if (inactiveItemsCounter == 0) {
 					//First Inactive Item
@@ -97,7 +98,7 @@ public class ToDoList implements Serializable{
 		//TESTING CODE
 		//------------------------------------------------------
 		if (testingFlag) {
-
+            System.out.println("After Sort");
 			System.out.println("\n***TESTING INITIATED***\n"
 					+ "-------------------------------------------");
 

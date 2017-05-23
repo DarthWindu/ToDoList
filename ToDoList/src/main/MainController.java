@@ -150,7 +150,7 @@ public class MainController {
 					//data.add(text);
 					data.add(0, text);
 					try {
-						tdl.add(new Task(text,Calendar.getInstance().getTime(), Task.URGENT));
+						tdl.add(0, new Task(text,Calendar.getInstance().getTime(), Task.URGENT));
 					}catch (NullPointerException e) {
 						//e.printStackTrace();
 						System.out.println("tdl is NULL");
@@ -197,6 +197,7 @@ public class MainController {
 	
 	public void loadTaskNames() {
 		tdl.sortTasks();
+
 		tdl.checkElevations();
 		//tdl = Main.todoList;
 		if (tdl != null) {
@@ -221,6 +222,7 @@ public class MainController {
 				return new TaskCell();
 			}
 		});
+
 	}
 
 	public boolean saveFile(File file) {
