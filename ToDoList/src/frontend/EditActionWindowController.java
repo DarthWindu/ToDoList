@@ -228,6 +228,8 @@ public class EditActionWindowController {
 		if (datePicker.getValue().isBefore(LocalDate.now()) ||datePicker.getValue().isEqual(LocalDate.now())) {
 			txtfMessage.setVisible(true);
 			txtfMessage.setText("Please select a future date.");
+			Alert alert = new Alert(AlertType.INFORMATION, "Please select a future date.");
+			alert.showAndWait();
 			datePicker.setValue(null);
 		} else {
 			txtfMessage.setVisible(false);
