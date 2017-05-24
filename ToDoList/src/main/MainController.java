@@ -42,6 +42,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
 public class MainController {
+	private MainController main = this;
 
 	public static int TDL_CHANGE_STATUS = 0;// 0 means unchanged, 1 means changed, add other meanings if necessary. Used to determine overwrite of default save.
 	public static int TDL_UNCHANGED = 0,
@@ -219,7 +220,7 @@ public class MainController {
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> list) {
-				return new TaskCell();
+				return new TaskCell(main);
 			}
 		});
 
@@ -448,7 +449,7 @@ public class MainController {
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> list) {
-				return new TaskCell();
+				return new TaskCell(main);
 			}
 		});
 	}

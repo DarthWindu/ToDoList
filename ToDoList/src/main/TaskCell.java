@@ -2,6 +2,7 @@ package main;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import backend.Task;
 import javafx.collections.ObservableList;
@@ -13,7 +14,7 @@ import javafx.scene.input.TransferMode;
 
 public class TaskCell extends ListCell<String>{ //Chaange string to Text if you choose that route
 	private int indexToDelete = -1;
-	public TaskCell() {
+	public TaskCell(MainController mainController) {
 		setOnDragDetected(event -> {
 			if (getItem() == null) {
 				return;
@@ -110,24 +111,52 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 						success = true;
 					}
 					int index = 0;
+					Task task;
 					if (draggedIndex < indexOfThis) {
 						//Dragged down - set priority to priority of task above
 						index = items.indexOf(db.getString());
 						int priorIndex = index - 1;
-						tasks.get(index).setStatus(tasks.get(priorIndex).getStatus());
+						task = tasks.get(index);
+						task.setStatus(tasks.get(priorIndex).getStatus());
 					} else {
 						//Dragged up - set priority to priority of task below
 						index = items.indexOf(db.getString());
 						int afterIndex = index + 1;
-						tasks.get(index).setStatus(tasks.get(afterIndex).getStatus());
+						task=tasks.get(index);
+						task.setStatus(tasks.get(afterIndex).getStatus());
 					}
 					
 					this.setText(tasks.get(index).getName());
+					/*
+					 *Bug: Top task urgent, bottom task inactive and set to elevate to urgent
+					 *Drag top below bottom. Double click on the new bottom task (the old top task)
+					 */
+					
 					
 					//System.out.println("Drop should be successful");
 					/*for (String text : items) {
 						//System.out.println("item: " + text);
 					}*/
+					try {
+						if (task != null) {
+							switch (task.getStatus()) {
+							case Task.URGENT: super.setStyle("-fx-font-weight: bold");
+								break;
+								
+							case Task.CURRENT: super.setStyle("-fx-font-weight: normal");
+								break;
+							
+							case Task.EVENTUAL: super.setStyle("-fx-font-style: italic");
+								break;
+								
+							case Task.INACTIVE: super.setStyle("-fx-font-style: italic");
+								break;
+							
+							default: super.setStyle("-fx-font-weight: normal");
+							}
+						}
+					}catch (NullPointerException e) {
+					}
 				}
 			}
 			event.setDropCompleted(success);
@@ -145,6 +174,7 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 		if (item != null) {
 			//this.setItem(item);
 			this.setText(item);
+
 		}
 		try {
 			if (Main.todoList.getTask(item) != null) {

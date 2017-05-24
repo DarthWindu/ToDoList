@@ -31,7 +31,7 @@ public class Main extends Application{
 		boolean testingMode = false;//Change to FALSE When Delivering
 		primStage = primaryStage;
 		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(true);
 		//import code the saved to do list is saved in todoList
 		try {
 			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");
