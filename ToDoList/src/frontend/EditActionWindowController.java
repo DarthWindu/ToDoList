@@ -5,12 +5,15 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.scene.control.DateCell;
 
 import backend.Task;
 import main.Main;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import javafx.util.Callback;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,9 +23,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 
 public class EditActionWindowController {
 	private Task task = null;
+	private int eventHiddenCounter = 0;
 
 	@FXML
 	private ResourceBundle resources;
@@ -97,10 +103,10 @@ public class EditActionWindowController {
 		/*Platform.runLater(new Runnable() {
 			@Override
 			public void run() {*/
-				new FXHistoryWindow(task, EditActionWindow.editActionStage.getScene());
-			/*}
+		new FXHistoryWindow(task, EditActionWindow.editActionStage.getScene());
+		/*}
 		});*/
-		
+
 	}
 
 	@FXML
@@ -189,9 +195,12 @@ public class EditActionWindowController {
 	@FXML
 	void urgentDatePickerOnHidden(Event event) {
 		//System.out.println(urgentDatePicker.getValue().toString());
-		if (urgentDatePicker.getValue() != null && chkbUrgent.isSelected()) {
-			task.setUrgentElevDate(urgentDatePicker.getValue());
+		if (eventHiddenCounter%2 == 0) {
+			if (urgentDatePicker.getValue() != null && chkbUrgent.isSelected()) {
+				task.setUrgentElevDate(urgentDatePicker.getValue());
+			}
 		}
+
 	}
 
 	@FXML
@@ -222,30 +231,46 @@ public class EditActionWindowController {
 
 		initTaskInfo();
 		setNameFocusListener();
+		setDisabledDays();
 	}
 
-	private void datePickerOnHiding(JFXDatePicker datePicker, JFXCheckBox chkBox) {
-		if (datePicker.getValue().isBefore(LocalDate.now()) ||datePicker.getValue().isEqual(LocalDate.now())) {
-			txtfMessage.setVisible(true);
-			txtfMessage.setText("Please select a future date.");
-			Alert alert = new Alert(AlertType.INFORMATION, "Please select a future date.");
-			alert.showAndWait();
-			datePicker.setValue(null);
-		} else {
-			txtfMessage.setVisible(false);
-			chkBox.setSelected(true);
-		}
+	private void datePickerOnHiding(JFXDatePicker datePicker, JFXCheckBox chkBox) {	
+			int counter = 0;
+			boolean entered = false;
+			
+			if (datePicker.getValue().isBefore(LocalDate.now()) ||datePicker.getValue().isEqual(LocalDate.now())) {
+				if ((eventHiddenCounter % 2) == 0) {
+					/*System.out.println("HAHA");//Testing
+					txtfMessage.setVisible(true);
+					txtfMessage.setText("Please select a future date.");
+					Alert alert = new Alert(AlertType.WARNING, "Please select a future date.");
+					//alert.showAndWait();
+					datePicker.setValue(null);
+					
+					counter ++;
+					entered = true;*/
+				}
+			} else {
+				txtfMessage.setVisible(false);
+				chkBox.setSelected(true);
+			}
+			
+			//Testing
+			/*System.out.println("" + eventHiddenCounter + ": " + ((eventHiddenCounter % 2) == 0));
+			System.out.println("COUNTER: " + counter + "\nENTERED: " + entered);
+			entered = false;
+			eventHiddenCounter ++;*/
 	}
-	
+
 	private void setStatus(int newStatus) {
 		if (task.getStatus() == Task.COMPLETED) {
 			System.out.println("Get From Comp List: " + Main.todoList.getCompletedTask(task.getName()));
 			System.out.println(Main.todoList.setCompletedTaskActive(task));
-			
+
 		} 
 		task.setStatus(newStatus);
 	}
-	
+
 
 	private void initTaskInfo() {
 		task = EditActionWindow.taskBeingEdited;
@@ -282,9 +307,9 @@ public class EditActionWindowController {
 			chkbEventual.setSelected(true);
 			eventualDatePicker.setValue(task.getEventualElevDate());
 		}
-		
+
 	}
-	
+
 	private void setNameFocusListener() {
 		txtfName.focusedProperty().addListener(new ChangeListener<Boolean> ()
 		{
@@ -311,10 +336,37 @@ public class EditActionWindowController {
 							Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
 							alert.showAndWait();
 						}
-						
+
 					}
 				}
 			}
 		});
+	}
+	
+	private void setDisabledDays() {
+		final Callback<DatePicker, DateCell> dayCellFactory = 
+	            new Callback<DatePicker, DateCell>() {
+	                @Override
+	                public DateCell call(final DatePicker datePicker) {
+	                    return new DateCell() {
+	                        @Override
+	                        public void updateItem(LocalDate item, boolean empty) {
+	                            super.updateItem(item, empty);
+	                           
+	                            if (item.isBefore(
+	                            		LocalDate.now().plusDays(1))
+	                            		
+	                                ) {
+	                                    setDisable(true);
+	                                    setStyle("-fx-background-color: #ffc0cb;");
+	                            }   
+	                    }
+	                };
+	            }
+	        };
+	        
+	        urgentDatePicker.setDayCellFactory(dayCellFactory);
+	        currentDatePicker.setDayCellFactory(dayCellFactory);
+	        eventualDatePicker.setDayCellFactory(dayCellFactory);
 	}
 }

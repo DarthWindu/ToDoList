@@ -28,7 +28,7 @@ public class Main extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		boolean testingMode = true;//Change to FALSE When Delivering
+		boolean testingMode = false;//Change to FALSE When Delivering
 		primStage = primaryStage;
 		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
 		primaryStage.setResizable(false);
