@@ -333,7 +333,8 @@ public class Task implements Serializable{
 				} else if (this.getUrgentElevDate() != null) {
 					formattedString = (inactiveNameDateFormatter(this.getUrgentElevDate()));
 				} else {
-					formattedString = ("No date of elevation set - " + this.getName());
+					//formattedString = ("No date of elevation set - " + this.getName());
+					setShowDate(false);
 				}
 			} else {
 				//formattedString = "<i>" + this.getName() + "</i>";
