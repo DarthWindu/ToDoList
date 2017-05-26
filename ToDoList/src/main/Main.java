@@ -1,4 +1,5 @@
 package main;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,6 +8,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -57,6 +62,7 @@ public class Main extends Application{
 		//Show Gui
 		//MainController.TDL_CHANGE_STATUS = MainController.TDL_UNCHANGED;
 		try {
+		
             ScrollPane page = (ScrollPane) FXMLLoader.load(getClass().getResource("test1.fxml"));
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);
@@ -77,12 +83,21 @@ public class Main extends Application{
 	  //export code
 	    try
         {
+	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
+	        Marshaller m = context.createMarshaller();
+	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+	        // Write to System.out
+	        m.marshal(todoList, System.out);
+
+	        // Write to File
+	        m.marshal(todoList, new File("test.xml"));
 			FileOutputStream fileOut = new FileOutputStream("./" + "todolist" + ".java");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(todoList); // change this to the toDoList you are trying to save - Done
 			out.close();
 			fileOut.close();
-        }catch(IOException i)
+        }catch(Exception i)
         {
             i.printStackTrace();
         }

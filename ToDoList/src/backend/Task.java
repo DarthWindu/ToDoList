@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Pujit M.
  * 
@@ -23,7 +30,8 @@ import java.util.Date;
  * 4 means completed
  *
  */
-
+@XmlRootElement(name="Task")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Task implements Serializable{
 	/**
 	 * AUTO GENERATED serialVersionUID
@@ -31,15 +39,20 @@ public class Task implements Serializable{
 	 * Pujit - I'm not going to lie, I have little idea what's going on here with the serialization id
 	 */
 	private static final long serialVersionUID = 2850384200535302052L;
+	@XmlAttribute(name="taskName")
 	private String taskName;
 	private boolean showDate = false;
+	@XmlAttribute(name="status")
 	private Integer status; //Integer is serializable - we could change to int if primitive types are serializable, but I'm not sure
+	@XmlElementWrapper(name="comments")
+	@XmlElement(name="Comment")
 	private ArrayList<Comment> comments = new ArrayList<Comment>();//Changed from design - Changed from HistoryItem List to Comment List
 	private ArrayList<PriorityChange> priorityChanges;
 	private ArrayList<NameChange> nameChanges;
 	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
 	//private Date[] priorityChange = new Date[3];
 	private LocalDate dateUrgentElev = null, dateCurrentElev = null, dateEventualElev = null;
+	@XmlAttribute(name="dateCreated")
 	private Date dateCreated;
 
 	public static final int DEFAULT_STATUS = 2;//Default status (2) means Current
@@ -51,6 +64,9 @@ public class Task implements Serializable{
 
 	//CONSTRUCTORS----------------------------------------------------------
 
+	public Task(){
+		
+	}
 	public Task(String name) 
 	{
 		//Date date = Calendar.getInstance().getTime();

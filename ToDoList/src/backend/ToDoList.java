@@ -1,19 +1,34 @@
 package backend;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+@XmlRootElement(name="ToDoList")
+@XmlAccessorType(XmlAccessType.NONE)
 public class ToDoList implements Serializable{
 
 	/**
 	 * Don't change this
 	 */
 	private static final long serialVersionUID = 1582472173711463948L;
+	@XmlElementWrapper(name="activeTasks")
+	@XmlElement(name="Task")
 	private ArrayList<Task> activeTasks;
+	
+	@XmlElementWrapper(name="completedTasks")
+	@XmlElement(name="Task")
 	private ArrayList<Task> completedTasks;
 	private boolean testingFlag = false;
 	//initializes variables

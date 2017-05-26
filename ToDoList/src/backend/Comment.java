@@ -3,6 +3,9 @@ package backend;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Pujit
  * 
@@ -12,9 +15,14 @@ import java.util.Calendar;
  * Represents Comment on a task
  *
  */
+@XmlRootElement(name="Comment")
 public class Comment extends HistoryItem implements Serializable {
-	private String comment;
 	
+	@XmlElement(name="comment")
+	private String comment;
+	public Comment(){
+		System.out.println("This constructor should never run.");
+	}
 	public Comment(String userComment)
 	{
 		comment = userComment;
