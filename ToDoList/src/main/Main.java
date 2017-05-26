@@ -2,11 +2,18 @@ package main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,20 +40,31 @@ public class Main extends Application{
 		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
 		primaryStage.setResizable(true);
 		//import code the saved to do list is saved in todoList
-		try {
+		
+		try{
+			Reader reader = new InputStreamReader(new FileInputStream("./" + "Output" + ".json"), "UTF-8");
+            Gson gson = new GsonBuilder().create();
+            todoList = gson.fromJson(reader, ToDoList.class);
+            if (todoList != null) {
+            	System.out.println("NOT NULL");
+            }
+            //System.out.println(p);
+        }
+		
+		/*try {
 			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			todoList = (ToDoList) in.readObject();
 			todoList.setTestingFlag(testingMode);
 			in.close();
 			fileIn.close();
-		} catch (FileNotFoundException e1) {
+		}*/ //catch (FileNotFoundException e1) {
 			//MainMenu a = new MainMenu(null);
 			//e1.printStackTrace();
-		} catch (IOException e1) {
+		/*}*/ catch (IOException e1) {
 			//e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			//e1.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 		
 		if (todoList.getActiveTasks() == null) {
@@ -70,7 +88,23 @@ public class Main extends Application{
 	
 	@Override
 	public void stop(){
-	    System.out.println("Stage is closing");
+		Writer writer;
+		try {
+			writer = new FileWriter("Output.json");
+			
+			Gson gson = new GsonBuilder().create();
+	        gson.toJson(todoList, writer);
+	        //gson.toJson(123, writer);
+
+	        writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        
+		
+	    /*System.out.println("Stage is closing");
 	    for (Task task : todoList.getActiveTasks()) {
 	    	System.out.println(task.getName());
 	    }
@@ -85,7 +119,7 @@ public class Main extends Application{
         }catch(IOException i)
         {
             i.printStackTrace();
-        }
+        }*/
 	    System.exit(0);
 	}
 }

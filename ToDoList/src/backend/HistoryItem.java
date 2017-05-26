@@ -3,7 +3,7 @@ package backend;
 import java.io.Serializable;
 import java.util.Date;
 
-public abstract class HistoryItem implements Serializable{
+public class HistoryItem implements Serializable{
 	private Date whenDone;
 	private String text = "";
 	
