@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +13,8 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.UnmarshalException;
+import javax.xml.bind.Unmarshaller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,20 +42,22 @@ public class Main extends Application{
 		primaryStage.setResizable(true);
 		//import code the saved to do list is saved in todoList
 		try {
+	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
+	        Unmarshaller unmarshaller = context.createUnmarshaller();
+	        todoList = (ToDoList)unmarshaller.unmarshal(new FileReader("toDoList.xml"));
+	        todoList.setTestingFlag(testingMode);
+	        /*
 			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			todoList = (ToDoList) in.readObject();
 			todoList.setTestingFlag(testingMode);
 			in.close();
 			fileIn.close();
-		} catch (FileNotFoundException e1) {
+			*/
+		} catch (Exception e1) {
 			//MainMenu a = new MainMenu(null);
-			//e1.printStackTrace();
-		} catch (IOException e1) {
-			//e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			//e1.printStackTrace();
-		}
+			e1.printStackTrace();
+		} 
 		
 		if (todoList.getActiveTasks() == null) {
 			//ToDoList could not be de-serialized
@@ -87,11 +92,9 @@ public class Main extends Application{
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-	        // Write to System.out
-	        m.marshal(todoList, System.out);
-
 	        // Write to File
-	        m.marshal(todoList, new File("test.xml"));
+	        m.marshal(todoList, new File("toDoList.xml"));
+
 			FileOutputStream fileOut = new FileOutputStream("./" + "todolist" + ".java");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(todoList); // change this to the toDoList you are trying to save - Done

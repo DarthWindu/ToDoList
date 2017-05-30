@@ -2,6 +2,9 @@ package backend;
 
 import java.io.Serializable;
 import java.util.Calendar;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 /**
  * 
  * @author Pujit
@@ -11,9 +14,16 @@ import java.util.Calendar;
  * Represents a name change event
  * No changes, except for possible addition of serialization implementation is expected.
  */
+@XmlRootElement(name="NameChange")
 public class NameChange extends HistoryItem implements Serializable{
-	private String oldName, newName;
+	@XmlElement(name="oldName")
+	private String oldName;
+	@XmlElement(name="newName")
+	private String newName;
 	
+	NameChange(){
+		
+	}
 	NameChange(String old_Name, String new_Name)
 	{
 		oldName = old_Name;

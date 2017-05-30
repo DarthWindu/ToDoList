@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 
 public abstract class HistoryItem implements Serializable{
-	@XmlElement(name="whenDone")
 	private Date whenDone;
 	private String text = "";
 	

@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="Comment")
 public class Comment extends HistoryItem implements Serializable {
 	
-	@XmlElement(name="comment")
 	private String comment;
 	public Comment(){
 		System.out.println("This constructor should never run.");
@@ -32,6 +31,7 @@ public class Comment extends HistoryItem implements Serializable {
 	/** @author Pujit
 	 * @return comment: Returns comment the object represent
 	 */
+	@XmlElement(name="comment")
 	public String getComment() 
 	{
 		return comment;

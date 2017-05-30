@@ -47,8 +47,14 @@ public class Task implements Serializable{
 	@XmlElementWrapper(name="comments")
 	@XmlElement(name="Comment")
 	private ArrayList<Comment> comments = new ArrayList<Comment>();//Changed from design - Changed from HistoryItem List to Comment List
+	@XmlElementWrapper(name="priorityChanges")
+	@XmlElement(name="PriorityChange")
 	private ArrayList<PriorityChange> priorityChanges;
+	@XmlElementWrapper(name="nameChanges")
+	@XmlElement(name="NameChange")
 	private ArrayList<NameChange> nameChanges;
+	@XmlElementWrapper(name="historyEvents")
+	@XmlElement(name="HistoryEvent")
 	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
 	//private Date[] priorityChange = new Date[3];
 	private LocalDate dateUrgentElev = null, dateCurrentElev = null, dateEventualElev = null;
