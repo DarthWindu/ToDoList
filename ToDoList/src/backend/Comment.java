@@ -20,7 +20,6 @@ public class Comment extends HistoryItem implements Serializable {
 	
 	private String comment;
 	public Comment(){
-		System.out.println("This constructor should never run.");
 	}
 	public Comment(String userComment)
 	{

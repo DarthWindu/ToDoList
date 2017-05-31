@@ -46,14 +46,7 @@ public class Main extends Application{
 	        Unmarshaller unmarshaller = context.createUnmarshaller();
 	        todoList = (ToDoList)unmarshaller.unmarshal(new FileReader("toDoList.xml"));
 	        todoList.setTestingFlag(testingMode);
-	        /*
-			FileInputStream fileIn = new FileInputStream("./" + "todolist" + ".java");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			todoList = (ToDoList) in.readObject();
-			todoList.setTestingFlag(testingMode);
-			in.close();
-			fileIn.close();
-			*/
+
 		} catch (Exception e1) {
 			//MainMenu a = new MainMenu(null);
 			e1.printStackTrace();
@@ -95,11 +88,6 @@ public class Main extends Application{
 	        // Write to File
 	        m.marshal(todoList, new File("toDoList.xml"));
 
-			FileOutputStream fileOut = new FileOutputStream("./" + "todolist" + ".java");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(todoList); // change this to the toDoList you are trying to save - Done
-			out.close();
-			fileOut.close();
         }catch(Exception i)
         {
             i.printStackTrace();
