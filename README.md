@@ -12,3 +12,10 @@ Original Creators of ToDoList:
 
 * Ben Germroth
 -----------------------------------------------------
+
+Maintenance Team:  
+
+* Bryce Plunkett (Navbryce)
+* Joshua Shin
+* Pujit Mehrotra
+* Joe Dipisquale
