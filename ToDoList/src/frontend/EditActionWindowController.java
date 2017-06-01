@@ -20,15 +20,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Window;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.application.Platform;
 
 public class EditActionWindowController {
 	private Task task = null;
 	private int eventHiddenCounter = 0;
+	private boolean proceed = false;
+	private boolean extRequest = false;
 
 	@FXML
 	private ResourceBundle resources;
@@ -228,10 +233,13 @@ public class EditActionWindowController {
 		assert btnHistory != null : "fx:id=\"btnHistory\" was not injected: check your FXML file 'editActionWindow.fxml'.";
 		assert btnPrint != null : "fx:id=\"btnPrint\" was not injected: check your FXML file 'editActionWindow.fxml'.";
 		assert btnClose != null : "fx:id=\"btnClose\" was not injected: check your FXML file 'editActionWindow.fxml'.";
+		
+		
 
 		initTaskInfo();
 		setNameFocusListener();
 		setDisabledDays();
+		
 	}
 
 	private void datePickerOnHiding(JFXDatePicker datePicker, JFXCheckBox chkBox) {	
@@ -322,25 +330,29 @@ public class EditActionWindowController {
 				}
 				else
 				{
-					//System.out.println("Textfield out focus");
-					String newName = txtfName.getText().trim();
-					if (!newName.equals("") && !newName.equals(task.getName())) {
-						if (Main.todoList.getTask(newName) == null) {
-							if (Main.todoList.getCompletedTask(newName) == null) {
-								task.changeName(txtfName.getText().trim());
+					if (!extRequest) {
+						String newName = txtfName.getText().trim();
+						if (!newName.equals("") && !newName.equals(task.getName())) {
+							if (Main.todoList.getTask(newName) == null) {
+								if (Main.todoList.getCompletedTask(newName) == null) {
+									task.changeName(txtfName.getText().trim());
+								} else {
+									Alert alert = new Alert(AlertType.INFORMATION, "This task has already been completed!");
+									alert.showAndWait();
+								}
 							} else {
-								Alert alert = new Alert(AlertType.INFORMATION, "This task has already been completed!");
+								Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
 								alert.showAndWait();
 							}
-						} else {
-							Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
-							alert.showAndWait();
-						}
 
+						}
 					}
+					//System.out.println("Textfield out focus");
+					
 				}
 			}
 		});
+		
 	}
 	
 	private void setDisabledDays() {
@@ -368,5 +380,55 @@ public class EditActionWindowController {
 	        urgentDatePicker.setDayCellFactory(dayCellFactory);
 	        currentDatePicker.setDayCellFactory(dayCellFactory);
 	        eventualDatePicker.setDayCellFactory(dayCellFactory);
+	}
+	
+	
+	/**
+	 * Does more than simply get text from the Name textfield
+	 * 
+	 * It changes the task name if the task name is valid, and it sets error flags if not. 
+	 * To fire any errors, call fireError().
+	 * @return text from the Name TextField
+	 */
+	public String getNameField() {
+		String newName = txtfName.getText().trim();
+		
+		if (!newName.equals("") && !newName.equals(task.getName())) {
+			if (Main.todoList.getTask(newName) == null) {
+				if (Main.todoList.getCompletedTask(newName) == null) {
+					task.changeName(txtfName.getText().trim());
+					proceed = true;
+				} else {
+					proceed = false;
+				}
+			} else {
+				proceed = false;
+			}
+
+		} else {
+			proceed = true;
+		}
+		
+		return newName;
+	}
+	
+	public boolean proceed() {
+		return proceed;
+	}
+	
+	public boolean fireError() {
+		if (!proceed) {
+			txtfMessage.requestFocus();
+			Alert al = new Alert(AlertType.ERROR, "This task already exists!");
+			al.showAndWait();
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public void setExternalRequest(boolean val) {
+		extRequest = val;
 	}
 }
