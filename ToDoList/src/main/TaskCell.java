@@ -2,8 +2,6 @@ package main;
 
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import backend.Task;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;

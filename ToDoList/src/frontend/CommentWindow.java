@@ -5,7 +5,6 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import backend.Comment;
-import backend.HistoryItem;
 import backend.Task;
 
 public class CommentWindow {
@@ -41,7 +40,7 @@ public class CommentWindow {
 
 		mainFrame.add(controlPanel);
 		mainFrame.setVisible(true);  
-		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
+		JLabel  namelabel= new JLabel("Comment", SwingConstants.RIGHT);
 		userText = new JTextField(6);
 		if(userComment != null)
 			userText.setText(userComment.getComment());
@@ -49,6 +48,7 @@ public class CommentWindow {
 
 		commit = new JButton("Commit Comment");
 		commit.addActionListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Commit Comment")){
@@ -59,6 +59,7 @@ public class CommentWindow {
 		});
 		delete = new JButton("Delete Comment");
 		delete.addActionListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Delete Comment")){
@@ -85,12 +86,13 @@ public class CommentWindow {
 
 		mainFrame.add(controlPanel);
 		mainFrame.setVisible(true);  
-		JLabel  namelabel= new JLabel("Comment", JLabel.RIGHT);
+		JLabel  namelabel= new JLabel("Comment", SwingConstants.RIGHT);
 		userText = new JTextField(6); 
 		userText.setPreferredSize( new Dimension(200,24));
 
 		JButton commit = new JButton("Commit Comment");
 		commit.addActionListener(new ActionListener(){
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				String commandName = event.getActionCommand();
 				if(commandName.equals("Commit Comment")){

@@ -34,7 +34,7 @@ public class HistoryWindow implements MouseListener{
 		panel.addMouseListener(this);
 
 		scrollPane = new JScrollPane(panel);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		frame.add(scrollPane);
 		frame.setVisible(true);
@@ -89,15 +89,18 @@ public class HistoryWindow implements MouseListener{
 			holder = new JPanel();
 			if(commented) {
 				holder.addMouseListener(new MouseListener() {
+					@Override
 					public void mouseEntered(MouseEvent e) {
 						in = true;
 						out = false;
 					}
 
+					@Override
 					public void mouseExited(MouseEvent e) {
 						in = false;
 						out = true;
 					}
+					@Override
 					public void mouseClicked(MouseEvent e) {
 						if(firstClick == 0 || System.currentTimeMillis()/100 - firstClick > 4 && in) {
 							firstClick = System.currentTimeMillis()/100;
@@ -119,7 +122,9 @@ public class HistoryWindow implements MouseListener{
 							}
 						}
 					}
+					@Override
 					public void mousePressed(MouseEvent e) {}
+					@Override
 					public void mouseReleased(MouseEvent e) {}
 				});
 				commented = false;
@@ -136,10 +141,15 @@ public class HistoryWindow implements MouseListener{
 		scrollPane.revalidate();
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {}
+	@Override
 	public void mouseEntered(MouseEvent e) {}
+	@Override
 	public void mouseExited(MouseEvent e) {}
+	@Override
 	public void mousePressed(MouseEvent e) {}
+	@Override
 	public void mouseReleased(MouseEvent e) {}
 
 }
