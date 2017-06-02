@@ -13,32 +13,33 @@ import javafx.scene.input.TransferMode;
 public class TaskCell extends ListCell<String>{ //Chaange string to Text if you choose that route
 	private int indexToDelete = -1;
 	public TaskCell(MainController mainController) {
+
+		initSetDragDetected();
+		initSetOnDragOver();
+		initSetOnDragEntered();
+		initSetOnDragExited();
+		setOnDragDone(DragEvent::consume);	
+	}
+
+	//***********INITIALIZATION*****************************
+
+	private void initSetDragDetected() {
 		setOnDragDetected(event -> {
 			if (getItem() == null) {
 				return;
 				//If item is null, exit this function
 			}
 
-			/*ObservableList<String> items = this.getListView().getItems();
-			indexToDelete = items.indexOf(this.getText());
-			System.out.println(indexToDelete);*/
-
 			Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			ClipboardContent content = new ClipboardContent();
 			
 			content.putString(getItem());
-			/*dragboard.setDragView(
-                birdImages.get(
-                    items.indexOf(
-                        getItem()
-                    )
-                )
-            );*/
 			dragboard.setContent(content);
-
 			event.consume();
 		});
+	}
 
+	private void initSetOnDragOver() {
 		setOnDragOver(event -> {
 			if (event.getGestureSource() != this &&
 					event.getDragboard().hasString()) {
@@ -47,7 +48,9 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 
 			event.consume();
 		});
+	}
 
+	private void initSetOnDragEntered() {
 		setOnDragEntered(event -> {
 			if (event.getGestureSource() != this &&
 					event.getDragboard().hasString()) {
@@ -57,14 +60,18 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 				System.out.println(indexToDelete);*/
 			}
 		});
+	}
 
+	private void initSetOnDragExited() {
 		setOnDragExited(event -> {
 			if (event.getGestureSource() != this &&
 					event.getDragboard().hasString()) {
 				setOpacity(1);
 			}
 		});
+	}
 
+	private void initSetOnDragDropped() {
 		setOnDragDropped(event -> {
 			if (getItem() == null) {
 				return;
@@ -161,9 +168,9 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 
 			event.consume();
 		});
-
-		setOnDragDone(DragEvent::consume);
 	}
+
+	//********************OVERRIDES**************************
 
 	@Override
 	protected void updateItem(String item, boolean empty) {

@@ -73,6 +73,7 @@ public class Task implements Serializable{
 	public Task(){
 		
 	}
+
 	public Task(String name) 
 	{
 		//Date date = Calendar.getInstance().getTime();
@@ -98,7 +99,7 @@ public class Task implements Serializable{
 		//TODO: make new historyItem
 	}
 
-	//METHODS ---------------------------------------------------------------------------
+	//-----------------------------------METHODS ---------------------------------------------------------------------------
 
 	private void initVariables() 
 	{
@@ -108,6 +109,8 @@ public class Task implements Serializable{
 		nameChanges = new ArrayList<NameChange>();
 		historyEvents = new ArrayList<HistoryItem>();
 	}
+
+	//ACCESSORS*********************************************************888
 
 	/**@return status: integer representation of Priority level*/
 	public int getStatus()
@@ -142,108 +145,6 @@ public class Task implements Serializable{
 		return strStatus;
 	}
 
-	/** @param newStatus - PriorityLevel
-	 * Adds PrirityChange and HistoryItem events, and changes status/priority level
-	 */
-	public void setStatus(int newStatus) 
-	{
-		PriorityChange change = new PriorityChange(status, newStatus);
-		change.setText("Priority Changed");
-		priorityChanges.add(change);
-		historyEvents.add(change);
-		status = new Integer(newStatus);
-		if (this.getStatus() != Task.INACTIVE) {
-			this.setShowDate(false);
-		}
-		//if(newStatus == COMPLETED)
-		//	MainMenu.getList().switchTaskToCompleted(this);
-
-	}
-
-	/** @param newName for task
-	 * Adds a NameChange Event and a HistoryItem event
-	 * Also changes the task Name
-	 */
-	public void changeName(String newName)
-	{
-		NameChange change = new NameChange(taskName, newName);
-		change.setText("Name Changed");
-		nameChanges.add(change);
-		historyEvents.add(change);
-		taskName = newName;
-	}
-
-	/** @return List of comments */
-	public ArrayList<Comment> getComments()
-	{
-		return comments;//NEED TO ADD addComment method
-	}
-
-	/** @return List of history items */
-	public ArrayList<HistoryItem> getHistoryItems()
-	{
-		return historyEvents;
-	}
-
-	/** @return priorityChange Events */
-	public ArrayList<PriorityChange> getPriorityChanges()
-	{
-		return priorityChanges;
-	}
-
-	/**  @return nameChange Events*/
-	public ArrayList<NameChange> getNameChanges()
-	{
-		return nameChanges;
-	}
-
-	/** @param comment*/
-	public void addComment(String comment)
-	{
-		Comment newComment = (new Comment(comment));
-		newComment.setText("New Comment Added");
-		comments.add(newComment);
-		historyEvents.add(newComment);
-	}
-
-	/*public Date[] getDates()
-	{
-		return priorityChange;
-	}*/
-
-	public String getName()
-	{
-		return taskName;
-	}
-
-	public boolean isEqual(Task task) 
-	{
-		return (taskName.equals(task.getName()) && (status.intValue() == task.getStatus()));
-		//Returns true if both tasks' names and status values match
-	}
-
-	public void deleteComment(Comment comment) {
-		Comment commCheck = null;
-
-		for(Comment com: comments) {
-			if(com.isEqual(comment))
-				commCheck = com;
-		}
-		
-		/*for (int counter = 0; counter < comments.size(); counter ++) {
-			
-		}*/
-		if(commCheck != null) {
-			comments.remove(commCheck);
-			historyEvents.remove(commCheck);
-		}
-			
-	}
-
-	/*public void storeDate(Date day, int index){
-		priorityChange[index] = day;
-	}*/
-
 	/**
 	 * Returns LocalDate representation of date Task should elevate to urgent.
 	 * Returns null if no date has been set.
@@ -271,65 +172,46 @@ public class Task implements Serializable{
 		return dateEventualElev;
 	}
 
-	public void setUrgentElevDate(LocalDate date) {
-		dateUrgentElev = date;
-	}
-
-	public void setCurrentElevDate(LocalDate date) {
-		dateCurrentElev = date;
-	}
-
-	public void setEventualElevDate(LocalDate date) {
-		dateEventualElev = date;
-	}
-
-	public void checkElevation() {
-		for (int priorityToCheck = this.getStatus() + 1; priorityToCheck <= Task.URGENT; priorityToCheck ++) {
-			checkElevation(priorityToCheck);
+	public LocalDate getEarliestElevDate() {
+		if (this.getEventualElevDate() != null) {
+			return this.getEventualElevDate();
+		} else if (this.getCurrentElevDate() != null) {
+			return this.getCurrentElevDate();
+		} else if (this.getUrgentElevDate() != null) {
+			return this.getUrgentElevDate();
+		} else {
+			return LocalDate.MIN;
 		}
 	}
 
-	private void checkElevation(int priority) {
-		switch(priority) {
-		case Task.EVENTUAL: analyzeElev(Task.EVENTUAL, dateEventualElev);
-		break;
-
-		case Task.CURRENT: analyzeElev(Task.CURRENT, dateCurrentElev);
-		break;
-
-		case Task.URGENT: analyzeElev(Task.URGENT, dateUrgentElev);
-		break;
-		}
+	/** @return List of comments */
+	public ArrayList<Comment> getComments()
+	{
+		return comments;//NEED TO ADD addComment method
 	}
 
-	/*Basis for analyzeElev(int urgency, LocalDate date):
-	 * 
-	 * private void checkUrgentElev() {
-		if (this.getStatus() < Task.URGENT) {
-			//If Task is not yet urgent
-			if (dateUrgentElev != null) {
-				//If there is a specified date to elevate to urgent
-				if (dateUrgentElev.isEqual(LocalDate.now()) || dateUrgentElev.isBefore(LocalDate.now())) {
-					this.setStatus(Task.URGENT);
-					dateUrgentElev = null;//Reset dateUrgentElev
-				}
-			}
-		}
-	}*/
-
-	private void analyzeElev(int urgency, LocalDate date) {
-		if (this.getStatus() < urgency) {
-			//If Task is not yet as urgent (as indicated by value of urgency)
-			if (date != null) {
-				//If there is a specified date to elevate to this urgent
-				if (date.isEqual(LocalDate.now()) || date.isBefore(LocalDate.now())) {
-					this.setStatus(urgency);
-					date = null;//Reset date - should point internally to an elevation date
-				}
-			}
-		}
+	/** @return List of history items */
+	public ArrayList<HistoryItem> getHistoryItems()
+	{
+		return historyEvents;
 	}
 
+	/** @return priorityChange Events */
+	public ArrayList<PriorityChange> getPriorityChanges()
+	{
+		return priorityChanges;
+	}
+
+	/**  @return nameChange Events*/
+	public ArrayList<NameChange> getNameChanges()
+	{
+		return nameChanges;
+	}
+
+	public String getName()
+	{
+		return taskName;
+	}
 
 	public String getFormattedName() {
 		String formattedString = this.getName();
@@ -373,26 +255,166 @@ public class Task implements Serializable{
 
 	}
 
-	private String inactiveNameDateFormatter(LocalDate date) {
-		return date + ", "+ date.getDayOfWeek() + "-\n" + this.getName();
+	public boolean isEqual(Task task) 
+	{
+		return (taskName.equals(task.getName()) && (status.intValue() == task.getStatus()));
+		//Returns true if both tasks' names and status values match
+	}
+
+
+	//MODIFIERS**********************************************************************
+
+	/** @param newStatus - PriorityLevel
+	 * Adds PrirityChange and HistoryItem events, and changes status/priority level
+	 */
+	public void setStatus(int newStatus) 
+	{
+		PriorityChange change = new PriorityChange(status, newStatus);
+		change.setText("Priority Changed");
+		priorityChanges.add(change);
+		historyEvents.add(change);
+		status = new Integer(newStatus);
+		if (this.getStatus() != Task.INACTIVE) {
+			this.setShowDate(false);
+		}
+		//if(newStatus == COMPLETED)
+		//	MainMenu.getList().switchTaskToCompleted(this);
+
 	}
 
 	public void setShowDate(boolean shudIshowDate) {
 		showDate = shudIshowDate;
 	}
+
+	/** @param newName for task
+	 * Adds a NameChange Event and a HistoryItem event
+	 * Also changes the task Name
+	 */
+	public void changeName(String newName)
+	{
+		NameChange change = new NameChange(taskName, newName);
+		change.setText("Name Changed");
+		nameChanges.add(change);
+		historyEvents.add(change);
+		taskName = newName;
+	}
+
 	
-	public LocalDate getEarliestElevDate() {
-		if (this.getEventualElevDate() != null) {
-			return this.getEventualElevDate();
-		} else if (this.getCurrentElevDate() != null) {
-			return this.getCurrentElevDate();
-		} else if (this.getUrgentElevDate() != null) {
-			return this.getUrgentElevDate();
-		} else {
-			return LocalDate.MIN;
+
+	/** @param comment*/
+	public void addComment(String comment)
+	{
+		Comment newComment = (new Comment(comment));
+		newComment.setText("New Comment Added");
+		comments.add(newComment);
+		historyEvents.add(newComment);
+	}
+
+	/*public Date[] getDates()
+	{
+		return priorityChange;
+	}*/
+
+	
+
+	public void deleteComment(Comment comment) {
+		Comment commCheck = null;
+
+		for(Comment com: comments) {
+			if(com.isEqual(comment))
+				commCheck = com;
+		}
+		
+		/*for (int counter = 0; counter < comments.size(); counter ++) {
+			
+		}*/
+		if(commCheck != null) {
+			comments.remove(commCheck);
+			historyEvents.remove(commCheck);
+		}
+			
+	}
+
+	/*public void storeDate(Date day, int index){
+		priorityChange[index] = day;
+	}*/
+
+	
+
+	public void setUrgentElevDate(LocalDate date) {
+		dateUrgentElev = date;
+	}
+
+	public void setCurrentElevDate(LocalDate date) {
+		dateCurrentElev = date;
+	}
+
+	public void setEventualElevDate(LocalDate date) {
+		dateEventualElev = date;
+	}
+
+	public void checkElevation() {
+		for (int priorityToCheck = this.getStatus() + 1; priorityToCheck <= Task.URGENT; priorityToCheck ++) {
+			checkElevation(priorityToCheck);
 		}
 	}
+
+
+
+	//***********************PRIVATE METHODS*****************************************
+
+	private void checkElevation(int priority) {
+		switch(priority) {
+		case Task.EVENTUAL: analyzeElev(Task.EVENTUAL, dateEventualElev);
+		break;
+
+		case Task.CURRENT: analyzeElev(Task.CURRENT, dateCurrentElev);
+		break;
+
+		case Task.URGENT: analyzeElev(Task.URGENT, dateUrgentElev);
+		break;
+		}
+	}
+
+	/*Basis for analyzeElev(int urgency, LocalDate date):
+	 * 
+	 * private void checkUrgentElev() {
+		if (this.getStatus() < Task.URGENT) {
+			//If Task is not yet urgent
+			if (dateUrgentElev != null) {
+				//If there is a specified date to elevate to urgent
+				if (dateUrgentElev.isEqual(LocalDate.now()) || dateUrgentElev.isBefore(LocalDate.now())) {
+					this.setStatus(Task.URGENT);
+					dateUrgentElev = null;//Reset dateUrgentElev
+				}
+			}
+		}
+	}*/
+
+	private void analyzeElev(int urgency, LocalDate date) {
+		if (this.getStatus() < urgency) {
+			//If Task is not yet as urgent (as indicated by value of urgency)
+			if (date != null) {
+				//If there is a specified date to elevate to this urgent
+				if (date.isEqual(LocalDate.now()) || date.isBefore(LocalDate.now())) {
+					this.setStatus(urgency);
+					date = null;//Reset date - should point internally to an elevation date
+				}
+			}
+		}
+	}
+
+
 	
+
+	private String inactiveNameDateFormatter(LocalDate date) {
+		return date + ", "+ date.getDayOfWeek() + "-\n" + this.getName();
+	}
+
+	
+	
+	
+	//OVERRIDES
 
 	@Override
 	public String toString(){
