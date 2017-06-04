@@ -49,7 +49,8 @@ public class MainController {
 			TDL_CHANGED = 1;
 
 	private ObservableList<String> data;
-	private ToDoList tdl = null;
+	protected ToDoList tdl = null;
+	protected ArrayList<String> taskIDs = new ArrayList<String>();
 
 	@FXML // ResourceBundle that was given to the FXMLLoader
 	private ResourceBundle resources;
@@ -80,7 +81,7 @@ public class MainController {
 
 	@FXML // fx:id="menuCAI"
 	private Menu menuCAI; // Value injected by FXMLLoader
-	
+
 	@FXML
 	private MenuItem menuItemCAI;
 
@@ -135,7 +136,7 @@ public class MainController {
 		initRestoreFunctionality();
 		initLoadTasks();	
 	}
-	
+
 	//==================================================================
 	//FXML ACTION LISTENERS - AUTO INJECTED ==> Begins
 	//==================================================================
@@ -145,27 +146,18 @@ public class MainController {
 		String text = myTextField.getText();
 		text = text.trim();//Removes leading/trialing whitespace
 		if (!text.equals("")) {
-			if (tdl.getTask(text) == null) {
-				if (tdl.getCompletedTask(text) == null) {
-					
-					//data.add(text);
-					data.add(0, text);
-					try {
-						tdl.add(0, new Task(text,Calendar.getInstance().getTime(), Task.URGENT));
-					}catch (NullPointerException e) {
-						//e.printStackTrace();
-						System.out.println("tdl is NULL");
-					}
-					
-					
-				} else {
-					Alert alert = new Alert(AlertType.INFORMATION, "This task has already been completed!");
-					alert.showAndWait();
-				}
-			} else {
-				Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
-				alert.showAndWait();
+
+			data.add(0, text);
+			Task newTask = new Task(text,Calendar.getInstance().getTime(), Task.URGENT);
+			
+			try {
+				tdl.add(0, newTask);
+			}catch (NullPointerException e) {
+				//e.printStackTrace();
+				System.out.println("tdl is NULL");
 			}
+			
+			taskIDs.add(0, newTask.getID());
 		}
 
 		myTextField.clear();
@@ -178,7 +170,7 @@ public class MainController {
 	public void completedTasksOnAction(ActionEvent evt) {
 		System.out.print("hkjhkjfd");
 	}
-	
+
 	@FXML
 	public void onViewCAIaction(ActionEvent evt) {
 		new CompletedTasksWindow(Main.primStage);
@@ -187,15 +179,15 @@ public class MainController {
 	//==================================================================
 	//FXML ACTION LISTENERS - AUTO INJECTED ==> ENDS
 	//==================================================================
-	
-	
-	
-	
-	
+
+
+
+
+
 	//==================================================================
 	//Utility Methods ==> BEGIN
 	//==================================================================
-	
+
 	public void loadTaskNames() {
 		tdl.sortTasks();
 
@@ -205,8 +197,10 @@ public class MainController {
 			ArrayList<Task> tasks = tdl.getActiveTasks();
 			if (tasks != null) {
 				ArrayList<String> taskNames = new ArrayList<String>();
+				taskIDs = new ArrayList<String>();
 				for (Task activeTask: tasks) {
 					taskNames.add(activeTask.getFormattedName());
+					taskIDs.add(activeTask.getID());
 				}
 				data = FXCollections.observableArrayList(taskNames);
 			} else {
@@ -215,6 +209,10 @@ public class MainController {
 		} else {
 			System.out.println("TDL is NULL");
 			data = FXCollections.observableArrayList();
+		}
+
+		for (String str : myCustomListView.getItems()) {
+			System.out.println("\n Item: " + str);
 		}
 		myCustomListView.setItems(data);
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -282,17 +280,17 @@ public class MainController {
 			alert.showAndWait();
 			return false;
 		}
-		
-		
-		
+
+
+
 	}
 	//==================================================================
 	//Utility Methods ==> END
 	//==================================================================
-	
-	
-	
-	
+
+
+
+
 	//==================================================================
 	//INITIALIZATION Methods ==> BEGIN
 	//==================================================================
@@ -305,16 +303,16 @@ public class MainController {
 			public void handle(MouseEvent click) {
 
 				if (click.getClickCount() == 2 && click.getButton() == MouseButton.PRIMARY) {
-					
+
 					//Use ListView's getSelected Item
-					String item = myCustomListView.getSelectionModel().getSelectedItem();
-					System.out.println("Double Click on: " + item);//Works
-					Task taskToEdit = tdl.getTask(item);
+					//String item = myCustomListView.getSelectionModel().getSelectedItem();
+					int index = myCustomListView.getSelectionModel().getSelectedIndex();
+					//System.out.println("Double Click on: " + item);//Works
+					Task taskToEdit = tdl.getTaskByID(taskIDs.get(index));
 					new EditActionWindow(taskToEdit, Main.primStage.getScene());//loads modally
 					//new EditActionItem(taskToEdit);
 					//System.out.println("fall through");
 					loadTaskNames();//Works
-					//use this to do whatever you want to. Open Link etc.
 				}
 			}
 		});
@@ -328,19 +326,20 @@ public class MainController {
 		MenuItem completed = new MenuItem("Set task to completed");
 		MenuItem deleteTask = new MenuItem("Delete");
 		MenuItem edit = new MenuItem("Edit");
-		contextMenu.getItems().addAll(completed, deleteTask, edit);
+		contextMenu.getItems().addAll(completed, edit, deleteTask);
 
 		completed.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
+				int index = myCustomListView.getSelectionModel().getSelectedIndex();
 				try {
-					Task taskToComplete = tdl.getTask(item);
+					Task taskToComplete = tdl.getTaskByID(taskIDs.get(index));
 					taskToComplete.setStatus(Task.COMPLETED);
-					tdl.setTaskCompleted(taskToComplete);
+					tdl.setTaskCompletedByID(taskIDs.get(index));
 					loadTaskNames();
-				}catch (Exception e) {/*Usually a Null Pointer*/}
+				}catch (Exception e) {/*Usually a Null Pointer caused by right clicking and selecting an action on an empty row */}
 			}
 		});
 		deleteTask.setOnAction(new EventHandler<ActionEvent>() {
@@ -348,16 +347,18 @@ public class MainController {
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
+				int index = myCustomListView.getSelectionModel().getSelectedIndex();
 				try {
-					Task taskToDelete = tdl.getTask(item);
+					Task taskToDelete = tdl.getTaskByID(taskIDs.get(index));
 					Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
-		    		alert.showAndWait().ifPresent(response -> {
-		    		     if (response == ButtonType.OK) {
-		    		    	 //If response exists and is OK
-		    		    	 tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
-		    					loadTaskNames();
-		    		     }
-		    		 });
+					alert.showAndWait().ifPresent(response -> {
+						if (response == ButtonType.OK) {
+							//If response exists and is OK
+							tdl.deleteByID(taskIDs.get(index));
+							//tdl.getActiveTasks().remove(taskToDelete);//Function is not verified to be working
+							loadTaskNames();
+						}
+					});
 				}catch (Exception ex) {/*Usually a Null Pointer*/}
 			}
 		});
@@ -366,8 +367,9 @@ public class MainController {
 			public void handle(ActionEvent event) {
 				String item = myCustomListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
+				int index = myCustomListView.getSelectionModel().getSelectedIndex();
 				try {
-					Task taskToEdit = tdl.getTask(item);
+					Task taskToEdit = tdl.getTaskByID(taskIDs.get(index));
 					contextMenu.hide();//Hides context menu before opening Edit Action Window
 					new EditActionWindow(taskToEdit, Main.primStage.getScene());
 					loadTaskNames();//Works
@@ -432,7 +434,9 @@ public class MainController {
 				ArrayList<String> taskNames = new ArrayList<String>();
 				for (Task activeTask: tasks) {
 					//activeTask.checkElevation();
-					taskNames.add(activeTask.getFormattedName());
+					taskNames.add(activeTask.getName());
+					taskIDs.add(activeTask.getID());
+					//System.out.println(activeTask.getID());
 				}
 				data = FXCollections.observableArrayList(taskNames);
 			} else {
@@ -445,13 +449,20 @@ public class MainController {
 
 		//SAMPLE -
 
-		myCustomListView.setItems(data);
+		/*for (String str : myCustomListView.getItems()) {
+			System.out.println("\n Item: " + str);
+		}*/
+
+
 		myCustomListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> list) {
 				return new TaskCell(main);
 			}
 		});
+		myCustomListView.setItems(data);
+		loadTaskNames();
+
 	}
 	//==================================================================
 	//INITIALIZATION Methods ==> END

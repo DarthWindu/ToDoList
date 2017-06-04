@@ -46,8 +46,28 @@ public class ToDoList implements Serializable{
 		activeTasks.add(index, task);
 	}
 
-	public void delete(Task task){
-		activeTasks.remove(task);
+	public boolean deleteByID(String id){
+		Task taskToDel = getTaskByID(id);
+		if (taskToDel != null)
+			return activeTasks.remove(taskToDel);
+		else {
+			taskToDel = this.getCompletedTaskByID(id);
+			if (taskToDel != null)
+				return completedTasks.remove(taskToDel);
+		}
+		
+		return false;
+	}
+	
+	public Task getTaskByID(String id) {
+		for (Task task : activeTasks) {
+			System.out.println(task + ": " + id);
+			if (task.getID().equals(id)) {
+				return task;
+			}
+		}
+		
+		return null;
 	}
 
 	public void sortTasks(){
@@ -65,9 +85,10 @@ public class ToDoList implements Serializable{
 					 * Pujit M.
 					 */
 					//If the task before this one is more important, switch positions
-					temp = activeTasks.get(currentElement-1);  
+					Collections.swap(activeTasks, currentElement - 1, currentElement);
+					/*temp = activeTasks.get(currentElement-1);  
 					activeTasks.set(currentElement-1, activeTasks.get(currentElement));
-					activeTasks.set(currentElement, temp);
+					activeTasks.set(currentElement, temp);*/
 				}  
 
 			}  
@@ -280,6 +301,17 @@ public class ToDoList implements Serializable{
 		return null;
 		//No Task with this name was found
 	}
+	
+	public Task getCompletedTaskByID(String id) {
+		for (Task task : completedTasks) {
+			System.out.println(task + ": " + id);
+			if (task.getID().equals(id)) {
+				return task;
+			}
+		}
+		
+		return null;
+	}
 
 	/*public boolean setTaskCompleted(String taskName) {
 		boolean stopForLoop = false;
@@ -304,6 +336,19 @@ public class ToDoList implements Serializable{
 
 		return stopForLoop;//True if successfully switched.
 	}
+	
+	public boolean setTaskCompletedByID(String id) {
+		Task taskToBeComp = getTaskByID(id);
+		try {
+			taskToBeComp.setStatus(Task.COMPLETED);
+			//activeTasks.remo
+			completedTasks.add(taskToBeComp);
+			return activeTasks.remove(taskToBeComp);
+			//completedTasks.add(activeTasks.remove(taskToBeComp));
+		}catch (NullPointerException e) {
+			return false;
+		}
+	}
 
 	public boolean setCompletedTaskActive(Task taskName) {
 		boolean stopForLoop = false;
@@ -318,6 +363,17 @@ public class ToDoList implements Serializable{
 		}
 
 		return stopForLoop;//True if successfully switched.
+	}
+	
+	public boolean setCompletedTaskActiveByID(String id) {
+		Task taskToBeActive = this.getCompletedTaskByID(id);
+		
+		try {
+			activeTasks.add(taskToBeActive);
+			return completedTasks.remove(taskToBeActive);
+		} catch (NullPointerException e) {
+			return false;
+		}
 	}
 
 	public void enableTestingMode() {

@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 public class CompletedTasksController {
 
 	private ToDoList tdl = null;
+	private ArrayList<String> taskIDs = new ArrayList<String>();
 
 	@FXML
 	private JFXListView<String> myListView;
@@ -53,14 +54,16 @@ public class CompletedTasksController {
 			public void handle(ActionEvent event) {
 				String item = myListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
+				int index = myListView.getSelectionModel().getSelectedIndex();
 				try {
-					Task taskToDelete = Main.todoList.getCompletedTask(item);
+					Task taskToDelete = Main.todoList.getCompletedTaskByID(taskIDs.get(index));
 					if (taskToDelete != null) {
 						Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this task?");
 						alert.showAndWait().ifPresent(response -> {
 							if (response == ButtonType.OK) {
-								//If response exists and is OK
-								tdl.getCompletedTasks().remove(taskToDelete);//Function is not verified to be working
+								//If response exists and is OK'
+								tdl.deleteByID(taskIDs.get(index));
+								//tdl.getCompletedTasks().remove(taskToDelete);//Function is not verified to be working
 								loadTaskNames();
 							}
 						});
@@ -74,8 +77,9 @@ public class CompletedTasksController {
 			public void handle(ActionEvent event) {
 				String item = myListView.getSelectionModel().getSelectedItem();//Get task name
 				System.out.println("Right Click on: " + item);//Works
+				int index = myListView.getSelectionModel().getSelectedIndex();
 				try {
-					Task taskToEdit = Main.todoList.getCompletedTask(item);
+					Task taskToEdit = Main.todoList.getCompletedTaskByID(taskIDs.get(index));
 					if (taskToEdit != null) {
 						contextMenu.hide();
 						new EditActionWindow(taskToEdit, CompletedTasksWindow.compTasksStage.getScene());
@@ -96,7 +100,8 @@ public class CompletedTasksController {
 					//Use ListView's getSelected Item
 					String item = myListView.getSelectionModel().getSelectedItem();
 					System.out.println("Double Click on: " + item);//Works
-					Task taskToEdit = Main.todoList.getCompletedTask(item);
+					int index = myListView.getSelectionModel().getSelectedIndex();
+					Task taskToEdit = Main.todoList.getCompletedTaskByID(taskIDs.get(index));
 					new EditActionWindow(taskToEdit, CompletedTasksWindow.compTasksStage.getScene());
 					loadTaskNames();//Works
 					//use this to do whatever you want to. Open Link etc.
@@ -110,12 +115,15 @@ public class CompletedTasksController {
 		ObservableList<String> data = null;
 		if (tdl != null) {
 			ArrayList<Task> tasks = tdl.getCompletedTasks();
+			taskIDs = new ArrayList<String>();
 			if (tasks != null) {
 				ArrayList<String> taskNames = new ArrayList<String>();
 				for (Task compTask: tasks) {
 					taskNames.add(compTask.getName());
+					taskIDs.add(compTask.getID());
 				}
 				Collections.reverse(taskNames);
+				Collections.reverse(taskIDs);
 				data = FXCollections.observableArrayList(taskNames);
 			} else {
 				data = FXCollections.observableArrayList();
