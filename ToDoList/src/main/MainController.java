@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,6 +19,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -226,36 +231,34 @@ public class MainController {
 
 	public boolean saveFile(File file) {
 		try
-		{
-			FileOutputStream fileOut = new FileOutputStream(file);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(tdl); // change this to the toDoList you are trying to save - Done
-			out.close();
-			fileOut.close();
-			return true;
-		}catch(IOException i)
-		{
-			i.printStackTrace();
-			return false;
-		}
+        {
+	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
+	        Marshaller m = context.createMarshaller();
+	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+	        // Write to File
+	        m.marshal(tdl, file);
+	        return true;
+
+        }catch(Exception i)
+        {
+            i.printStackTrace();
+            return false;
+        }
 	}
 
 	public boolean loadFromSave(File file) {
 		ToDoList todoList_temp = null;
+		
 		try {
-			FileInputStream fileIn = new FileInputStream(file);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			todoList_temp = (ToDoList) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (FileNotFoundException e1) {
+	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
+	        Unmarshaller unmarshaller = context.createUnmarshaller();
+	        todoList_temp = (ToDoList)unmarshaller.unmarshal(new FileReader(file));
+
+		} catch (Exception e1) {
 			//MainMenu a = new MainMenu(null);
 			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		} 
 
 		try {
 			if (todoList_temp.getActiveTasks() == null) {
@@ -270,6 +273,8 @@ public class MainController {
 				Main.todoList = todoList_temp;//Could cause bug
 				//MainController.TDL_CHANGE_STATUS = MainController.TDL_CHANGED;
 				loadTaskNames();
+				Alert alert = new Alert(AlertType.INFORMATION, "Successfully loaded from backup!");
+				alert.showAndWait();
 				/*Alert alert = new Alert(AlertType.INFORMATION, "!");
 				alert.showAndWait();*/
 				return true;
@@ -388,7 +393,7 @@ public class MainController {
 				FileChooser fileChooser = new FileChooser();
 
 				//Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList XML (*.xml)", "*.xml");
 				fileChooser.getExtensionFilters().add(extFilter);
 
 				//Show save file dialog
@@ -410,7 +415,7 @@ public class MainController {
 				FileChooser fileChooser = new FileChooser();
 
 				//Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Serialized JAVA objects and files (*.java)", "*.java");
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList XML (*.xml)", "*.xml");
 				fileChooser.getExtensionFilters().add(extFilter);
 
 				//Show open file dialog
