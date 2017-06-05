@@ -71,8 +71,7 @@ public class Main extends Application{
 	    	System.out.println(task.getName());
 	    }
 	  //export code
-	    try
-        {
+	    try{
 	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
