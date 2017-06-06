@@ -180,6 +180,7 @@ public class TaskCell extends ListCell<String>{ //Chaange string to Text if you 
 			//controller.loadTaskNames();
 			event.setDropCompleted(success);
 			controller.loadTaskNames();
+			controller.loadTaskNames();
 			event.consume();
 		});
 	}
