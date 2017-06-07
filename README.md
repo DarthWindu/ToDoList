@@ -16,6 +16,7 @@ Original Creators of ToDoList:
 Maintenance Team:  
 
 * Bryce Plunkett (Navbryce)
+* Fayyaz Zaidi
 * Joshua Shin
 * Pujit Mehrotra
 * Joe Dipisquale
