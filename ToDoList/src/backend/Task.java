@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,6 +13,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Pujit M.
@@ -44,6 +46,14 @@ public class Task implements Serializable{
 	private boolean showDate = false;
 	@XmlAttribute(name="status")
 	private Integer status; //Integer is serializable - we could change to int if primitive types are serializable, but I'm not sure
+	
+	@XmlJavaTypeAdapter(value=LocalDateAdapter.class)
+	private LocalDate dateUrgentElev = null;
+	@XmlJavaTypeAdapter(value=LocalDateAdapter.class)
+	private LocalDate dateCurrentElev = null;
+	@XmlJavaTypeAdapter(value=LocalDateAdapter.class)
+	private LocalDate dateEventualElev = null;
+	
 	@XmlElementWrapper(name="comments")
 	@XmlElement(name="Comment")
 	private ArrayList<Comment> comments = new ArrayList<Comment>();//Changed from design - Changed from HistoryItem List to Comment List
@@ -57,9 +67,11 @@ public class Task implements Serializable{
 	@XmlElement(name="HistoryEvent")
 	private ArrayList<HistoryItem> historyEvents = new ArrayList<HistoryItem>();
 	//private Date[] priorityChange = new Date[3];
-	private LocalDate dateUrgentElev = null, dateCurrentElev = null, dateEventualElev = null;
+	
 	@XmlAttribute(name="dateCreated")
 	private Date dateCreated;
+	@XmlAttribute(name="uniqueID") 
+	private String uniqueID;
 
 	public static final int DEFAULT_STATUS = 2;//Default status (2) means Current
 	public static final int INACTIVE = 0,
@@ -78,7 +90,7 @@ public class Task implements Serializable{
 	{
 		//Date date = Calendar.getInstance().getTime();
 		this(name, Calendar.getInstance().getTime());
-		this.initVariables();
+		//this.initVariables();
 		//NOTE that Calendar.getInstance().getTime() might not yield desired result (mm.dd.yy hh:mm am/pm)
 		//TODO: make new historyItem
 	}
@@ -86,7 +98,7 @@ public class Task implements Serializable{
 	public Task(String name, Date date) 
 	{
 		this(name, date, DEFAULT_STATUS); // !! - might be an issue calling a static variable in constructor
-		this.initVariables();
+		//this.initVariables();
 		//TODO: make new historyItem
 	}
 
@@ -96,6 +108,7 @@ public class Task implements Serializable{
 		taskName = name;
 		dateCreated = date;
 		status = new Integer(initPriority);
+		System.out.println(taskName +": " + uniqueID);
 		//TODO: make new historyItem
 	}
 
@@ -108,6 +121,7 @@ public class Task implements Serializable{
 		priorityChanges = new ArrayList<PriorityChange>();
 		nameChanges = new ArrayList<NameChange>();
 		historyEvents = new ArrayList<HistoryItem>();
+		uniqueID = UUID.randomUUID().toString();
 	}
 
 	//ACCESSORS*********************************************************888
@@ -238,6 +252,7 @@ public class Task implements Serializable{
 					formattedString = (inactiveNameDateFormatter(this.getUrgentElevDate()));
 				} else {
 					//formattedString = ("No date of elevation set - " + this.getName());
+					System.out.println("DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					setShowDate(false);
 				}
 			} else {
@@ -259,6 +274,10 @@ public class Task implements Serializable{
 	{
 		return (taskName.equals(task.getName()) && (status.intValue() == task.getStatus()));
 		//Returns true if both tasks' names and status values match
+	}
+	
+	public String getID() {
+		return uniqueID;
 	}
 
 
@@ -412,12 +431,20 @@ public class Task implements Serializable{
 	}
 
 	
-	
-	
 	//OVERRIDES
 
 	@Override
 	public String toString(){
 		return getName();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Task) {
+			Task comp = (Task) obj;
+			return this.getID().equals(comp.getID());
+		}
+		
+		return false;
 	}
 }

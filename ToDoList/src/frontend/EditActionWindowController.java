@@ -229,38 +229,38 @@ public class EditActionWindowController {
 		assert btnHistory != null : "fx:id=\"btnHistory\" was not injected: check your FXML file 'editActionWindow.fxml'.";
 		assert btnPrint != null : "fx:id=\"btnPrint\" was not injected: check your FXML file 'editActionWindow.fxml'.";
 		assert btnClose != null : "fx:id=\"btnClose\" was not injected: check your FXML file 'editActionWindow.fxml'.";
-		
-		
+
+
 
 		initTaskInfo();
 		setNameFocusListener();
 		setDisabledDays();
-		
+
 	}
 
 	private void datePickerOnHiding(JFXDatePicker datePicker, JFXCheckBox chkBox) {	
-			int counter = 0;
-			boolean entered = false;
-			
-			if (datePicker.getValue().isBefore(LocalDate.now()) ||datePicker.getValue().isEqual(LocalDate.now())) {
-				if ((eventHiddenCounter % 2) == 0) {
-					/*System.out.println("HAHA");//Testing
+		int counter = 0;
+		boolean entered = false;
+
+		if (datePicker.getValue().isBefore(LocalDate.now()) ||datePicker.getValue().isEqual(LocalDate.now())) {
+			if ((eventHiddenCounter % 2) == 0) {
+				/*System.out.println("HAHA");//Testing
 					txtfMessage.setVisible(true);
 					txtfMessage.setText("Please select a future date.");
 					Alert alert = new Alert(AlertType.WARNING, "Please select a future date.");
 					//alert.showAndWait();
 					datePicker.setValue(null);
-					
+
 					counter ++;
 					entered = true;*/
-				}
-			} else {
-				txtfMessage.setVisible(false);
-				chkBox.setSelected(true);
 			}
-			
-			//Testing
-			/*System.out.println("" + eventHiddenCounter + ": " + ((eventHiddenCounter % 2) == 0));
+		} else {
+			txtfMessage.setVisible(false);
+			chkBox.setSelected(true);
+		}
+
+		//Testing
+		/*System.out.println("" + eventHiddenCounter + ": " + ((eventHiddenCounter % 2) == 0));
 			System.out.println("COUNTER: " + counter + "\nENTERED: " + entered);
 			entered = false;
 			eventHiddenCounter ++;*/
@@ -329,56 +329,50 @@ public class EditActionWindowController {
 					if (!extRequest) {
 						String newName = txtfName.getText().trim();
 						if (!newName.equals("") && !newName.equals(task.getName())) {
-							if (Main.todoList.getTask(newName) == null) {
-								if (Main.todoList.getCompletedTask(newName) == null) {
-									task.changeName(txtfName.getText().trim());
-								} else {
-									Alert alert = new Alert(AlertType.INFORMATION, "This task has already been completed!");
-									alert.showAndWait();
-								}
-							} else {
-								Alert alert = new Alert(AlertType.INFORMATION, "This task already exists!");
-								alert.showAndWait();
-							}
+
+
+							task.changeName(txtfName.getText().trim());
+
+
 
 						}
 					}
 					//System.out.println("Textfield out focus");
-					
+
 				}
 			}
 		});
-		
+
 	}
-	
+
 	private void setDisabledDays() {
 		final Callback<DatePicker, DateCell> dayCellFactory = 
-	            new Callback<DatePicker, DateCell>() {
-	                @Override
-	                public DateCell call(final DatePicker datePicker) {
-	                    return new DateCell() {
-	                        @Override
-	                        public void updateItem(LocalDate item, boolean empty) {
-	                            super.updateItem(item, empty);
-	                           
-	                            if (item.isBefore(
-	                            		LocalDate.now().plusDays(1))
-	                            		
-	                                ) {
-	                                    setDisable(true);
-	                                    setStyle("-fx-background-color: #ffc0cb;");
-	                            }   
-	                    }
-	                };
-	            }
-	        };
-	        
-	        urgentDatePicker.setDayCellFactory(dayCellFactory);
-	        currentDatePicker.setDayCellFactory(dayCellFactory);
-	        eventualDatePicker.setDayCellFactory(dayCellFactory);
+				new Callback<DatePicker, DateCell>() {
+			@Override
+			public DateCell call(final DatePicker datePicker) {
+				return new DateCell() {
+					@Override
+					public void updateItem(LocalDate item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item.isBefore(
+								LocalDate.now().plusDays(1))
+
+								) {
+							setDisable(true);
+							setStyle("-fx-background-color: #ffc0cb;");
+						}   
+					}
+				};
+			}
+		};
+
+		urgentDatePicker.setDayCellFactory(dayCellFactory);
+		currentDatePicker.setDayCellFactory(dayCellFactory);
+		eventualDatePicker.setDayCellFactory(dayCellFactory);
 	}
-	
-	
+
+
 	/**
 	 * Does more than simply get text from the Name textfield
 	 * 
@@ -388,42 +382,36 @@ public class EditActionWindowController {
 	 */
 	public String getNameField() {
 		String newName = txtfName.getText().trim();
-		
+
 		if (!newName.equals("") && !newName.equals(task.getName())) {
-			if (Main.todoList.getTask(newName) == null) {
-				if (Main.todoList.getCompletedTask(newName) == null) {
-					task.changeName(txtfName.getText().trim());
-					proceed = true;
-				} else {
-					proceed = false;
-				}
-			} else {
-				proceed = false;
-			}
+
+			task.changeName(txtfName.getText().trim());
+			proceed = true;
+
 
 		} else {
 			proceed = true;
 		}
-		
+
 		return newName;
 	}
-	
+
 	public boolean proceed() {
 		return proceed;
 	}
-	
+
 	public boolean fireError() {
-		if (!proceed) {
+		/*if (!proceed) {
 			txtfMessage.requestFocus();
 			Alert al = new Alert(AlertType.ERROR, "This task already exists!");
 			al.showAndWait();
 			return true;
 		} else {
 			return false;
-		}
-		
+		}*/
+		return false;
 	}
-	
+
 	public void setExternalRequest(boolean val) {
 		extRequest = val;
 	}
