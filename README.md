@@ -1,22 +1,23 @@
-# ToDoList-Maintenance
+# [ToDoList]
+-------------------------
+Developed by PD2-RedTeam Prod. © 2017
 
-Original Creators of ToDoList:
+Directory Structure
+- toDoList.exe - The main application.
+-- \jre folder - holds all of the necessary tools to run the software
+-- \images - holds the icons and pictures for the software
 
-* Pujit Mehrotra (DarthWindu)
+***Disclaimer***: ToDo List is freeware. You can redistribute and/or modify ToDo list, including its source code. However, you may not sell ToDo List. It is distributed in the hope that it will be useful, so use 3rd party modifications at your own risk!
 
-* Joshua Shin (Objekshin)
+v1.0 (deprecated): https://github.com/JoeCleary/ToDoList/ 
+Forked to https://github.com/DarthWindu/ToDoList-Maintenance
 
-* Fayyaz Zaidi
+Enjoy your To-Do List!
 
-* Joe Cleary
-
-* Ben Germroth
------------------------------------------------------
-
-Maintenance Team:  
-
-* Bryce Plunkett (Navbryce)
-* Fayyaz Zaidi
-* Joshua Shin
-* Pujit Mehrotra
-* Joe Dipisquale
+# Credits
+--------------------------------------------
+- Bryce P.
+- Josh S.
+- Fayyaz Z.
+- Joe D.
+- Pujit M.
