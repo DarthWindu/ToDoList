@@ -1,157 +1,172 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ToDoList>
-    <activeTasks/>
-    <completedTasks>
-        <Task taskName="&quot;TEST&quot;" status="4" dateCreated="2017-06-06T08:30:07.869-04:00" uniqueID="82882a7e-1867-4e7f-af26-c1ba985bb9b1">
-            <dateUrgentElev>2017-06-07</dateUrgentElev>
-            <comments>
-                <Comment>
-                    <date>2017-06-07T08:26:49.428-04:00</date>
-                    <text>New Comment Added</text>
-                    <comment>TEST COMMENT
-</comment>
-                </Comment>
-                <Comment>
-                    <date>2017-06-07T08:29:05.495-04:00</date>
-                    <text>New Comment Added</text>
-                    <comment>a&lt;/comment&gt;&lt;text&gt;Fuck you to do list &lt;/text&gt; &lt;comment&gt;test comment replacement &lt;/comment&gt;</comment>
-                </Comment>
-            </comments>
+    <activeTasks>
+        <Task taskName="ATask1" status="3" dateCreated="2017-06-01T08:25:45.084-04:00">
+            <comments/>
             <priorityChanges>
                 <PriorityChange>
-                    <date>2017-06-06T08:30:40.680-04:00</date>
+                    <date>2017-06-01T08:25:57.144-04:00</date>
                     <text>Priority Changed</text>
                     <oldStatus>3</oldStatus>
-                    <newStatus>0</newStatus>
-                </PriorityChange>
-                <PriorityChange>
-                    <date>2017-06-06T08:31:31.180-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </PriorityChange>
-                <PriorityChange>
-                    <date>2017-06-06T08:33:58.209-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </PriorityChange>
-                <PriorityChange>
-                    <date>2017-06-06T08:34:12.248-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </PriorityChange>
-                <PriorityChange>
-                    <date>2017-06-06T08:34:18.969-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </PriorityChange>
-                <PriorityChange>
-                    <date>2017-06-06T08:34:27.191-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </PriorityChange>
-                <PriorityChange>
-                    <date>2017-06-07T08:24:28.620-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
                     <newStatus>3</newStatus>
                 </PriorityChange>
                 <PriorityChange>
-                    <date>2017-06-07T08:40:00.313-04:00</date>
+                    <date>2017-06-01T08:26:19.149-04:00</date>
                     <text>Priority Changed</text>
                     <oldStatus>3</oldStatus>
-                    <newStatus>4</newStatus>
+                    <newStatus>3</newStatus>
+                </PriorityChange>
+            </priorityChanges>
+            <nameChanges/>
+            <historyEvents>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-06-01T08:25:57.144-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </HistoryEvent>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-06-01T08:26:19.149-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </HistoryEvent>
+            </historyEvents>
+        </Task>
+        <Task taskName="ATask" status="3" dateCreated="2017-06-01T08:25:17.898-04:00">
+            <comments/>
+            <priorityChanges>
+                <PriorityChange>
+                    <date>2017-06-01T08:25:47.180-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
                 </PriorityChange>
                 <PriorityChange>
-                    <date>2017-06-07T08:40:00.313-04:00</date>
+                    <date>2017-06-01T08:26:08.168-04:00</date>
                     <text>Priority Changed</text>
-                    <oldStatus>4</oldStatus>
-                    <newStatus>4</newStatus>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </PriorityChange>
+                <PriorityChange>
+                    <date>2017-06-01T08:26:16.119-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </PriorityChange>
+                <PriorityChange>
+                    <date>2017-06-01T08:26:17.137-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
                 </PriorityChange>
             </priorityChanges>
             <nameChanges>
                 <NameChange>
-                    <date>2017-06-07T08:25:59.895-04:00</date>
+                    <date>2017-06-01T08:25:23.548-04:00</date>
                     <text>Name Changed</text>
-                    <oldName>Test2</oldName>
-                    <newName>"TEST"</newName>
+                    <oldName>ATask</oldName>
+                    <newName>ATask2</newName>
+                </NameChange>
+                <NameChange>
+                    <date>2017-06-01T08:25:40.008-04:00</date>
+                    <text>Name Changed</text>
+                    <oldName>ATask2</oldName>
+                    <newName>ATask</newName>
                 </NameChange>
             </nameChanges>
             <historyEvents>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-06T08:30:40.680-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>3</oldStatus>
-                    <newStatus>0</newStatus>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-06T08:31:31.180-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-06T08:33:58.209-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-06T08:34:12.248-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-06T08:34:18.969-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-06T08:34:27.191-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>0</newStatus>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-07T08:24:28.620-04:00</date>
-                    <text>Priority Changed</text>
-                    <oldStatus>0</oldStatus>
-                    <newStatus>3</newStatus>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="nameChange">
+                    <date>2017-06-01T08:25:23.548-04:00</date>
+                    <text>Name Changed</text>
+                    <oldName>ATask</oldName>
+                    <newName>ATask2</newName>
                 </HistoryEvent>
                 <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="nameChange">
-                    <date>2017-06-07T08:25:59.895-04:00</date>
+                    <date>2017-06-01T08:25:40.008-04:00</date>
                     <text>Name Changed</text>
-                    <oldName>Test2</oldName>
-                    <newName>"TEST"</newName>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="comment">
-                    <date>2017-06-07T08:26:49.428-04:00</date>
-                    <text>New Comment Added</text>
-                    <comment>TEST COMMENT
-</comment>
-                </HistoryEvent>
-                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="comment">
-                    <date>2017-06-07T08:29:05.495-04:00</date>
-                    <text>New Comment Added</text>
-                    <comment>a&lt;/comment&gt;
-&lt;text&gt;Fuck you to do list &lt;/text&gt; &lt;comment&gt;test comment replacement</comment>
+                    <oldName>ATask2</oldName>
+                    <newName>ATask</newName>
                 </HistoryEvent>
                 <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-07T08:40:00.313-04:00</date>
+                    <date>2017-06-01T08:25:47.180-04:00</date>
                     <text>Priority Changed</text>
                     <oldStatus>3</oldStatus>
-                    <newStatus>4</newStatus>
+                    <newStatus>3</newStatus>
                 </HistoryEvent>
                 <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
-                    <date>2017-06-07T08:40:00.313-04:00</date>
+                    <date>2017-06-01T08:26:08.168-04:00</date>
                     <text>Priority Changed</text>
-                    <oldStatus>4</oldStatus>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </HistoryEvent>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-06-01T08:26:16.119-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </HistoryEvent>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-06-01T08:26:17.137-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>3</newStatus>
+                </HistoryEvent>
+            </historyEvents>
+        </Task>
+    </activeTasks>
+    <completedTasks>
+        <Task taskName="Test" status="4" dateCreated="2017-05-30T09:07:01.598-04:00">
+            <comments>
+                <Comment>
+                    <date>2017-05-30T09:07:28.948-04:00</date>
+                    <text>New Comment Added</text>
+                    <comment>Test</comment>
+                </Comment>
+            </comments>
+            <priorityChanges>
+                <PriorityChange>
+                    <date>2017-05-30T09:07:13.382-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>1</newStatus>
+                </PriorityChange>
+                <PriorityChange>
+                    <date>2017-05-30T09:07:17.252-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>1</oldStatus>
+                    <newStatus>0</newStatus>
+                </PriorityChange>
+                <PriorityChange>
+                    <date>2017-05-31T08:32:46.105-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>0</oldStatus>
+                    <newStatus>4</newStatus>
+                </PriorityChange>
+            </priorityChanges>
+            <nameChanges/>
+            <historyEvents>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-05-30T09:07:13.382-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>3</oldStatus>
+                    <newStatus>1</newStatus>
+                </HistoryEvent>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-05-30T09:07:17.252-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>1</oldStatus>
+                    <newStatus>0</newStatus>
+                </HistoryEvent>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="comment">
+                    <date>2017-05-30T09:07:28.948-04:00</date>
+                    <text>New Comment Added</text>
+                    <comment>Test</comment>
+                </HistoryEvent>
+                <HistoryEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="priorityChange">
+                    <date>2017-05-31T08:32:46.105-04:00</date>
+                    <text>Priority Changed</text>
+                    <oldStatus>0</oldStatus>
                     <newStatus>4</newStatus>
                 </HistoryEvent>
             </historyEvents>
