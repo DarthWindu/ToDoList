@@ -1,0 +1,27 @@
+﻿Installation Instructions:
+1. Extract files from release-2.x.x into folder
+2. File Hierarchy of Folder:
+	toDoList.exe
+	toDoList.xml (after the first run)
+	images\
+	jre\
+
+Running Instructions:
+1. After installation, just run the toDoList.exe
+2. There will be about a 10 second load-time on the first run; after the first run, it will take about 5 seconds to load
+
+Access Save File:
+To view saved tasks from OUTSIDE the application, open the toDoList.xml in a web-browser or other XML reader
+
+Trouble Shooting:
+Ensure the file hierarchy matches the one described above.
+
+Enjoy your To-Do List!
+
+# Credits
+--------------------------------------------
+- Bryce P.
+- Josh S.
+- Fayyaz Z.
+- Joe D.
+- Pujit M.
