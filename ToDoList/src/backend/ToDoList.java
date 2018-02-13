@@ -15,20 +15,14 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-@XmlRootElement(name="ToDoList")
-@XmlAccessorType(XmlAccessType.NONE)
 public class ToDoList implements Serializable{
 
 	/**
-	 * Don't change this
+	 * Don't change this if you intend to use java's in-house serialization
 	 */
 	private static final long serialVersionUID = 1582472173711463948L;
-	@XmlElementWrapper(name="activeTasks")
-	@XmlElement(name="Task")
 	private ArrayList<Task> activeTasks;
-	
-	@XmlElementWrapper(name="completedTasks")
-	@XmlElement(name="Task")
+
 	private ArrayList<Task> completedTasks;
 	private boolean testingFlag = false;
 	//initializes variables
@@ -55,10 +49,10 @@ public class ToDoList implements Serializable{
 			if (taskToDel != null)
 				return completedTasks.remove(taskToDel);
 		}
-		
+
 		return false;
 	}
-	
+
 	public Task getTaskByID(String id) {
 		for (Task task : activeTasks) {
 			System.out.println(task + ": " + id);
@@ -66,7 +60,7 @@ public class ToDoList implements Serializable{
 				return task;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -134,7 +128,7 @@ public class ToDoList implements Serializable{
 		//TESTING CODE
 		//------------------------------------------------------
 		if (testingFlag) {
-            System.out.println("After Sort");
+			System.out.println("After Sort");
 			System.out.println("\n***TESTING INITIATED***\n"
 					+ "-------------------------------------------");
 
@@ -301,7 +295,7 @@ public class ToDoList implements Serializable{
 		return null;
 		//No Task with this name was found
 	}
-	
+
 	public Task getCompletedTaskByID(String id) {
 		for (Task task : completedTasks) {
 			System.out.println(task + ": " + id);
@@ -309,7 +303,7 @@ public class ToDoList implements Serializable{
 				return task;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -336,7 +330,7 @@ public class ToDoList implements Serializable{
 
 		return stopForLoop;//True if successfully switched.
 	}
-	
+
 	public boolean setTaskCompletedByID(String id) {
 		Task taskToBeComp = getTaskByID(id);
 		try {
@@ -364,10 +358,10 @@ public class ToDoList implements Serializable{
 
 		return stopForLoop;//True if successfully switched.
 	}
-	
+
 	public boolean setCompletedTaskActiveByID(String id) {
 		Task taskToBeActive = this.getCompletedTaskByID(id);
-		
+
 		try {
 			activeTasks.add(taskToBeActive);
 			return completedTasks.remove(taskToBeActive);
@@ -376,16 +370,41 @@ public class ToDoList implements Serializable{
 		}
 	}
 
+	@Deprecated
+	/**
+	 * Enables Testing Mode.
+	 * 
+	 * @deprecated Replaced by {@link #setTestingMode(boolean)}
+	 */
 	public void enableTestingMode() {
 		testingFlag = true;
 	}
 
+	@Deprecated
+	/**
+	 * Disables Testing Mode
+	 * 
+	 * @deprecated Replaced by {@link #setTestingMode(boolean)}
+	 */
 	public void disableTestingMode() {
 		testingFlag = false;
 	}
-	
-	public void setTestingFlag(boolean flag) {
+
+	/**
+	 * If the parameter evaluates to true, testing mode is enabled. 
+	 * If it evaluates to false, testing mode is disabled.
+	 * @param flag
+	 */
+	public void setTestingMode(boolean flag) {
 		testingFlag = flag;
+	}
+
+	/**
+	 * Returns true if testing mode is enabled and false if it's not.
+	 * @return testingFlag
+	 */
+	public boolean testingModeIsEnabled() {
+		return testingFlag;
 	}
 
 

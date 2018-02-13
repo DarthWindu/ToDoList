@@ -38,7 +38,8 @@ public class Task implements Serializable{
 	/**
 	 * AUTO GENERATED serialVersionUID
 	 * 
-	 * Pujit - I'm not going to lie, I have little idea what's going on here with the serialization id
+	 * Pujit - I'm not going to lie, I have no idea what's going on here with the serialization id
+	 * 		   Remove at your own risk. T_T
 	 */
 	private static final long serialVersionUID = 2850384200535302052L;
 	@XmlAttribute(name="taskName")
