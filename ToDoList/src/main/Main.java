@@ -1,9 +1,16 @@
 package main;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,11 +28,19 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import backend.*;
+import backend.adapters.TodolistLoadState;
+import backend.adapters.UserTodolistAdapter;
+import backend.config.AbstractAppConfigAdapter;
+import backend.config.AppConfigBuilder;
+import backend.config.GlobalConfigManager;
 
 public class Main extends Application{
 	public static ToDoList todoList = new ToDoList();
 	public static GsonBuilder gsonBuilder = new GsonBuilder();
 	protected static Stage primStage = null;
+	private String fileName = "ToDoList.json";
+	public static final boolean DEBUGGING_ENABLED = true;
+	public static AbstractAppConfigAdapter appProps = new AppConfigBuilder().create();
 	//public static File originOfToDoList;
 
 	public static void main(String[] args) {
@@ -35,7 +50,13 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		boolean testingMode = false;//Change to FALSE When Delivering
+		//appProps.load(new FileInputStream("./src/backend/config/AppConfig.properties"));
+		System.out.println("Checkpt 1 reached");
+		System.out.println("Path to Last List: " + appProps.getProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST));
+		
+		boolean testingMode = true;//Change to FALSE When Delivering
+		GlobalConfigManager.setGlobalTestingMode(testingMode);
+
 		primStage = primaryStage;
 		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream( "/images/todolistIcon.png" )));
 		primaryStage.setResizable(false);
@@ -44,32 +65,34 @@ public class Main extends Application{
 		//Deserialize TodoList
 		try {
 			Gson gson = gsonBuilder.create();
-			todoList = gson.fromJson(new FileReader("ToDoList.json"), ToDoList.class);
-
+			todoList = gson.fromJson(new FileReader(appProps.getProperty("pathToLastList")), ToDoList.class);
 			todoList.setTestingMode(testingMode);
 
 		} catch (FileNotFoundException e) {
-			/*
-			 * This will occur during the first run of the program. Make a prompt asking user if it's their first time.
-			 */
+			UserTodolistAdapter.setLoadState(TodolistLoadState.FILE_NOT_FOUND);
+
+			if(Main.DEBUGGING_ENABLED)
+				System.err.println("File not Found");
 
 
+		} catch (NullPointerException e1) {
+			//The file was found, but the serialization data is either absent or corrupted
+			//BLOCK NAME: CORRUPTION CHECK
 
-		} catch (Exception e1) {
-			//This is to ensure that the program keeps running.
-			e1.printStackTrace();//For debugging
+			if(Main.DEBUGGING_ENABLED)
+				e1.printStackTrace();
+
+			UserTodolistAdapter.setLoadState(TodolistLoadState.CORRUPT);
+			todoList = new ToDoList();
 		} 
 
+		//Final, Brute-Force check -- May have been replaced by ^ CORRUPTION CHECK block ^
 		if (todoList.getActiveTasks() == null) {
-			//ToDoList could not be de-serialized
-
-			/*
-			 * PROMPTT!!!!!!
-			 */
-
+			UserTodolistAdapter.setLoadState(TodolistLoadState.CORRUPT);
 			todoList = new ToDoList();
 		}
-
+		
+		
 		//Show Gui
 		//MainController.TDL_CHANGE_STATUS = MainController.TDL_UNCHANGED;
 		try {
@@ -95,15 +118,42 @@ public class Main extends Application{
 			}
 		}
 
+		File currentFile = new File(Main.appProps.getProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST));
+		System.out.println("Path to Last List: " + appProps.getProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST));
 
 		//Serialize Todo List
-		try {
+		try (Writer writer = new FileWriter(currentFile)){
 			Gson gson = gsonBuilder.create();
-			gson.toJson(todoList, new FileWriter("toDoList.json"));
+			gson.toJson(todoList, writer);
+			//writer.flush();
+
+
+			System.out.println(gson.toJson(todoList));
+			//System.out.println("\n\n\n");
+
+			//readTest();
 
 		} catch(IOException i) {
 			i.printStackTrace();//for debugging
 		}
+		
+		//Save AppConfig File
+		appProps.saveAppConfig();
 		System.exit(0);//EXIT
+	}
+
+
+	private void readTest() {
+		Path p = Paths.get(fileName);
+		try {
+			List<String> l = Files.readAllLines(p);
+
+			for(String s : l) {
+				System.out.println(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

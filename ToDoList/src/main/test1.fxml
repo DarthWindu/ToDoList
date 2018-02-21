@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="myScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+<ScrollPane fx:id="myScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
   <content>
     <AnchorPane fx:id="myAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="567.0" prefWidth="818.0">
          <children>
@@ -17,9 +17,9 @@
               <menus>
                 <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Create backup..." />
-                        <MenuItem fx:id="menuRestore_Backup" mnemonicParsing="false" text="Restore from backup..." />
-                        <MenuItem fx:id="menuPrint" disable="true" mnemonicParsing="false" text="Print" visible="false" />
+                    <MenuItem fx:id="menuCreateBackup" mnemonicParsing="false" text="Save as..." />
+                        <MenuItem fx:id="menuRestore_Backup" mnemonicParsing="false" text="Open..." />
+                        <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#menuNewOnAction" text="New" />
                   </items>
                 </Menu>
                   <Menu fx:id="menuCAI" mnemonicParsing="false" text="View">

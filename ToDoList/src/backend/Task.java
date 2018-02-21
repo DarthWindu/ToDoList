@@ -15,6 +15,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import backend.adapters.LocalDateAdapter;
+
 /**
  * @author Pujit M.
  * 

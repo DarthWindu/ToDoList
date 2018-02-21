@@ -1,20 +1,26 @@
 package main;
 
 
+import com.google.gson.Gson;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
 import backend.Task;
 import backend.ToDoList;
+import backend.adapters.TodolistLoadState;
+import backend.adapters.UserTodolistAdapter;
+import backend.config.AbstractAppConfigAdapter;
 import frontend.EditActionWindow;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,7 +88,7 @@ public class MainController {
 	private MenuItem menuRestore_Backup; // Value injected by FXMLLoader
 
 	@FXML // fx:id="menuPrint"
-	private MenuItem menuPrint; // Value injected by FXMLLoader
+	private MenuItem menuNew; // Value injected by FXMLLoader
 
 	@FXML // fx:id="menuCAI"
 	private Menu menuCAI; // Value injected by FXMLLoader
@@ -121,7 +127,7 @@ public class MainController {
 		assert menuFile != null : "fx:id=\"menuFile\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuCreateBackup != null : "fx:id=\"menuCreateBackup\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuRestore_Backup != null : "fx:id=\"menuRestore_Backup\" was not injected: check your FXML file 'test1.fxml'.";
-		assert menuPrint != null : "fx:id=\"menuPrint\" was not injected: check your FXML file 'test1.fxml'.";
+		assert menuNew != null : "fx:id=\"menuPrint\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuCAI != null : "fx:id=\"menuCAI\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuQuit != null : "fx:id=\"menuQuit\" was not injected: check your FXML file 'test1.fxml'.";
 		assert menuHelp != null : "fx:id=\"menuHelp\" was not injected: check your FXML file 'test1.fxml'.";
@@ -154,14 +160,14 @@ public class MainController {
 
 			data.add(0, text);
 			Task newTask = new Task(text,Calendar.getInstance().getTime(), Task.URGENT);
-			
+
 			try {
 				tdl.add(0, newTask);
 			}catch (NullPointerException e) {
 				//e.printStackTrace();
 				System.out.println("tdl is NULL");
 			}
-			
+
 			taskIDs.add(0, newTask.getID());
 		}
 
@@ -180,6 +186,32 @@ public class MainController {
 	public void onViewCAIaction(ActionEvent evt) {
 		new CompletedTasksWindow(Main.primStage);
 		loadTaskNames();
+	}
+	
+	@FXML
+	public void menuNewOnAction(ActionEvent evt) {
+		File currentFile = new File(Main.appProps.getProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST));
+		boolean fileSaved = saveFile(currentFile);
+		if (fileSaved) {
+			FileChooser fileChooser = new FileChooser();
+			//Set extension filter
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList JSON (*.json)", "*.json");
+			fileChooser.getExtensionFilters().add(extFilter);
+
+			//Show save file dialog
+			File file = fileChooser.showSaveDialog(Main.primStage);
+
+			if(file != null){
+				ToDoList newList = new ToDoList();
+				Main.todoList = newList;
+				tdl = Main.todoList;				
+				saveFile(file);
+				loadTaskNames();
+			}
+		} else {
+			System.err.println("FILE NOT SAVEEEDD");
+		}
+		
 	}
 	//==================================================================
 	//FXML ACTION LISTENERS - AUTO INJECTED ==> ENDS
@@ -230,64 +262,88 @@ public class MainController {
 	}
 
 	public boolean saveFile(File file) {
-		try
-        {
-	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
-	        Marshaller m = context.createMarshaller();
-	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-	        // Write to File
-	        m.marshal(tdl, file);
-	        return true;
-
-        }catch(Exception i)
-        {
-            i.printStackTrace();
-            return false;
-        }
+		try (Writer writer = new FileWriter(file)){
+			Gson gson = Main.gsonBuilder.create();
+			gson.toJson(tdl, writer);
+			Main.appProps.setProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST, file.getPath());
+			//writer.flush();
+			//System.out.println(gson.toJson(tdl));
+			
+			System.out.println("SAVED " + file.getName());
+			return true;
+		} catch(IOException i) {
+			i.printStackTrace();//for debugging
+			return false;
+		}
 	}
 
 	public boolean loadFromSave(File file) {
-		ToDoList todoList_temp = null;
+		File currentFile = new File(Main.appProps.getProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST));
+		boolean fileSaved = saveFile(currentFile);
 		
-		try {
-	        JAXBContext context = JAXBContext.newInstance(ToDoList.class);
-	        Unmarshaller unmarshaller = context.createUnmarshaller();
-	        todoList_temp = (ToDoList)unmarshaller.unmarshal(new FileReader(file));
+		if (fileSaved) {
+			ToDoList todoList_temp = null;
+			boolean success = false;
+			
+			
+			try {
+				Gson gson = Main.gsonBuilder.create();
+				todoList_temp = gson.fromJson(new FileReader(file), ToDoList.class);
 
-		} catch (Exception e1) {
-			//MainMenu a = new MainMenu(null);
-			e1.printStackTrace();
-		} 
+			} catch (FileNotFoundException e) {
+				//UserTodolistAdapter.setLoadState(TodolistLoadState.FILE_NOT_FOUND);
+				if (Main.DEBUGGING_ENABLED)
+					System.err.println("File not Found");
+				loadFromSaveMessage(false);
+				return success;//success = false
 
-		try {
-			if (todoList_temp.getActiveTasks() == null) {
-				//ToDoList could not be de-serialized
-				System.out.println("Loading FAILED!!!!");
-				Alert alert = new Alert(AlertType.INFORMATION, "Restoration of this Todolist was not successful. No changes have been made.");
-				alert.showAndWait();
-				return false;
-			} else {
-				System.out.println("Loading Succeeded!");
-				tdl = todoList_temp;//Could cause bug
-				Main.todoList = todoList_temp;//Could cause bug
-				//MainController.TDL_CHANGE_STATUS = MainController.TDL_CHANGED;
-				loadTaskNames();
-				Alert alert = new Alert(AlertType.INFORMATION, "Successfully loaded from backup!");
-				alert.showAndWait();
-				/*Alert alert = new Alert(AlertType.INFORMATION, "!");
-				alert.showAndWait();*/
-				return true;
+			} 
+			
+			
+			//Final, Brute-Force check -- May have been replaced by ^ CORRUPTION CHECK block ^
+			try {
+				if (todoList_temp.getActiveTasks() == null) {
+					loadFromSaveMessage(false);
+					return success;//success = false
+				}
+			} catch (NullPointerException e1) {
+				//The file was found, but the serialization data is either absent or corrupted
+				//BLOCK NAME: CORRUPTION CHECK
+				//UserTodolistAdapter.setLoadState(TodolistLoadState.CORRUPT);
+				if (Main.DEBUGGING_ENABLED)
+					e1.printStackTrace();
+				loadFromSaveMessage(false);
+				return success;//success = false
+
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			Alert alert = new Alert(AlertType.INFORMATION, "Restoration of this Todolist was not successful. No changes have been made.");
-			alert.showAndWait();
+			
+			
+			//Yay! The load was successful xD
+			success = true;
+			tdl = todoList_temp;//Could cause bug
+			Main.todoList = todoList_temp;//Could cause bug
+			loadTaskNames();
+			
+			System.out.println("FILENAME:  " + file.getName() + "\nPATH:  " + file.getPath());
+			Main.appProps.setProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST, file.getPath());
+			return true;
+		} else {
+			System.err.println("CRITICAL SAVING ERROR");//Debugging
 			return false;
 		}
 
+	}
 
-
+	private void loadFromSaveMessage(boolean success) {
+		Alert alert;
+		if (success) {
+			System.out.println("Loading FAILED!!!!");
+			alert = new Alert(AlertType.INFORMATION, "Restoration of this Todolist was not successful. No changes have been made.");
+		} else {
+			System.out.println("Loading Succeeded!");
+			alert = new Alert(AlertType.INFORMATION, "Successfully loaded from backup!");
+		}
+		alert.showAndWait();
 	}
 	//==================================================================
 	//Utility Methods ==> END
@@ -393,14 +449,17 @@ public class MainController {
 				FileChooser fileChooser = new FileChooser();
 
 				//Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList XML (*.xml)", "*.xml");
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList JSON (*.json)", "*.json");
 				fileChooser.getExtensionFilters().add(extFilter);
-
+				
+				File currentFile = new File(Main.appProps.getProperty(AbstractAppConfigAdapter.KEYNAME_PATHTOLASTLIST));
 				//Show save file dialog
 				File file = fileChooser.showSaveDialog(Main.primStage);
 
 				if(file != null){
+					saveFile(currentFile);
 					saveFile(file);
+					loadFromSave(file);
 				}
 			}
 		});
@@ -415,14 +474,28 @@ public class MainController {
 				FileChooser fileChooser = new FileChooser();
 
 				//Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList XML (*.xml)", "*.xml");
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ToDoList JSON (*.json)", "*.json");
 				fileChooser.getExtensionFilters().add(extFilter);
+				
+				//File currentFile = new File(Main.appProps.getProperty(AppConfigAdapter.KEYNAME_PATHTOLASTLIST));
+				
+				
+				/*fileChooser.setInitialDirectory(currentFile);
+				 * 
+				 * 
+				 * Causes following exception:
+				 * Exception in thread "JavaFX Application Thread" java.lang.IllegalArgumentException: Folder parameter must be a valid folder
+				 * 
+				 * Add feature Later
+				 * 
+				 * 
+				//Set initial directory to parent directory of current file*/
 
 				//Show open file dialog
 				File file = fileChooser.showOpenDialog(Main.primStage);
 
 				if(file != null){
-					loadFromSave(file);
+					loadFromSave(file);//Path to Last List is set inside this method call
 				}
 			}
 		});
